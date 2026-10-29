@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sri Devi Groups - Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled" style="background: rgba(255,255,255,0.97);">
+        <div class="container">
+            <a href="dashboard.html" class="logo">
+                <div class="logo-icon">SD</div>
+                <span class="logo-text" style="color: var(--primary);">Sri Devi Groups</span>
+            </a>
+            <div class="nav-links">
+                <a href="dashboard.html" style="color: var(--dark);">Home</a>
+                <a href="tours.html" style="color: var(--dark);">Tours & Travels</a>
+                <a href="catering.html" style="color: var(--dark);">Catering Services</a>
+                <a href="#" onclick="logout()" class="btn btn-primary nav-btn">Logout</a>
+            </div>
+            <button class="mobile-menu-btn" style="color: var(--dark);">☰</button>
+        </div>
+    </nav>
+
+    <!-- Dashboard Hero -->
+    <section class="dashboard-hero">
+        <div class="container" style="position: relative;">
+            <div class="welcome-badge">👋 Welcome back, <span id="welcome-user">Admin</span></div>
+            <h1>Sri Devi Groups</h1>
+            <p>Your trusted partner for premium travel and catering services across India</p>
+        </div>
+    </section>
+
+    <!-- Dashboard Cards -->
+    <section class="dashboard-section">
+        <div class="dashboard-cards">
+            <!-- Tours & Travels Card -->
+            <a href="tours.html" class="dashboard-card">
+                <div class="card-image tours-bg">
+                    <div class="card-pattern"></div>
+                    <div class="card-icon">🚗</div>
+                </div>
+                <div class="card-body">
+                    <h2>Sri Devi Tours & Travels</h2>
+                    <p>Premium car and traveller rental services from Pollachi to anywhere in India. Comfortable vehicles with experienced drivers for all your travel needs.</p>
+                    <div class="card-features">
+                        <div class="card-feature">
+                            <span class="icon">🚙</span> Cars
+                        </div>
+                        <div class="card-feature">
+                            <span class="icon">🚐</span> Travellers
+                        </div>
+                        <div class="card-feature">
+                            <span class="icon">👨‍✈️</span> With Driver
+                        </div>
+                        <div class="card-feature">
+                            <span class="icon">🗺️</span> All India
+                        </div>
+                    </div>
+                    <div class="card-arrow">
+                        Explore Services →
+                    </div>
+                </div>
+            </a>
+
+            <!-- Catering Services Card -->
+            <a href="catering.html" class="dashboard-card">
+                <div class="card-image catering-bg">
+                    <div class="card-pattern"></div>
+                    <div class="card-icon">🍽️</div>
+                </div>
+                <div class="card-body">
+                    <h2>Sri Devi Catering Services</h2>
+                    <p>Delicious and hygienic catering services for weddings, functions, corporate events, and special occasions. Authentic South Indian & North Indian cuisine.</p>
+                    <div class="card-features">
+                        <div class="card-feature">
+                            <span class="icon">💒</span> Weddings
+                        </div>
+                        <div class="card-feature">
+                            <span class="icon">🏢</span> Corporate
+                        </div>
+                        <div class="card-feature">
+                            <span class="icon">🎉</span> Events
+                        </div>
+                        <div class="card-feature">
+                            <span class="icon">🥘</span> Multi Cuisine
+                        </div>
+                    </div>
+                    <div class="card-arrow">
+                        Explore Services →
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Quick Stats -->
+    <section style="padding: 60px 20px 100px; background: var(--white);">
+        <div class="container">
+            <h2 class="section-title">Why Choose Sri Devi Groups?</h2>
+            <p class="section-subtitle">Trusted by thousands of customers across Tamil Nadu and beyond</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🏆</div>
+                    <h3>10+ Years Experience</h3>
+                    <p>Over a decade of excellence in providing top-notch travel and catering services.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">😊</div>
+                    <h3>5000+ Happy Customers</h3>
+                    <p>Thousands of satisfied customers who trust us for their travel and event needs.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🌟</div>
+                    <h3>Quality Guaranteed</h3>
+                    <p>We maintain the highest standards of quality, safety, and customer satisfaction.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💰</div>
+                    <h3>Best Prices</h3>
+                    <p>Competitive pricing with no hidden charges. Transparent billing always.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <span class="logo-text" style="font-family: 'Playfair Display', serif; font-size: 1.5rem;">Sri Devi Groups</span>
+                    <p>Your trusted partner for premium travel and catering services. Serving customers from Pollachi since 2015.</p>
+                    <div class="footer-social">
+                        <a href="#">📘</a>
+                        <a href="#">📸</a>
+                        <a href="#">🐦</a>
+                        <a href="#">📱</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="tours.html">Car Rentals</a></li>
+                        <li><a href="tours.html">Traveller Rentals</a></li>
+                        <li><a href="catering.html">Wedding Catering</a></li>
+                        <li><a href="catering.html">Event Catering</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="dashboard.html">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">📍 Pollachi, Tamil Nadu</a></li>
+                        <li><a href="#">📞 +91 98765 43210</a></li>
+                        <li><a href="#">✉️ info@sridevigroups.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Sri Devi Groups. All Rights Reserved. | Designed with ❤️ in Pollachi</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/919876543210" class="whatsapp-btn" target="_blank">💬</a>
+
+    <!-- Back to Top -->
+    <button class="back-to-top">↑</button>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+

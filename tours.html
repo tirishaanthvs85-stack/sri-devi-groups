@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sri Devi Tours & Travels - Car & Traveller Rentals from Pollachi</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="dashboard.html" class="logo">
+                <div class="logo-icon">SD</div>
+                <span class="logo-text">Sri Devi Tours & Travels</span>
+            </a>
+            <div class="nav-links">
+                <a href="dashboard.html">Home</a>
+                <a href="#services">Services</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#routes">Routes</a>
+                <a href="#contact">Contact</a>
+                <a href="#" onclick="logout()" class="btn btn-outline nav-btn">Logout</a>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Booking Form -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">🚗 Premium Travel Services from Pollachi</div>
+                <h1>Travel Anywhere in <span>India</span> with Comfort</h1>
+                <p>Rent cars and travellers with experienced drivers from Pollachi. Safe, reliable, and affordable rides to any destination across India.</p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="number">500+</div>
+                        <div class="label">Happy Trips</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="number">50+</div>
+                        <div class="label">Destinations</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="number">100%</div>
+                        <div class="label">Safe Rides</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Form -->
+            <div class="hero-booking">
+                <h3>📍 Book Your Ride from Pollachi</h3>
+                <form onsubmit="handleBooking(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="booking-name">Your Name</label>
+                            <input type="text" id="booking-name" placeholder="Full Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="booking-phone">Phone Number</label>
+                            <input type="tel" id="booking-phone" placeholder="+91 XXXXX XXXXX" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vehicle-type">Vehicle Type</label>
+                        <select id="vehicle-type" onchange="calculateEstimate()" required>
+                            <option value="">Select Vehicle</option>
+                            <option value="car">🚗 Standard Car — ₹16/km | ₹2,000/day</option>
+                            <option value="traveller">🚐 Traveller — ₹20/km | ₹3,000/day</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="destination">Destination</label>
+                            <select id="destination" onchange="calculateEstimate()" required>
+                                <option value="">Select Destination</option>
+                                <optgroup label="🔥 Popular Nearby">
+                                    <option value="coimbatore">Coimbatore (40 km)</option>
+                                    <option value="palakkad">Palakkad (50 km)</option>
+                                    <option value="ooty">Ooty (95 km)</option>
+                                    <option value="erode">Erode (120 km)</option>
+                                    <option value="thrissur">Thrissur (120 km)</option>
+                                </optgroup>
+                                <optgroup label="🏔️ Hill Stations">
+                                    <option value="kodaikanal">Kodaikanal (150 km)</option>
+                                    <option value="munnar">Munnar (160 km)</option>
+                                </optgroup>
+                                <optgroup label="🏙️ Major Cities">
+                                    <option value="kochi">Kochi (190 km)</option>
+                                    <option value="madurai">Madurai (200 km)</option>
+                                    <option value="salem">Salem (210 km)</option>
+                                    <option value="trichy">Tiruchirappalli (260 km)</option>
+                                    <option value="mysore">Mysore (280 km)</option>
+                                    <option value="trivandrum">Thiruvananthapuram (300 km)</option>
+                                    <option value="thanjavur">Thanjavur (300 km)</option>
+                                    <option value="tirunelveli">Tirunelveli (310 km)</option>
+                                    <option value="bangalore">Bangalore (370 km)</option>
+                                    <option value="kanyakumari">Kanyakumari (370 km)</option>
+                                    <option value="rameshwaram">Rameshwaram (380 km)</option>
+                                    <option value="pondicherry">Pondicherry (400 km)</option>
+                                    <option value="chennai">Chennai (510 km)</option>
+                                </optgroup>
+                                <optgroup label="✈️ Long Distance">
+                                    <option value="tirupati">Tirupati (550 km)</option>
+                                    <option value="hyderabad">Hyderabad (750 km)</option>
+                                    <option value="goa">Goa (850 km)</option>
+                                    <option value="vizag">Visakhapatnam (1100 km)</option>
+                                    <option value="mumbai">Mumbai (1100 km)</option>
+                                    <option value="kolkata">Kolkata (1950 km)</option>
+                                    <option value="jaipur">Jaipur (2000 km)</option>
+                                    <option value="delhi">Delhi (2200 km)</option>
+                                </optgroup>
+                                <optgroup label="📝 Other">
+                                    <option value="custom">Custom Distance...</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="num-days">Number of Days</label>
+                            <select id="num-days" onchange="calculateEstimate()">
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="7">7 Days</option>
+                                <option value="10">10 Days</option>
+                                <option value="15">15 Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="custom-km-group" style="display: none;">
+                        <label for="custom-km">Distance (One Way in KM)</label>
+                        <input type="number" id="custom-km" placeholder="Enter distance in km" oninput="calculateEstimate()">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="travel-date">Travel Date</label>
+                        <input type="date" id="travel-date" required>
+                    </div>
+
+                    <!-- Estimate Box -->
+                    <div id="estimate-box" class="estimate-box">
+                        <div class="estimate-row">
+                            <span>Vehicle:</span>
+                            <span id="est-vehicle">-</span>
+                        </div>
+                        <div class="estimate-row">
+                            <span>To:</span>
+                            <span id="est-destination">-</span>
+                        </div>
+                        <div class="estimate-row">
+                            <span>Distance:</span>
+                            <span id="est-distance">-</span>
+                        </div>
+                        <div class="estimate-row">
+                            <span>KM Charge:</span>
+                            <span id="est-km-charge">-</span>
+                        </div>
+                        <div class="estimate-row">
+                            <span>Day Charge:</span>
+                            <span id="est-day-charge">-</span>
+                        </div>
+                        <div class="estimate-row total">
+                            <span>Estimated Total:</span>
+                            <span id="est-total">-</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-gold booking-btn">
+                        📞 Book Now
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Comfortable and reliable travel solutions from Pollachi</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🚗</div>
+                    <h3>Car Rental with Driver</h3>
+                    <p>Comfortable sedans and SUVs with experienced drivers for your trips. AC vehicles with clean interiors.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🚐</div>
+                    <h3>Traveller Rental</h3>
+                    <p>Spacious traveller vehicles for group travel, pilgrimages, and family tours. Perfect for 12-20 passengers.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🗺️</div>
+                    <h3>All India Coverage</h3>
+                    <p>Travel from Pollachi to any destination across India. Long distance trips with multiple stops available.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👨‍✈️</div>
+                    <h3>Experienced Drivers</h3>
+                    <p>All our drivers are licensed, experienced, and know routes across India. Your safety is our priority.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏔️</div>
+                    <h3>Hill Station Trips</h3>
+                    <p>Specialized services for Ooty, Kodaikanal, Munnar, and other hill stations with mountain-ready vehicles.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛕</div>
+                    <h3>Pilgrimage Tours</h3>
+                    <p>Special packages for temple tours, Rameswaram, Kanyakumari, Tirupati, and other religious destinations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Our Pricing</h2>
+            <p class="section-subtitle">Transparent pricing with no hidden charges</p>
+            <div class="pricing-cards">
+                <!-- Car Pricing -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="vehicle-icon">🚗</div>
+                        <h3>Standard Car</h3>
+                        <p class="vehicle-desc">Sedan / SUV with AC & Driver</p>
+                    </div>
+                    <div class="pricing-body">
+                        <div class="price-row">
+                            <span class="price-label">Per Kilometer</span>
+                            <span class="price-value"><span class="rupee">₹</span>16</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Per Day (Driver Bata)</span>
+                            <span class="price-value"><span class="rupee">₹</span>2,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Seating Capacity</span>
+                            <span class="price-value">4-6 Persons</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Luggage Space</span>
+                            <span class="price-value">Standard</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">AC</span>
+                            <span class="price-value" style="color: #28a745;">✓ Included</span>
+                        </div>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="#home" class="btn btn-primary" onclick="document.getElementById('vehicle-type').value='car'; calculateEstimate();">Book a Car →</a>
+                    </div>
+                </div>
+
+                <!-- Traveller Pricing -->
+                <div class="pricing-card popular">
+                    <span class="popular-badge">Popular</span>
+                    <div class="pricing-header">
+                        <div class="vehicle-icon">🚐</div>
+                        <h3>Traveller</h3>
+                        <p class="vehicle-desc">Tempo Traveller with AC & Driver</p>
+                    </div>
+                    <div class="pricing-body">
+                        <div class="price-row">
+                            <span class="price-label">Per Kilometer</span>
+                            <span class="price-value"><span class="rupee">₹</span>20</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Per Day (Driver Bata)</span>
+                            <span class="price-value"><span class="rupee">₹</span>3,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Seating Capacity</span>
+                            <span class="price-value">12-20 Persons</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Luggage Space</span>
+                            <span class="price-value">Extra Large</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">AC</span>
+                            <span class="price-value" style="color: #28a745;">✓ Included</span>
+                        </div>
+                    </div>
+                    <div class="pricing-footer">
+                        <a href="#home" class="btn btn-gold" onclick="document.getElementById('vehicle-type').value='traveller'; calculateEstimate();">Book a Traveller →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Routes -->
+    <section class="routes" id="routes">
+        <div class="container">
+            <h2 class="section-title">Popular Routes from Pollachi</h2>
+            <p class="section-subtitle">Most booked destinations by our customers</p>
+            <div class="routes-grid">
+                <div class="route-card" onclick="selectRoute('coimbatore')">
+                    <div class="route-header">
+                        <div class="route-dot"></div>
+                        <div class="route-line"></div>
+                        <div class="route-dot-end"></div>
+                    </div>
+                    <div class="route-cities">
+                        <div class="route-from">
+                            <strong>Pollachi</strong>
+                            <span>Tamil Nadu</span>
+                        </div>
+                        <div class="route-to" style="text-align: right;">
+                            <strong>Coimbatore</strong>
+                            <span>Tamil Nadu</span>
+                        </div>
+                    </div>
+                    <div class="route-info">
+                        <span>📏 40 km</span>
+                        <span>⏱️ ~1 hr</span>
+                        <span>🚗 From <strong>₹1,280</strong></span>
+                    </div>
+                </div>
+
+                <div class="route-card" onclick="selectRoute('ooty')">
+                    <div class="route-header">
+                        <div class="route-dot"></div>
+                        <div class="route-line"></div>
+                        <div class="route-dot-end"></div>
+                    </div>
+                    <div class="route-cities">
+                        <div class="route-from">
+                            <strong>Pollachi</strong>
+                            <span>Tamil Nadu</span>
+                        </div>
+                        <div class="route-to" style="text-align: right;">
+                            <strong>Ooty</strong>
+                            <span>Tamil Nadu</span>
+                        </div>
+                    </div>
+                    <div class="route-info">
+                        <span>📏 95 km</span>
+                        <span>⏱️ ~3 hrs</span>
+                        <span>🚗 From <strong>₹3,040</strong></span>
+                    </div>
+                </div>
+
+                <div class="route-card" onclick="selectRoute('kodaikanal')">
+                    <div class="route-header">
+                        <div class="route-dot"></div>
+                        <div class="route-line"></div>
+                        <div class="route-dot-end"></div>
+                    </div>
+                    <div class="route-cities">
+                        <div class="route-from">
+                            <strong>Pollachi</strong>
+                            <span>Tamil Nadu</span>
+                        </div>
+                        <div class="route-to" style="text-align: right;">
+                            <strong>Kodaikanal</strong>
+                            <span>Tamil Nadu</span>
+                        </div>
+                    </div>
+                    <div class="route-info">
+                        <span>📏 150 km</span>
+                        <span>⏱️ ~4 hrs</span>
+                        <span>🚗 From <strong>₹4,800</strong></span>
+                    </div>
+                </div>
+
+                <div class="route-card" onclick="selectRoute('munnar')">
+                    <div class="route-header">
+                        <div class="route-dot"></div>
+                        <div class="route-line"></div>
+                        <div class="route-dot-end"></div>
+                    </div>
+                    <div class="route-cities">
+                        <div class="route-from">
+                            <strong>Pollachi</strong>
+                            <span>Tamil Nadu</span>
+                        </div>
+                        <div class="route-to" style="text-align: right;">
+                            <strong>Munnar</strong>
+                            <span>Kerala</span>
+                        </div>
+                    </div>
+                    <div class="route-info">
+                        <span>📏 160 km</span>
+                        <span>⏱️ ~4.5 hrs</span>
+                        <span>🚗 From <strong>₹5,120</strong></span>
+                    </div>
+                </div>
+
+                <div class="route-card" onclick="selectRoute('bangalore')">
+                    <div class="route-header">
+                        <div class="route-dot"></div>
+                        <div class="route-line"></div>
+                        <div class="route-dot-end"></div>
+                    </div>
+                    <div class="route-cities">
+                        <div class="route-from">
+                            <strong>Pollachi</strong>
+                            <span>Tamil Nadu</span>
+                        </div>
+                        <div class="route-to" style="text-align: right;">
+                            <strong>Bangalore</strong>
+                            <span>Karnataka</span>
+                        </div>
+                    </div>
+                    <div class="route-info">
+                        <span>📏 370 km</span>
+                        <span>⏱️ ~7 hrs</span>
+                        <span>🚗 From <strong>₹11,840</strong></span>
+                    </div>
+                </div>
+
+                <div class="route-card" onclick="selectRoute('chennai')">
+                    <div class="route-header">
+                        <div class="route-dot"></div>
+                        <div class="route-line"></div>
+                        <div class="route-dot-end"></div>
+                    </div>
+                    <div class="route-cities">
+                        <div class="route-from">
+                            <strong>Pollachi</strong>
+                            <span>Tamil Nadu</span>
+                        </div>
+                        <div class="route-to" style="text-align: right;">
+                            <strong>Chennai</strong>
+                            <span>Tamil Nadu</span>
+                        </div>
+                    </div>
+                    <div class="route-info">
+                        <span>📏 510 km</span>
+                        <span>⏱️ ~9 hrs</span>
+                        <span>🚗 From <strong>₹16,320</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <p class="section-subtitle">Get in touch for bookings and inquiries</p>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Sri Devi Tours & Travels</h3>
+                    <p>We are available 24/7 for your travel needs. Call us anytime or fill out the form and we'll get back to you within 30 minutes.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="icon">📍</div>
+                            <div class="contact-item-text">
+                                <h4>Our Location</h4>
+                                <p>Main Road, Pollachi, Tamil Nadu - 642001</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="icon">📞</div>
+                            <div class="contact-item-text">
+                                <h4>Phone Number</h4>
+                                <p>+91 98765 43210 | +91 87654 32109</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="icon">✉️</div>
+                            <div class="contact-item-text">
+                                <h4>Email Address</h4>
+                                <p>tours@sridevigroups.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="icon">⏰</div>
+                            <div class="contact-item-text">
+                                <h4>Working Hours</h4>
+                                <p>24/7 — Available All Days</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" onsubmit="handleContact(event)">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" placeholder="+91 XXXXX XXXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Service Required</label>
+                        <select required>
+                            <option value="">Select a service</option>
+                            <option value="car">Car Rental</option>
+                            <option value="traveller">Traveller Rental</option>
+                            <option value="tour-package">Tour Package</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea placeholder="Tell us about your travel plans..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message →</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <span class="logo-text" style="font-family: 'Playfair Display', serif; font-size: 1.5rem;">Sri Devi Tours & Travels</span>
+                    <p>Your trusted travel partner from Pollachi. Premium car and traveller rental services with experienced drivers across India.</p>
+                    <div class="footer-social">
+                        <a href="#">📘</a>
+                        <a href="#">📸</a>
+                        <a href="#">🐦</a>
+                        <a href="#">📱</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Vehicles</h4>
+                    <ul>
+                        <li><a href="#">Standard Car</a></li>
+                        <li><a href="#">SUV</a></li>
+                        <li><a href="#">Traveller (12 Seater)</a></li>
+                        <li><a href="#">Traveller (20 Seater)</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Popular Routes</h4>
+                    <ul>
+                        <li><a href="#">Pollachi → Coimbatore</a></li>
+                        <li><a href="#">Pollachi → Ooty</a></li>
+                        <li><a href="#">Pollachi → Bangalore</a></li>
+                        <li><a href="#">Pollachi → Chennai</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">📍 Pollachi, Tamil Nadu</a></li>
+                        <li><a href="#">📞 +91 98765 43210</a></li>
+                        <li><a href="#">✉️ tours@sridevigroups.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Sri Devi Tours & Travels — A Unit of Sri Devi Groups. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Success Modal -->
+    <div class="modal-overlay" id="booking-modal">
+        <div class="modal">
+            <div class="success-icon">✅</div>
+            <h2>Booking Request Sent!</h2>
+            <p>Thank you, <strong id="modal-name">Customer</strong>! Our team will contact you shortly to confirm your booking. You can also call us at <strong>+91 98765 43210</strong> for immediate assistance.</p>
+            <button class="btn btn-primary close-btn" onclick="closeModal()">Done ✓</button>
+        </div>
+    </div>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/919876543210?text=Hi!%20I%20want%20to%20book%20a%20ride%20from%20Pollachi" class="whatsapp-btn" target="_blank">💬</a>
+
+    <!-- Back to Top -->
+    <button class="back-to-top">↑</button>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+

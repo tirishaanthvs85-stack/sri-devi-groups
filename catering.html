@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sri Devi Catering Services - Premium Catering in Pollachi</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="dashboard.html" class="logo">
+                <div class="logo-icon" style="background: linear-gradient(135deg, #c0392b, #e74c3c);">SD</div>
+                <span class="logo-text">Sri Devi Catering Services</span>
+            </a>
+            <div class="nav-links">
+                <a href="dashboard.html">Home</a>
+                <a href="#services">Services</a>
+                <a href="#menu">Menu</a>
+                <a href="#contact">Contact</a>
+                <a href="#" onclick="logout()" class="btn btn-outline nav-btn">Logout</a>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Catering Hero -->
+    <section class="catering-hero">
+        <div class="container" style="position: relative;">
+            <div class="hero-badge" style="margin-bottom: 20px;">🍽️ Premium Catering from Pollachi</div>
+            <h1>Delicious Food for<br>Your <span>Special</span> Occasions</h1>
+            <p>Authentic South Indian & multi-cuisine catering services for weddings, corporate events, birthday parties, and all types of functions.</p>
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <a href="#contact" class="btn btn-gold">Get a Quote →</a>
+                <a href="#menu" class="btn btn-outline">View Menu</a>
+            </div>
+            <div class="hero-stats" style="justify-content: center; margin-top: 50px;">
+                <div class="hero-stat">
+                    <div class="number">1000+</div>
+                    <div class="label">Events Catered</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">50+</div>
+                    <div class="label">Menu Items</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">100%</div>
+                    <div class="label">Hygiene Standard</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catering Services -->
+    <section class="catering-services" id="services">
+        <div class="container">
+            <h2 class="section-title">Our Catering Services</h2>
+            <p class="section-subtitle">We cater to all types of events with perfection</p>
+            <div class="catering-grid">
+                <div class="catering-card">
+                    <div class="card-emoji">💒</div>
+                    <h3>Wedding Catering</h3>
+                    <p>Grand wedding feasts with traditional and modern cuisine. From intimate gatherings to lavish celebrations with 5000+ guests.</p>
+                    <div class="price-tag">Starting ₹350/plate</div>
+                </div>
+                <div class="catering-card">
+                    <div class="card-emoji">🏢</div>
+                    <h3>Corporate Events</h3>
+                    <p>Professional catering for corporate meetings, conferences, seminars, and office parties. Customizable menus available.</p>
+                    <div class="price-tag">Starting ₹250/plate</div>
+                </div>
+                <div class="catering-card">
+                    <div class="card-emoji">🎂</div>
+                    <h3>Birthday Parties</h3>
+                    <p>Make birthdays extra special with our delicious food packages. Both vegetarian and non-vegetarian options available.</p>
+                    <div class="price-tag">Starting ₹200/plate</div>
+                </div>
+                <div class="catering-card">
+                    <div class="card-emoji">🛕</div>
+                    <h3>Temple & Pooja Events</h3>
+                    <p>Pure vegetarian food for temple festivals, pooja celebrations, annaprasanam, and other religious functions.</p>
+                    <div class="price-tag">Starting ₹150/plate</div>
+                </div>
+                <div class="catering-card">
+                    <div class="card-emoji">🎓</div>
+                    <h3>College & School Events</h3>
+                    <p>Affordable and tasty food for college fests, school functions, sports events, and cultural programs.</p>
+                    <div class="price-tag">Starting ₹180/plate</div>
+                </div>
+                <div class="catering-card">
+                    <div class="card-emoji">🏠</div>
+                    <h3>House Warming</h3>
+                    <p>Celebrate your new home with delicious food. Complete catering solutions for grihapravesam and house warming events.</p>
+                    <div class="price-tag">Starting ₹300/plate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="catering-menu" id="menu">
+        <div class="container">
+            <h2 class="section-title">Our Menu</h2>
+            <p class="section-subtitle">Explore our delicious variety of dishes</p>
+            
+            <div class="menu-categories">
+                <button class="menu-tab active" data-category="all">All Items</button>
+                <button class="menu-tab" data-category="starters">Starters</button>
+                <button class="menu-tab" data-category="main">Main Course</button>
+                <button class="menu-tab" data-category="rice">Rice & Biryani</button>
+                <button class="menu-tab" data-category="desserts">Desserts</button>
+                <button class="menu-tab" data-category="drinks">Beverages</button>
+            </div>
+
+            <div class="menu-grid">
+                <!-- Starters -->
+                <div class="menu-item" data-category="starters">
+                    <div class="emoji">🧆</div>
+                    <div class="menu-item-info">
+                        <h4>Medu Vada</h4>
+                        <p>Crispy urad dal fritters with coconut chutney & sambar</p>
+                        <div class="menu-price">₹30 per piece</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="starters">
+                    <div class="emoji">🥟</div>
+                    <div class="menu-item-info">
+                        <h4>Samosa</h4>
+                        <p>Crispy pastry filled with spiced potatoes and peas</p>
+                        <div class="menu-price">₹25 per piece</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="starters">
+                    <div class="emoji">🫔</div>
+                    <div class="menu-item-info">
+                        <h4>Paneer Tikka</h4>
+                        <p>Marinated paneer cubes grilled to perfection</p>
+                        <div class="menu-price">₹180 per plate</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="starters">
+                    <div class="emoji">🍗</div>
+                    <div class="menu-item-info">
+                        <h4>Chicken 65</h4>
+                        <p>Spicy deep-fried chicken with curry leaves</p>
+                        <div class="menu-price">₹220 per plate</div>
+                    </div>
+                </div>
+
+                <!-- Main Course -->
+                <div class="menu-item" data-category="main">
+                    <div class="emoji">🍛</div>
+                    <div class="menu-item-info">
+                        <h4>Sambar</h4>
+                        <p>Traditional South Indian lentil stew with vegetables</p>
+                        <div class="menu-price">₹80 per serving</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="main">
+                    <div class="emoji">🥘</div>
+                    <div class="menu-item-info">
+                        <h4>Paneer Butter Masala</h4>
+                        <p>Rich and creamy paneer curry with buttery tomato gravy</p>
+                        <div class="menu-price">₹200 per serving</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="main">
+                    <div class="emoji">🍖</div>
+                    <div class="menu-item-info">
+                        <h4>Chicken Chettinad</h4>
+                        <p>Authentic Chettinad style spicy chicken curry</p>
+                        <div class="menu-price">₹250 per serving</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="main">
+                    <div class="emoji">🐟</div>
+                    <div class="menu-item-info">
+                        <h4>Fish Curry</h4>
+                        <p>Kerala style fish curry with coconut milk</p>
+                        <div class="menu-price">₹280 per serving</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="main">
+                    <div class="emoji">🥬</div>
+                    <div class="menu-item-info">
+                        <h4>Mixed Vegetable Curry</h4>
+                        <p>Seasonal vegetables in aromatic spiced gravy</p>
+                        <div class="menu-price">₹120 per serving</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="main">
+                    <div class="emoji">🫘</div>
+                    <div class="menu-item-info">
+                        <h4>Dal Tadka</h4>
+                        <p>Yellow lentils tempered with cumin and garlic</p>
+                        <div class="menu-price">₹100 per serving</div>
+                    </div>
+                </div>
+
+                <!-- Rice & Biryani -->
+                <div class="menu-item" data-category="rice">
+                    <div class="emoji">🍚</div>
+                    <div class="menu-item-info">
+                        <h4>Steamed Rice</h4>
+                        <p>Fluffy steamed basmati/ponni rice</p>
+                        <div class="menu-price">₹60 per plate</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="rice">
+                    <div class="emoji">🥘</div>
+                    <div class="menu-item-info">
+                        <h4>Veg Biryani</h4>
+                        <p>Fragrant basmati rice with mixed vegetables & spices</p>
+                        <div class="menu-price">₹150 per plate</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="rice">
+                    <div class="emoji">🍗</div>
+                    <div class="menu-item-info">
+                        <h4>Chicken Biryani</h4>
+                        <p>Authentic dum biryani with tender chicken pieces</p>
+                        <div class="menu-price">₹200 per plate</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="rice">
+                    <div class="emoji">🐐</div>
+                    <div class="menu-item-info">
+                        <h4>Mutton Biryani</h4>
+                        <p>Premium dum biryani with succulent mutton</p>
+                        <div class="menu-price">₹280 per plate</div>
+                    </div>
+                </div>
+
+                <!-- Desserts -->
+                <div class="menu-item" data-category="desserts">
+                    <div class="emoji">🍮</div>
+                    <div class="menu-item-info">
+                        <h4>Payasam / Kheer</h4>
+                        <p>Traditional South Indian sweet milk dessert</p>
+                        <div class="menu-price">₹60 per cup</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="desserts">
+                    <div class="emoji">🧁</div>
+                    <div class="menu-item-info">
+                        <h4>Gulab Jamun</h4>
+                        <p>Soft milk dumplings soaked in rose syrup</p>
+                        <div class="menu-price">₹40 per piece</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="desserts">
+                    <div class="emoji">🍨</div>
+                    <div class="menu-item-info">
+                        <h4>Ice Cream</h4>
+                        <p>Premium ice cream in multiple flavors</p>
+                        <div class="menu-price">₹50 per scoop</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="desserts">
+                    <div class="emoji">🍰</div>
+                    <div class="menu-item-info">
+                        <h4>Mysore Pak</h4>
+                        <p>Traditional ghee-based sweet delicacy</p>
+                        <div class="menu-price">₹45 per piece</div>
+                    </div>
+                </div>
+
+                <!-- Beverages -->
+                <div class="menu-item" data-category="drinks">
+                    <div class="emoji">☕</div>
+                    <div class="menu-item-info">
+                        <h4>Filter Coffee</h4>
+                        <p>Authentic South Indian filter coffee</p>
+                        <div class="menu-price">₹30 per cup</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="drinks">
+                    <div class="emoji">🍵</div>
+                    <div class="menu-item-info">
+                        <h4>Masala Tea</h4>
+                        <p>Spiced Indian tea with ginger and cardamom</p>
+                        <div class="menu-price">₹25 per cup</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="drinks">
+                    <div class="emoji">🥤</div>
+                    <div class="menu-item-info">
+                        <h4>Buttermilk / Lassi</h4>
+                        <p>Cool and refreshing yogurt-based drinks</p>
+                        <div class="menu-price">₹35 per glass</div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="drinks">
+                    <div class="emoji">🧃</div>
+                    <div class="menu-item-info">
+                        <h4>Fresh Juice</h4>
+                        <p>Freshly squeezed seasonal fruit juices</p>
+                        <div class="menu-price">₹50 per glass</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="services" id="why-us">
+        <div class="container">
+            <h2 class="section-title">Why Choose Us?</h2>
+            <p class="section-subtitle">We bring quality, taste, and trust to every event</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon" style="background: linear-gradient(135deg, #c0392b, #e74c3c);">🧑‍🍳</div>
+                    <h3>Expert Chefs</h3>
+                    <p>Our experienced chefs prepare authentic dishes with the finest ingredients and traditional recipes.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon" style="background: linear-gradient(135deg, #c0392b, #e74c3c);">🧼</div>
+                    <h3>100% Hygiene</h3>
+                    <p>We follow the highest hygiene standards in food preparation, storage, and serving.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon" style="background: linear-gradient(135deg, #c0392b, #e74c3c);">📋</div>
+                    <h3>Custom Menus</h3>
+                    <p>Fully customizable menus to suit your preferences, dietary needs, and budget.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon" style="background: linear-gradient(135deg, #c0392b, #e74c3c);">🎪</div>
+                    <h3>Complete Setup</h3>
+                    <p>We provide full catering setup including tables, chairs, serving stations, and decoration.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon" style="background: linear-gradient(135deg, #c0392b, #e74c3c);">💰</div>
+                    <h3>Affordable Pricing</h3>
+                    <p>Premium quality catering at the most competitive prices. No hidden charges.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon" style="background: linear-gradient(135deg, #c0392b, #e74c3c);">🕐</div>
+                    <h3>On-Time Service</h3>
+                    <p>We guarantee timely setup and service. Your event will always start on time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get a Quote</h2>
+            <p class="section-subtitle">Tell us about your event and we'll provide a custom quote</p>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Sri Devi Catering Services</h3>
+                    <p>Plan your next event with us! We provide complete catering solutions for events of all sizes — from intimate gatherings of 50 guests to grand celebrations with 5000+ guests.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="icon" style="background: linear-gradient(135deg, #c0392b, #e74c3c);">📍</div>
+                            <div class="contact-item-text">
+                                <h4>Our Location</h4>
+                                <p>Main Road, Pollachi, Tamil Nadu - 642001</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="icon" style="background: linear-gradient(135deg, #c0392b, #e74c3c);">📞</div>
+                            <div class="contact-item-text">
+                                <h4>Phone Number</h4>
+                                <p>+91 98765 43210 | +91 87654 32109</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="icon" style="background: linear-gradient(135deg, #c0392b, #e74c3c);">✉️</div>
+                            <div class="contact-item-text">
+                                <h4>Email Address</h4>
+                                <p>catering@sridevigroups.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="icon" style="background: linear-gradient(135deg, #c0392b, #e74c3c);">⏰</div>
+                            <div class="contact-item-text">
+                                <h4>Working Hours</h4>
+                                <p>Mon - Sat: 8:00 AM - 9:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" onsubmit="handleContact(event)">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" placeholder="+91 XXXXX XXXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Event Type</label>
+                        <select required>
+                            <option value="">Select event type</option>
+                            <option value="wedding">Wedding</option>
+                            <option value="corporate">Corporate Event</option>
+                            <option value="birthday">Birthday Party</option>
+                            <option value="temple">Temple / Pooja</option>
+                            <option value="housewarming">House Warming</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Expected Number of Guests</label>
+                        <select>
+                            <option value="">Select guest count</option>
+                            <option value="50-100">50 - 100 Guests</option>
+                            <option value="100-200">100 - 200 Guests</option>
+                            <option value="200-500">200 - 500 Guests</option>
+                            <option value="500-1000">500 - 1,000 Guests</option>
+                            <option value="1000+">1,000+ Guests</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Additional Requirements</label>
+                        <textarea placeholder="Tell us about your event, food preferences, and any special requests..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #c0392b, #e74c3c);">Request Quote →</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <span class="logo-text" style="font-family: 'Playfair Display', serif; font-size: 1.5rem;">Sri Devi Catering Services</span>
+                    <p>Authentic and delicious food for all your special occasions. Serving customers in Pollachi and surrounding areas with love and care.</p>
+                    <div class="footer-social">
+                        <a href="#">📘</a>
+                        <a href="#">📸</a>
+                        <a href="#">🐦</a>
+                        <a href="#">📱</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="#">Wedding Catering</a></li>
+                        <li><a href="#">Corporate Events</a></li>
+                        <li><a href="#">Birthday Parties</a></li>
+                        <li><a href="#">Temple Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Menu</h4>
+                    <ul>
+                        <li><a href="#">South Indian</a></li>
+                        <li><a href="#">North Indian</a></li>
+                        <li><a href="#">Biryani Special</a></li>
+                        <li><a href="#">Desserts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">📍 Pollachi, Tamil Nadu</a></li>
+                        <li><a href="#">📞 +91 98765 43210</a></li>
+                        <li><a href="#">✉️ catering@sridevigroups.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Sri Devi Catering Services — A Unit of Sri Devi Groups. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/919876543210?text=Hi!%20I%20need%20catering%20services%20for%20an%20event" class="whatsapp-btn" target="_blank">💬</a>
+
+    <!-- Back to Top -->
+    <button class="back-to-top">↑</button>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+
