@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sri Devi Tours & Travels - Car & Traveller Rentals from Pollachi</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
+
 <body>
     <!-- Page Loader -->
     <div class="page-loader">
@@ -24,9 +27,10 @@
             </a>
             <div class="nav-links">
                 <a href="dashboard.html">Home</a>
-                <a href="#services">Services</a>
+                <a href="#fleet">Our Fleet</a>
                 <a href="#pricing">Pricing</a>
                 <a href="#routes">Routes</a>
+                <a href="#services">Services</a>
                 <a href="#contact">Contact</a>
                 <a href="catering.html" class="btn btn-outline nav-btn">Catering Services</a>
             </div>
@@ -35,12 +39,13 @@
     </nav>
 
     <!-- Hero Section with Booking Form -->
-    <section class="hero" id="home">
+    <section class="hero real-photo-hero" id="home" style="background-image: url('images/tours-hero.jpg');">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-badge">🚗 Premium Travel Services from Pollachi</div>
                 <h1>Travel Anywhere in <span>India</span> with Comfort</h1>
-                <p>Rent cars and travellers with experienced drivers from Pollachi. Safe, reliable, and affordable rides to any destination across India.</p>
+                <p>Rent cars and travellers with experienced drivers from Pollachi. Safe, reliable, and affordable rides
+                    to any destination across India.</p>
                 <div class="hero-stats">
                     <div class="hero-stat">
                         <div class="number">500+</div>
@@ -81,8 +86,9 @@
                         <label for="vehicle-type">Vehicle Type</label>
                         <select id="vehicle-type" onchange="calculateEstimate()" required>
                             <option value="">Select Vehicle</option>
-                            <option value="car">🚗 Standard Car — ₹16/km | ₹2,000/day</option>
-                            <option value="traveller">🚐 Traveller — ₹20/km | ₹3,000/day</option>
+                            <option value="sedan">🚗 Sedan (Dzire / Amaze / Etios) — ₹16/km | ₹2,000/day</option>
+                            <option value="suv">🚙 SUV (Innova Crysta / XUV700 / Scorpio / Ertiga) — ₹18/km | ₹2,000/day</option>
+                            <option value="traveller">🚐 Force Traveller (12-20 Seater) — ₹20/km | ₹3,000/day</option>
                         </select>
                     </div>
 
@@ -149,7 +155,8 @@
 
                     <div class="form-group" id="custom-km-group" style="display: none;">
                         <label for="custom-km">Distance (One Way in KM)</label>
-                        <input type="number" id="custom-km" placeholder="Enter distance in km" oninput="calculateEstimate()">
+                        <input type="number" id="custom-km" placeholder="Enter distance in km"
+                            oninput="calculateEstimate()">
                     </div>
 
                     <div class="form-group">
@@ -202,32 +209,255 @@
                 <div class="service-card">
                     <div class="service-icon">🚗</div>
                     <h3>Car Rental with Driver</h3>
-                    <p>Comfortable sedans and SUVs with experienced drivers for your trips. AC vehicles with clean interiors.</p>
+                    <p>Comfortable sedans and SUVs with experienced drivers for your trips. AC vehicles with clean
+                        interiors.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">🚐</div>
                     <h3>Traveller Rental</h3>
-                    <p>Spacious traveller vehicles for group travel, pilgrimages, and family tours. Perfect for 12-20 passengers.</p>
+                    <p>Spacious traveller vehicles for group travel, pilgrimages, and family tours. Perfect for 12-20
+                        passengers.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">🗺️</div>
                     <h3>All India Coverage</h3>
-                    <p>Travel from Pollachi to any destination across India. Long distance trips with multiple stops available.</p>
+                    <p>Travel from Pollachi to any destination across India. Long distance trips with multiple stops
+                        available.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">👨‍✈️</div>
                     <h3>Experienced Drivers</h3>
-                    <p>All our drivers are licensed, experienced, and know routes across India. Your safety is our priority.</p>
+                    <p>All our drivers are licensed, experienced, and know routes across India. Your safety is our
+                        priority.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">🏔️</div>
                     <h3>Hill Station Trips</h3>
-                    <p>Specialized services for Ooty, Kodaikanal, Munnar, and other hill stations with mountain-ready vehicles.</p>
+                    <p>Specialized services for Ooty, Kodaikanal, Munnar, and other hill stations with mountain-ready
+                        vehicles.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">🛕</div>
                     <h3>Pilgrimage Tours</h3>
-                    <p>Special packages for temple tours, Rameswaram, Kanyakumari, Tirupati, and other religious destinations.</p>
+                    <p>Special packages for temple tours, Rameswaram, Kanyakumari, Tirupati, and other religious
+                        destinations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fleet Section -->
+    <section class="fleet-section" id="fleet">
+        <div class="container">
+            <h2 class="section-title">Our Premium Fleet & Brand Cars</h2>
+            <p class="section-subtitle">100% Real Vehicles with Experienced Drivers from Pollachi to Anywhere in India</p>
+
+            <div class="fleet-filter-bar">
+                <button class="fleet-filter-btn active" onclick="filterFleet('all', this)">All Fleet (8)</button>
+                <button class="fleet-filter-btn" onclick="filterFleet('sedan', this)">Sedans (₹16/km)</button>
+                <button class="fleet-filter-btn" onclick="filterFleet('suv', this)">SUVs (₹18/km)</button>
+                <button class="fleet-filter-btn" onclick="filterFleet('traveller', this)">Force Traveller (₹20/km)</button>
+            </div>
+
+            <div class="fleet-grid">
+                <!-- Sedan 1: Maruti Dzire -->
+                <div class="vehicle-fleet-card" data-category="sedan">
+                    <div class="vehicle-card-img-wrap">
+                        <img src="images/dzire.jpg" alt="Maruti Suzuki Dzire" loading="lazy">
+                        <span class="vehicle-type-badge">Sedan</span>
+                    </div>
+                    <div class="vehicle-card-content">
+                        <h3>Maruti Suzuki Dzire</h3>
+                        <p class="vehicle-subtitle">Premium Comfort & Mileage Champion</p>
+                        <div class="vehicle-specs">
+                            <div class="spec-item">👥 4+1 Seating</div>
+                            <div class="spec-item">❄️ Chilled AC</div>
+                            <div class="spec-item">🧳 378L Boot Space</div>
+                            <div class="spec-item">👨‍✈️ Driver Included</div>
+                        </div>
+                        <div class="vehicle-pricing-row">
+                            <div class="vehicle-price-info">
+                                <span class="km-rate">₹16 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="day-rate">₹2,000 / day</span>
+                            </div>
+                            <button class="btn btn-primary btn-book-sm" onclick="selectVehicle('sedan')">Book Dzire →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sedan 2: Honda Amaze -->
+                <div class="vehicle-fleet-card" data-category="sedan">
+                    <div class="vehicle-card-img-wrap">
+                        <img src="images/amaze.jpg" alt="Honda Amaze" loading="lazy">
+                        <span class="vehicle-type-badge">Sedan</span>
+                    </div>
+                    <div class="vehicle-card-content">
+                        <h3>Honda Amaze</h3>
+                        <p class="vehicle-subtitle">Executive Styling & Smooth Highway Ride</p>
+                        <div class="vehicle-specs">
+                            <div class="spec-item">👥 4+1 Seating</div>
+                            <div class="spec-item">❄️ Climate Control</div>
+                            <div class="spec-item">🧳 420L Big Boot</div>
+                            <div class="spec-item">👨‍✈️ Driver Included</div>
+                        </div>
+                        <div class="vehicle-pricing-row">
+                            <div class="vehicle-price-info">
+                                <span class="km-rate">₹16 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="day-rate">₹2,000 / day</span>
+                            </div>
+                            <button class="btn btn-primary btn-book-sm" onclick="selectVehicle('sedan')">Book Amaze →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sedan 3: Toyota Etios -->
+                <div class="vehicle-fleet-card" data-category="sedan">
+                    <div class="vehicle-card-img-wrap">
+                        <img src="images/etios.jpg" alt="Toyota Etios" loading="lazy">
+                        <span class="vehicle-type-badge">Sedan</span>
+                    </div>
+                    <div class="vehicle-card-content">
+                        <h3>Toyota Etios</h3>
+                        <p class="vehicle-subtitle">Spacious Cabin & Unmatched Reliability</p>
+                        <div class="vehicle-specs">
+                            <div class="spec-item">👥 4+1 Seating</div>
+                            <div class="spec-item">❄️ AC with Vents</div>
+                            <div class="spec-item">🧳 592L Jumbo Boot</div>
+                            <div class="spec-item">👨‍✈️ Driver Included</div>
+                        </div>
+                        <div class="vehicle-pricing-row">
+                            <div class="vehicle-price-info">
+                                <span class="km-rate">₹16 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="day-rate">₹2,000 / day</span>
+                            </div>
+                            <button class="btn btn-primary btn-book-sm" onclick="selectVehicle('sedan')">Book Etios →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUV 1: Toyota Innova Crysta -->
+                <div class="vehicle-fleet-card" data-category="suv">
+                    <div class="vehicle-card-img-wrap">
+                        <img src="images/innova.jpg" alt="Toyota Innova Crysta" loading="lazy">
+                        <span class="vehicle-type-badge suv-badge">SUV</span>
+                    </div>
+                    <div class="vehicle-card-content">
+                        <h3>Toyota Innova Crysta</h3>
+                        <p class="vehicle-subtitle">King of Long Drives & Highway Luxury</p>
+                        <div class="vehicle-specs">
+                            <div class="spec-item">👥 7+1 Seating</div>
+                            <div class="spec-item">❄️ Dual AC & Vents</div>
+                            <div class="spec-item">💺 Captain Recliner</div>
+                            <div class="spec-item">👨‍✈️ Driver Included</div>
+                        </div>
+                        <div class="vehicle-pricing-row">
+                            <div class="vehicle-price-info">
+                                <span class="km-rate">₹18 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="day-rate">₹2,000 / day</span>
+                            </div>
+                            <button class="btn btn-primary btn-book-sm" onclick="selectVehicle('suv')">Book Innova →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUV 2: Mahindra XUV700 -->
+                <div class="vehicle-fleet-card" data-category="suv">
+                    <div class="vehicle-card-img-wrap">
+                        <img src="images/xuv700.jpg" alt="Mahindra XUV700" loading="lazy">
+                        <span class="vehicle-type-badge suv-badge">SUV</span>
+                    </div>
+                    <div class="vehicle-card-content">
+                        <h3>Mahindra XUV700</h3>
+                        <p class="vehicle-subtitle">Next-Gen Power, Luxury & Safety</p>
+                        <div class="vehicle-specs">
+                            <div class="spec-item">👥 6+1 Seating</div>
+                            <div class="spec-item">❄️ Dual Zone AC</div>
+                            <div class="spec-item">🛡️ 5-Star Safety</div>
+                            <div class="spec-item">👨‍✈️ Driver Included</div>
+                        </div>
+                        <div class="vehicle-pricing-row">
+                            <div class="vehicle-price-info">
+                                <span class="km-rate">₹18 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="day-rate">₹2,000 / day</span>
+                            </div>
+                            <button class="btn btn-primary btn-book-sm" onclick="selectVehicle('suv')">Book XUV700 →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUV 3: Mahindra Scorpio -->
+                <div class="vehicle-fleet-card" data-category="suv">
+                    <div class="vehicle-card-img-wrap">
+                        <img src="images/scorpio.jpg" alt="Mahindra Scorpio" loading="lazy">
+                        <span class="vehicle-type-badge suv-badge">SUV</span>
+                    </div>
+                    <div class="vehicle-card-content">
+                        <h3>Mahindra Scorpio</h3>
+                        <p class="vehicle-subtitle">Rugged Power for Ooty, Munnar & Hill Climbs</p>
+                        <div class="vehicle-specs">
+                            <div class="spec-item">👥 7+1 Seating</div>
+                            <div class="spec-item">❄️ High Cooling AC</div>
+                            <div class="spec-item">⛰️ Hill Specialist</div>
+                            <div class="spec-item">👨‍✈️ Driver Included</div>
+                        </div>
+                        <div class="vehicle-pricing-row">
+                            <div class="vehicle-price-info">
+                                <span class="km-rate">₹18 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="day-rate">₹2,000 / day</span>
+                            </div>
+                            <button class="btn btn-primary btn-book-sm" onclick="selectVehicle('suv')">Book Scorpio →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUV 4: Maruti Suzuki Ertiga -->
+                <div class="vehicle-fleet-card" data-category="suv">
+                    <div class="vehicle-card-img-wrap">
+                        <img src="images/ertiga.jpg" alt="Maruti Suzuki Ertiga" loading="lazy">
+                        <span class="vehicle-type-badge suv-badge">SUV</span>
+                    </div>
+                    <div class="vehicle-card-content">
+                        <h3>Maruti Suzuki Ertiga</h3>
+                        <p class="vehicle-subtitle">Comfortable, Silent & Ideal for Families</p>
+                        <div class="vehicle-specs">
+                            <div class="spec-item">👥 6+1 Seating</div>
+                            <div class="spec-item">❄️ Roof Mounted AC</div>
+                            <div class="spec-item">🧳 Flexible Seats</div>
+                            <div class="spec-item">👨‍✈️ Driver Included</div>
+                        </div>
+                        <div class="vehicle-pricing-row">
+                            <div class="vehicle-price-info">
+                                <span class="km-rate">₹18 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="day-rate">₹2,000 / day</span>
+                            </div>
+                            <button class="btn btn-primary btn-book-sm" onclick="selectVehicle('suv')">Book Ertiga →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Force Traveller -->
+                <div class="vehicle-fleet-card" data-category="traveller">
+                    <div class="vehicle-card-img-wrap">
+                        <img src="images/traveller.jpg" alt="Force Traveller" loading="lazy">
+                        <span class="vehicle-type-badge traveller-badge">Force Traveller</span>
+                    </div>
+                    <div class="vehicle-card-content">
+                        <h3>Force Traveller (12 / 17 / 20 Seater)</h3>
+                        <p class="vehicle-subtitle">High-Roof Luxury for Pilgrimage, Tours & Groups</p>
+                        <div class="vehicle-specs">
+                            <div class="spec-item">👥 12 - 20 Seating</div>
+                            <div class="spec-item">❄️ Chilled Dual AC</div>
+                            <div class="spec-item">💺 Pushback Recliners</div>
+                            <div class="spec-item">🧳 Rooftop Luggage Carrier</div>
+                        </div>
+                        <div class="vehicle-pricing-row">
+                            <div class="vehicle-price-info">
+                                <span class="km-rate">₹20 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="day-rate">₹3,000 / day</span>
+                            </div>
+                            <button class="btn btn-gold btn-book-sm" onclick="selectVehicle('traveller')">Book Traveller →</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -236,15 +466,15 @@
     <!-- Pricing Section -->
     <section class="pricing" id="pricing">
         <div class="container">
-            <h2 class="section-title">Our Pricing</h2>
-            <p class="section-subtitle">Transparent pricing with no hidden charges</p>
-            <div class="pricing-cards">
-                <!-- Car Pricing -->
+            <h2 class="section-title">Transparent Pricing Structure</h2>
+            <p class="section-subtitle">No hidden charges • All rates from Pollachi with professional driver</p>
+            <div class="pricing-cards" style="grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); max-width: 1100px;">
+                <!-- Sedan Pricing -->
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <div class="vehicle-icon">🚗</div>
-                        <h3>Standard Car</h3>
-                        <p class="vehicle-desc">Sedan / SUV with AC & Driver</p>
+                        <h3>Sedans</h3>
+                        <p class="vehicle-desc">Dzire • Amaze • Etios</p>
                     </div>
                     <div class="pricing-body">
                         <div class="price-row">
@@ -257,29 +487,63 @@
                         </div>
                         <div class="price-row">
                             <span class="price-label">Seating Capacity</span>
-                            <span class="price-value">4-6 Persons</span>
+                            <span class="price-value">4 + 1 Driver</span>
                         </div>
                         <div class="price-row">
                             <span class="price-label">Luggage Space</span>
-                            <span class="price-value">Standard</span>
+                            <span class="price-value">2-3 Large Bags</span>
                         </div>
                         <div class="price-row">
-                            <span class="price-label">AC</span>
+                            <span class="price-label">Air Conditioning</span>
                             <span class="price-value" style="color: #28a745;">✓ Included</span>
                         </div>
                     </div>
                     <div class="pricing-footer">
-                        <a href="#home" class="btn btn-primary" onclick="document.getElementById('vehicle-type').value='car'; calculateEstimate();">Book a Car →</a>
+                        <button class="btn btn-primary" onclick="selectVehicle('sedan')">Book Sedan (@ ₹16/km) →</button>
                     </div>
                 </div>
 
-                <!-- Traveller Pricing -->
+                <!-- SUV Pricing -->
                 <div class="pricing-card popular">
-                    <span class="popular-badge">Popular</span>
+                    <span class="popular-badge">Most Popular</span>
+                    <div class="pricing-header">
+                        <div class="vehicle-icon">🚙</div>
+                        <h3>SUVs</h3>
+                        <p class="vehicle-desc">Innova Crysta • XUV700 • Scorpio • Ertiga</p>
+                    </div>
+                    <div class="pricing-body">
+                        <div class="price-row">
+                            <span class="price-label">Per Kilometer</span>
+                            <span class="price-value"><span class="rupee">₹</span>18</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Per Day (Driver Bata)</span>
+                            <span class="price-value"><span class="rupee">₹</span>2,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Seating Capacity</span>
+                            <span class="price-value">6 to 7 + 1 Driver</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Luggage Space</span>
+                            <span class="price-value">Spacious Boot</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Dual AC & Hill Power</span>
+                            <span class="price-value" style="color: #28a745;">✓ Included</span>
+                        </div>
+                    </div>
+                    <div class="pricing-footer">
+                        <button class="btn btn-primary" style="background: linear-gradient(135deg, #1b4d3e, #2d7a62);" onclick="selectVehicle('suv')">Book SUV (@ ₹18/km) →</button>
+                    </div>
+                </div>
+
+                <!-- Force Traveller Pricing -->
+                <div class="pricing-card">
                     <div class="pricing-header">
                         <div class="vehicle-icon">🚐</div>
-                        <h3>Traveller</h3>
-                        <p class="vehicle-desc">Tempo Traveller with AC & Driver</p>
+                        <h3>Force Traveller</h3>
+                        <p class="vehicle-desc">12 • 17 • 20 Seater Minibus</p>
                     </div>
                     <div class="pricing-body">
                         <div class="price-row">
@@ -292,19 +556,19 @@
                         </div>
                         <div class="price-row">
                             <span class="price-label">Seating Capacity</span>
-                            <span class="price-value">12-20 Persons</span>
+                            <span class="price-value">12 - 20 Passengers</span>
                         </div>
                         <div class="price-row">
                             <span class="price-label">Luggage Space</span>
-                            <span class="price-value">Extra Large</span>
+                            <span class="price-value">Heavy Roof Carrier</span>
                         </div>
                         <div class="price-row">
-                            <span class="price-label">AC</span>
+                            <span class="price-label">Pushback AC & High Roof</span>
                             <span class="price-value" style="color: #28a745;">✓ Included</span>
                         </div>
                     </div>
                     <div class="pricing-footer">
-                        <a href="#home" class="btn btn-gold" onclick="document.getElementById('vehicle-type').value='traveller'; calculateEstimate();">Book a Traveller →</a>
+                        <button class="btn btn-gold" onclick="selectVehicle('traveller')">Book Traveller (@ ₹20/km) →</button>
                     </div>
                 </div>
             </div>
@@ -466,7 +730,8 @@
             <div class="contact-grid">
                 <div class="contact-info">
                     <h3>Sri Devi Tours & Travels</h3>
-                    <p>We are available 24/7 for your travel needs. Call us anytime or fill out the form and we'll get back to you within 30 minutes.</p>
+                    <p>We are available 24/7 for your travel needs. Call us anytime or fill out the form and we'll get
+                        back to you within 30 minutes.</p>
                     <div class="contact-details">
                         <div class="contact-item">
                             <div class="icon">📍</div>
@@ -514,11 +779,12 @@
                     <div class="form-group">
                         <label>Service Required</label>
                         <select required>
-                            <option value="">Select a service</option>
-                            <option value="car">Car Rental</option>
-                            <option value="traveller">Traveller Rental</option>
-                            <option value="tour-package">Tour Package</option>
-                            <option value="other">Other</option>
+                            <option value="">Select a vehicle/service</option>
+                            <option value="sedan">🚗 Sedan Rental (₹16/km | ₹2,000/day)</option>
+                            <option value="suv">🚙 SUV Rental (₹18/km | ₹2,000/day)</option>
+                            <option value="traveller">🚐 Force Traveller Rental (₹20/km | ₹3,000/day)</option>
+                            <option value="tour-package">🗺️ All India Tour Package</option>
+                            <option value="other">📝 Other Inquiry</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -536,8 +802,10 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <span class="logo-text" style="font-family: 'Playfair Display', serif; font-size: 1.5rem;">Sri Devi Tours & Travels</span>
-                    <p>Your trusted travel partner from Pollachi. Premium car and traveller rental services with experienced drivers across India.</p>
+                    <span class="logo-text" style="font-family: 'Playfair Display', serif; font-size: 1.5rem;">Sri Devi
+                        Tours & Travels</span>
+                    <p>Your trusted travel partner from Pollachi. Premium car and traveller rental services with
+                        experienced drivers across India.</p>
                     <div class="footer-social">
                         <a href="#">📘</a>
                         <a href="#">📸</a>
@@ -546,12 +814,12 @@
                     </div>
                 </div>
                 <div class="footer-col">
-                    <h4>Vehicles</h4>
+                    <h4>Our Fleet</h4>
                     <ul>
-                        <li><a href="#">Standard Car</a></li>
-                        <li><a href="#">SUV</a></li>
-                        <li><a href="#">Traveller (12 Seater)</a></li>
-                        <li><a href="#">Traveller (20 Seater)</a></li>
+                        <li><a href="#fleet">Sedans (₹16/km)</a></li>
+                        <li><a href="#fleet">SUVs (₹18/km)</a></li>
+                        <li><a href="#fleet">Toyota Innova Crysta</a></li>
+                        <li><a href="#fleet">Force Traveller (12-20 Seater)</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -568,7 +836,7 @@
                     <ul>
                         <li><a href="#">📍 Pollachi, Tamil Nadu</a></li>
                         <li><a href="#">📞 +91 98765 43210</a></li>
-                        <li><a href="#">✉️ tours@sridevigroups.com</a></li>
+                        <li><a href="#">✉️ tours@sridevigroups.in</a></li>
                     </ul>
                 </div>
             </div>
@@ -583,18 +851,20 @@
         <div class="modal">
             <div class="success-icon">✅</div>
             <h2>Booking Request Sent!</h2>
-            <p>Thank you, <strong id="modal-name">Customer</strong>! Our team will contact you shortly to confirm your booking. You can also call us at <strong>+91 98765 43210</strong> for immediate assistance.</p>
+            <p>Thank you, <strong id="modal-name">Customer</strong>! Our team will contact you shortly to confirm your
+                booking. You can also call us at <strong>+91 98765 43210</strong> for immediate assistance.</p>
             <button class="btn btn-primary close-btn" onclick="closeModal()">Done ✓</button>
         </div>
     </div>
 
     <!-- WhatsApp Button -->
-    <a href="https://wa.me/919876543210?text=Hi!%20I%20want%20to%20book%20a%20ride%20from%20Pollachi" class="whatsapp-btn" target="_blank">💬</a>
+    <a href="https://wa.me/919876543210?text=Hi!%20I%20want%20to%20book%20a%20ride%20from%20Pollachi"
+        class="whatsapp-btn" target="_blank">💬</a>
 
     <!-- Back to Top -->
     <button class="back-to-top">↑</button>
 
     <script src="js/script.js"></script>
 </body>
-</html>
 
+</html>

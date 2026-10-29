@@ -65,15 +65,30 @@ const distances = {
 
 // ===== PRICING =====
 const pricing = {
-    car: {
+    sedan: {
         perKm: 16,
         perDay: 2000,
-        name: 'Standard Car'
+        name: 'Sedan (Dzire / Amaze / Etios)',
+        brandExample: 'Maruti Suzuki Dzire, Honda Amaze, Toyota Etios'
+    },
+    suv: {
+        perKm: 18,
+        perDay: 2000,
+        name: 'SUV (Innova Crysta / XUV700 / Scorpio)',
+        brandExample: 'Toyota Innova Crysta, Mahindra XUV700, Scorpio, Ertiga'
     },
     traveller: {
         perKm: 20,
         perDay: 3000,
-        name: 'Traveller'
+        name: 'Force Traveller (12-20 Seater)',
+        brandExample: 'Force Traveller 12 / 17 / 20 Seater Luxury AC'
+    },
+    // Backwards compatibility for legacy 'car'
+    car: {
+        perKm: 16,
+        perDay: 2000,
+        name: 'Sedan (Dzire / Amaze / Etios)',
+        brandExample: 'Maruti Suzuki Dzire, Honda Amaze, Toyota Etios'
     }
 };
 
@@ -117,7 +132,7 @@ function calculateEstimate() {
 
     // Round trip
     const totalKm = km * 2;
-    const rate = pricing[vehicle];
+    const rate = pricing[vehicle] || pricing.sedan;
 
     const kmCharge = totalKm * rate.perKm;
     const dayCharge = days * rate.perDay;
@@ -127,8 +142,8 @@ function calculateEstimate() {
     document.getElementById('est-vehicle').textContent = rate.name;
     document.getElementById('est-destination').textContent = distances[dest]?.name || 'Custom';
     document.getElementById('est-distance').textContent = totalKm + ' km (round trip)';
-    document.getElementById('est-km-charge').textContent = '₹' + kmCharge.toLocaleString('en-IN');
-    document.getElementById('est-day-charge').textContent = '₹' + dayCharge.toLocaleString('en-IN');
+    document.getElementById('est-km-charge').textContent = '₹' + kmCharge.toLocaleString('en-IN') + ` (@ ₹${rate.perKm}/km)`;
+    document.getElementById('est-day-charge').textContent = '₹' + dayCharge.toLocaleString('en-IN') + ` (@ ₹${rate.perDay}/day)`;
     document.getElementById('est-total').textContent = '₹' + total.toLocaleString('en-IN');
 
     if (estimateBox) estimateBox.classList.add('show');
@@ -166,11 +181,11 @@ function handleBooking(event) {
 
     // Get destination name and calculate estimate
     const destName = destination.options[destination.selectedIndex]?.text || destination.value;
-    const vehicleName = vehicleType.value === 'car' ? 'Standard Car (₹16/km, ₹2000/day)' : 'Traveller (₹20/km, ₹3000/day)';
+    const rate = pricing[vehicleType.value] || pricing.sedan;
+    const vehicleName = `${rate.name} (₹${rate.perKm}/km, ₹${rate.perDay}/day)`;
 
     let km = destination.value === 'custom' ? (parseInt(customKm) || 0) : (distances[destination.value]?.km || 0);
     const totalKm = km * 2;
-    const rate = pricing[vehicleType.value];
     const kmCharge = totalKm * rate.perKm;
     const dayCharge = parseInt(numDays) * rate.perDay;
     const total = Math.max(kmCharge, dayCharge);
@@ -334,6 +349,19 @@ function handleCateringContact(event) {
         });
 }
 
+// ===== SELECT VEHICLE SHORTCUT =====
+function selectVehicle(type) {
+    const vehicleSelect = document.getElementById('vehicle-type');
+    if (vehicleSelect) {
+        vehicleSelect.value = type;
+        calculateEstimate();
+        const bookingSection = document.getElementById('home') || document.querySelector('.hero-booking');
+        if (bookingSection) {
+            bookingSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+}
+
 // ===== BACK TO TOP =====
 function initBackToTop() {
     const btn = document.querySelector('.back-to-top');
@@ -421,3 +449,17 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('ℹ️ EmailJS not configured — forms will work in demo mode');
     }
 });
+
+// ===== FLEET FILTER =====
+function filterFleet(category, btn) {
+    document.querySelectorAll('.fleet-filter-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    document.querySelectorAll('.vehicle-fleet-card').forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
