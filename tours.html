@@ -6,6 +6,8 @@
     <title>Sri Devi Tours & Travels - Car & Traveller Rentals from Pollachi</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
     <!-- Page Loader -->
@@ -26,7 +28,7 @@
                 <a href="#pricing">Pricing</a>
                 <a href="#routes">Routes</a>
                 <a href="#contact">Contact</a>
-                <a href="#" onclick="logout()" class="btn btn-outline nav-btn">Logout</a>
+                <a href="catering.html" class="btn btn-outline nav-btn">Catering Services</a>
             </div>
             <button class="mobile-menu-btn">☰</button>
         </div>
@@ -68,6 +70,11 @@
                             <label for="booking-phone">Phone Number</label>
                             <input type="tel" id="booking-phone" placeholder="+91 XXXXX XXXXX" required>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="booking-email">Email Address</label>
+                        <input type="email" id="booking-email" placeholder="name@example.com" required>
                     </div>
 
                     <div class="form-group">
@@ -499,6 +506,10 @@
                     <div class="form-group">
                         <label>Phone Number</label>
                         <input type="tel" placeholder="+91 XXXXX XXXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="name@example.com" required>
                     </div>
                     <div class="form-group">
                         <label>Service Required</label>
