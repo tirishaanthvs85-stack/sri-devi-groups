@@ -30,69 +30,98 @@ function initNavbar() {
     }
 }
 
-// ===== DISTANCE DATA (from Pollachi) =====
+// ===== DISTANCE & COORDINATES DATA (from Pollachi) =====
+// Pollachi coordinates: [10.6609, 77.0048]
 const distances = {
-    'coimbatore': { name: 'Coimbatore', km: 40 },
-    'palakkad': { name: 'Palakkad', km: 50 },
-    'thrissur': { name: 'Thrissur', km: 120 },
-    'kochi': { name: 'Kochi', km: 190 },
-    'madurai': { name: 'Madurai', km: 200 },
-    'trichy': { name: 'Tiruchirappalli', km: 260 },
-    'salem': { name: 'Salem', km: 210 },
-    'erode': { name: 'Erode', km: 120 },
-    'ooty': { name: 'Ooty', km: 95 },
-    'kodaikanal': { name: 'Kodaikanal', km: 150 },
-    'munnar': { name: 'Munnar', km: 160 },
-    'chennai': { name: 'Chennai', km: 510 },
-    'bangalore': { name: 'Bangalore', km: 370 },
-    'mysore': { name: 'Mysore', km: 280 },
-    'pondicherry': { name: 'Pondicherry', km: 400 },
-    'tirunelveli': { name: 'Tirunelveli', km: 310 },
-    'kanyakumari': { name: 'Kanyakumari', km: 370 },
-    'rameshwaram': { name: 'Rameshwaram', km: 380 },
-    'thanjavur': { name: 'Thanjavur', km: 300 },
-    'tirupati': { name: 'Tirupati', km: 550 },
-    'hyderabad': { name: 'Hyderabad', km: 750 },
-    'goa': { name: 'Goa', km: 850 },
-    'mumbai': { name: 'Mumbai', km: 1100 },
-    'delhi': { name: 'Delhi', km: 2200 },
-    'jaipur': { name: 'Jaipur', km: 2000 },
-    'kolkata': { name: 'Kolkata', km: 1950 },
-    'trivandrum': { name: 'Thiruvananthapuram', km: 300 },
-    'vizag': { name: 'Visakhapatnam', km: 1100 },
-    'custom': { name: 'Custom Distance', km: 0 }
+    'coimbatore': { name: 'Coimbatore', km: 40, state: 'Tamil Nadu', lat: 11.0168, lng: 76.9558 },
+    'palakkad': { name: 'Palakkad', km: 50, state: 'Kerala', lat: 10.7867, lng: 76.6548 },
+    'thrissur': { name: 'Thrissur', km: 120, state: 'Kerala', lat: 10.5276, lng: 76.2144 },
+    'kochi': { name: 'Kochi', km: 190, state: 'Kerala', lat: 9.9312, lng: 76.2673 },
+    'madurai': { name: 'Madurai', km: 200, state: 'Tamil Nadu', lat: 9.9252, lng: 78.1198 },
+    'trichy': { name: 'Tiruchirappalli', km: 260, state: 'Tamil Nadu', lat: 10.7905, lng: 78.7047 },
+    'salem': { name: 'Salem', km: 210, state: 'Tamil Nadu', lat: 11.6643, lng: 78.1460 },
+    'erode': { name: 'Erode', km: 120, state: 'Tamil Nadu', lat: 11.3410, lng: 77.7172 },
+    'ooty': { name: 'Ooty', km: 95, state: 'Tamil Nadu', lat: 11.4102, lng: 76.6950 },
+    'kodaikanal': { name: 'Kodaikanal', km: 150, state: 'Tamil Nadu', lat: 10.2381, lng: 77.4892 },
+    'munnar': { name: 'Munnar', km: 160, state: 'Kerala', lat: 10.0889, lng: 77.0595 },
+    'chennai': { name: 'Chennai', km: 510, state: 'Tamil Nadu', lat: 13.0827, lng: 80.2707 },
+    'bangalore': { name: 'Bangalore', km: 370, state: 'Karnataka', lat: 12.9716, lng: 77.5946 },
+    'mysore': { name: 'Mysore', km: 280, state: 'Karnataka', lat: 12.2958, lng: 76.6394 },
+    'pondicherry': { name: 'Pondicherry', km: 400, state: 'Puducherry', lat: 11.9416, lng: 79.8083 },
+    'tirunelveli': { name: 'Tirunelveli', km: 310, state: 'Tamil Nadu', lat: 8.7139, lng: 77.7567 },
+    'kanyakumari': { name: 'Kanyakumari', km: 370, state: 'Tamil Nadu', lat: 8.0883, lng: 77.5385 },
+    'rameshwaram': { name: 'Rameshwaram', km: 380, state: 'Tamil Nadu', lat: 9.2876, lng: 79.3129 },
+    'thanjavur': { name: 'Thanjavur', km: 300, state: 'Tamil Nadu', lat: 10.7870, lng: 79.1378 },
+    'tirupati': { name: 'Tirupati', km: 550, state: 'Andhra Pradesh', lat: 13.6288, lng: 79.4192 },
+    'hyderabad': { name: 'Hyderabad', km: 750, state: 'Telangana', lat: 17.3850, lng: 78.4867 },
+    'goa': { name: 'Goa', km: 850, state: 'Goa', lat: 15.2993, lng: 74.1240 },
+    'mumbai': { name: 'Mumbai', km: 1100, state: 'Maharashtra', lat: 19.0760, lng: 72.8777 },
+    'delhi': { name: 'Delhi', km: 2200, state: 'Delhi NCR', lat: 28.7041, lng: 77.1025 },
+    'jaipur': { name: 'Jaipur', km: 2000, state: 'Rajasthan', lat: 26.9124, lng: 75.7873 },
+    'kolkata': { name: 'Kolkata', km: 1950, state: 'West Bengal', lat: 22.5726, lng: 88.3639 },
+    'trivandrum': { name: 'Thiruvananthapuram', km: 300, state: 'Kerala', lat: 8.5241, lng: 76.9366 },
+    'vizag': { name: 'Visakhapatnam', km: 1100, state: 'Andhra Pradesh', lat: 17.6868, lng: 83.2185 },
+    'custom': { name: 'Custom Distance', km: 0, state: 'India', lat: null, lng: null }
 };
 
+// Pollachi Origin Coordinates
+const POLLACHI_COORDS = [10.6609, 77.0048];
+
 // ===== PRICING =====
+// Updated rates:
+// Sedan: ₹18/km, ₹2000/day
+// SUV / XUV: ₹20/km, ₹2000/day
+// Traveller: ₹22/km, ₹2500/day
+// Bikes (Self Drive / Rentals):
+// Classic 350 (Men): ₹1,200/day (Unlimited km / ₹6/km fuel standard)
+// TVS Jupiter (Women): ₹600/day
 const pricing = {
     sedan: {
-        perKm: 16,
-        perDay: 2000,
-        name: 'Sedan (Dzire / Amaze / Etios)',
-        brandExample: 'Maruti Suzuki Dzire, Honda Amaze, Toyota Etios'
-    },
-    suv: {
         perKm: 18,
         perDay: 2000,
-        name: 'SUV (Innova Crysta / XUV700 / Scorpio)',
-        brandExample: 'Toyota Innova Crysta, Mahindra XUV700, Scorpio, Ertiga'
+        name: 'Sedan (Dzire / Amaze / Etios)',
+        brandExample: 'Maruti Suzuki Dzire, Honda Amaze, Toyota Etios',
+        isBike: false
+    },
+    suv: {
+        perKm: 20,
+        perDay: 2000,
+        name: 'SUV / XUV (Innova Crysta / XUV700 / Scorpio / Ertiga)',
+        brandExample: 'Toyota Innova Crysta, Mahindra XUV700, Scorpio, Ertiga',
+        isBike: false
     },
     traveller: {
-        perKm: 20,
-        perDay: 3000,
-        name: 'Force Traveller (12-20 Seater)',
-        brandExample: 'Force Traveller 12 / 17 / 20 Seater Luxury AC'
+        perKm: 22,
+        perDay: 2500,
+        name: 'Force Traveller (12-20 Seater Luxury AC)',
+        brandExample: 'Force Traveller 12 / 17 / 20 Seater Luxury AC',
+        isBike: false
     },
-    // Backwards compatibility for legacy 'car'
+    'bike-classic': {
+        perKm: 6,
+        perDay: 1200,
+        name: 'Royal Enfield Classic 350 (For Men)',
+        brandExample: 'Royal Enfield Classic 350cc - Stealth / Chrome with Helmet',
+        isBike: true
+    },
+    'scooter-jupiter': {
+        perKm: 4,
+        perDay: 600,
+        name: 'TVS Jupiter 110/125 (For Women & Easy Commute)',
+        brandExample: 'TVS Jupiter with Easy Electric Start & Helmet',
+        isBike: true
+    },
+    // Backwards compatibility
     car: {
-        perKm: 16,
+        perKm: 18,
         perDay: 2000,
         name: 'Sedan (Dzire / Amaze / Etios)',
-        brandExample: 'Maruti Suzuki Dzire, Honda Amaze, Toyota Etios'
+        brandExample: 'Maruti Suzuki Dzire, Honda Amaze, Toyota Etios',
+        isBike: false
     }
 };
 
-// ===== CALCULATE ESTIMATE =====
+// ===== CALCULATE ESTIMATE & UPDATE MAP =====
 function calculateEstimate() {
     const destination = document.getElementById('destination');
     const vehicleType = document.getElementById('vehicle-type');
@@ -134,19 +163,133 @@ function calculateEstimate() {
     const totalKm = km * 2;
     const rate = pricing[vehicle] || pricing.sedan;
 
-    const kmCharge = totalKm * rate.perKm;
-    const dayCharge = days * rate.perDay;
-    const total = Math.max(kmCharge, dayCharge);
+    let kmCharge = 0;
+    let dayCharge = 0;
+    let total = 0;
+
+    if (rate.isBike) {
+        // For bikes, rental is primarily per day
+        dayCharge = days * rate.perDay;
+        kmCharge = totalKm > 0 ? totalKm * rate.perKm : 0;
+        total = dayCharge; // Fixed daily rental
+    } else {
+        kmCharge = totalKm * rate.perKm;
+        dayCharge = days * rate.perDay;
+        total = Math.max(kmCharge, dayCharge);
+    }
 
     // Update estimate display
     document.getElementById('est-vehicle').textContent = rate.name;
     document.getElementById('est-destination').textContent = distances[dest]?.name || 'Custom';
-    document.getElementById('est-distance').textContent = totalKm + ' km (round trip)';
-    document.getElementById('est-km-charge').textContent = '₹' + kmCharge.toLocaleString('en-IN') + ` (@ ₹${rate.perKm}/km)`;
-    document.getElementById('est-day-charge').textContent = '₹' + dayCharge.toLocaleString('en-IN') + ` (@ ₹${rate.perDay}/day)`;
+    document.getElementById('est-distance').textContent = totalKm + ' km (round trip from Pollachi)';
+    
+    if (rate.isBike) {
+        document.getElementById('est-km-charge').textContent = 'Included standard';
+        document.getElementById('est-day-charge').textContent = '₹' + dayCharge.toLocaleString('en-IN') + ` (₹${rate.perDay}/day x ${days} days)`;
+    } else {
+        document.getElementById('est-km-charge').textContent = '₹' + kmCharge.toLocaleString('en-IN') + ` (@ ₹${rate.perKm}/km)`;
+        document.getElementById('est-day-charge').textContent = '₹' + dayCharge.toLocaleString('en-IN') + ` (@ ₹${rate.perDay}/day)`;
+    }
     document.getElementById('est-total').textContent = '₹' + total.toLocaleString('en-IN');
 
     if (estimateBox) estimateBox.classList.add('show');
+
+    // Update India Interactive Map Route
+    updateMapRoute(dest, totalKm);
+}
+
+// ===== LEAFLET INDIA ROUTE MAP =====
+let indiaMap = null;
+let pollachiMarker = null;
+let destinationMarker = null;
+let routeLine = null;
+
+function initIndiaMap() {
+    const mapContainer = document.getElementById('india-route-map');
+    if (!mapContainer || typeof L === 'undefined') return;
+
+    if (indiaMap) {
+        indiaMap.invalidateSize();
+        return;
+    }
+
+    // Centered on South-Central India
+    indiaMap = L.map('india-route-map', {
+        scrollWheelZoom: false
+    }).setView([15.5, 78.0], 5);
+
+    // OpenStreetMap standard tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '© OpenStreetMap contributors | Sri Devi Groups'
+    }).addTo(indiaMap);
+
+    // Custom Icon for Pollachi (Origin)
+    const pollachiIcon = L.divIcon({
+        className: 'custom-map-pin origin-pin',
+        html: `<div class="pin-badge origin"><span class="pin-dot"></span> 📍 <strong>Pollachi (Origin)</strong></div>`,
+        iconSize: [160, 40],
+        iconAnchor: [80, 20]
+    });
+
+    pollachiMarker = L.marker(POLLACHI_COORDS, { icon: pollachiIcon }).addTo(indiaMap);
+    pollachiMarker.bindPopup(`<b>Sri Devi Groups Headquarters</b><br>Pollachi, Tamil Nadu<br>Trip Origin Point`);
+}
+
+function updateMapRoute(destKey, roundTripKm) {
+    if (!indiaMap || typeof L === 'undefined') {
+        initIndiaMap();
+        if (!indiaMap) return;
+    }
+
+    const mapStatus = document.getElementById('map-route-status');
+    const destData = distances[destKey];
+
+    if (!destData || !destData.lat || !destData.lng) {
+        if (mapStatus) {
+            mapStatus.innerHTML = `<span>📍 Origin: <strong>Pollachi</strong></span> | <span>Custom / Unlisted destination chosen</span>`;
+        }
+        return;
+    }
+
+    const destCoords = [destData.lat, destData.lng];
+
+    // Remove existing destination marker and line
+    if (destinationMarker) indiaMap.removeLayer(destinationMarker);
+    if (routeLine) indiaMap.removeLayer(routeLine);
+
+    // Custom Icon for Destination
+    const destIcon = L.divIcon({
+        className: 'custom-map-pin dest-pin',
+        html: `<div class="pin-badge dest"><span class="pin-pulse"></span> 🎯 <strong>${destData.name}</strong></div>`,
+        iconSize: [150, 40],
+        iconAnchor: [75, 20]
+    });
+
+    destinationMarker = L.marker(destCoords, { icon: destIcon }).addTo(indiaMap);
+    destinationMarker.bindPopup(`<b>Destination: ${destData.name}</b><br>${destData.state}<br>One-way: ${destData.km} km | Round-trip: ${roundTripKm} km`).openPopup();
+
+    // Curved or geodesic-like polyline
+    routeLine = L.polyline([POLLACHI_COORDS, destCoords], {
+        color: '#8B1A1A',
+        weight: 5,
+        opacity: 0.85,
+        dashArray: '10, 10',
+        lineCap: 'round'
+    }).addTo(indiaMap);
+
+    // Fit map bounds to show both points with padding
+    const bounds = L.latLngBounds([POLLACHI_COORDS, destCoords]);
+    indiaMap.fitBounds(bounds, { padding: [60, 60] });
+
+    if (mapStatus) {
+        mapStatus.innerHTML = `
+            <div class="map-status-pill">📍 From: <strong>Pollachi, TN</strong></div>
+            <div class="map-status-arrow">➔</div>
+            <div class="map-status-pill dest">🎯 To: <strong>${destData.name} (${destData.state})</strong></div>
+            <div class="map-status-pill distance">📏 Distance: <strong>${destData.km} km</strong> (Round trip: ${roundTripKm} km)</div>
+        `;
+    }
 }
 
 // ===== SEND EMAIL VIA EMAILJS =====
@@ -186,9 +329,18 @@ function handleBooking(event) {
 
     let km = destination.value === 'custom' ? (parseInt(customKm) || 0) : (distances[destination.value]?.km || 0);
     const totalKm = km * 2;
-    const kmCharge = totalKm * rate.perKm;
-    const dayCharge = parseInt(numDays) * rate.perDay;
-    const total = Math.max(kmCharge, dayCharge);
+    let kmCharge = 0;
+    let dayCharge = 0;
+    let total = 0;
+
+    if (rate.isBike) {
+        dayCharge = parseInt(numDays) * rate.perDay;
+        total = dayCharge;
+    } else {
+        kmCharge = totalKm * rate.perKm;
+        dayCharge = parseInt(numDays) * rate.perDay;
+        total = Math.max(kmCharge, dayCharge);
+    }
 
     // Prepare email data
     const templateParams = {
@@ -428,6 +580,17 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavbar();
     initBackToTop();
     initLoader();
+    initIndiaMap();
+
+    // Default route demo on map
+    setTimeout(() => {
+        const destSelect = document.getElementById('destination');
+        if (destSelect && destSelect.value) {
+            calculateEstimate();
+        } else if (typeof updateMapRoute === 'function') {
+            updateMapRoute('ooty', 190);
+        }
+    }, 600);
 
     // Set minimum date for travel date picker
     const dateInput = document.getElementById('travel-date');

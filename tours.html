@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+    <!-- Leaflet CSS & JS for Interactive India Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
@@ -27,10 +30,11 @@
             </a>
             <div class="nav-links">
                 <a href="dashboard.html">Home</a>
-                <a href="#fleet">Our Fleet</a>
+                <a href="#fleet">Cars & Fleet</a>
+                <a href="#bikes">Bike Rentals</a>
+                <a href="#map-section">India Route Map</a>
                 <a href="#pricing">Pricing</a>
                 <a href="#routes">Routes</a>
-                <a href="#services">Services</a>
                 <a href="#contact">Contact</a>
                 <a href="catering.html" class="btn btn-outline nav-btn">Catering Services</a>
             </div>
@@ -85,10 +89,16 @@
                     <div class="form-group">
                         <label for="vehicle-type">Vehicle Type</label>
                         <select id="vehicle-type" onchange="calculateEstimate()" required>
-                            <option value="">Select Vehicle</option>
-                            <option value="sedan">🚗 Sedan (Dzire / Amaze / Etios) — ₹16/km | ₹2,000/day</option>
-                            <option value="suv">🚙 SUV (Innova Crysta / XUV700 / Scorpio / Ertiga) — ₹18/km | ₹2,000/day</option>
-                            <option value="traveller">🚐 Force Traveller (12-20 Seater) — ₹20/km | ₹3,000/day</option>
+                            <option value="">Select Vehicle / Bike</option>
+                            <optgroup label="🚗 Four Wheelers (With Driver)">
+                                <option value="sedan">🚗 Sedan (Dzire / Amaze / Etios) — ₹18/km | ₹2,000/day</option>
+                                <option value="suv">🚙 SUV / XUV (Innova Crysta / XUV700 / Scorpio) — ₹20/km | ₹2,000/day</option>
+                                <option value="traveller">🚐 Force Traveller (12-20 Seater) — ₹22/km | ₹2,500/day</option>
+                            </optgroup>
+                            <optgroup label="🏍️ Two Wheelers / Bike Rentals">
+                                <option value="bike-classic">🏍️ Royal Enfield Classic 350 (For Men) — ₹1,200/day</option>
+                                <option value="scooter-jupiter">🛵 TVS Jupiter Scooter (For Women) — ₹600/day</option>
+                            </optgroup>
                         </select>
                     </div>
 
@@ -253,10 +263,11 @@
             <p class="section-subtitle">100% Real Vehicles with Experienced Drivers from Pollachi to Anywhere in India</p>
 
             <div class="fleet-filter-bar">
-                <button class="fleet-filter-btn active" onclick="filterFleet('all', this)">All Fleet (8)</button>
-                <button class="fleet-filter-btn" onclick="filterFleet('sedan', this)">Sedans (₹16/km)</button>
-                <button class="fleet-filter-btn" onclick="filterFleet('suv', this)">SUVs (₹18/km)</button>
-                <button class="fleet-filter-btn" onclick="filterFleet('traveller', this)">Force Traveller (₹20/km)</button>
+                <button class="fleet-filter-btn active" onclick="filterFleet('all', this)">All Fleet & Bikes</button>
+                <button class="fleet-filter-btn" onclick="filterFleet('sedan', this)">Sedans (₹18/km)</button>
+                <button class="fleet-filter-btn" onclick="filterFleet('suv', this)">SUVs / XUV (₹20/km)</button>
+                <button class="fleet-filter-btn" onclick="filterFleet('traveller', this)">Force Traveller (₹22/km)</button>
+                <button class="fleet-filter-btn" onclick="filterFleet('bike', this)">🏍️ Bike & Scooter Rentals</button>
             </div>
 
             <div class="fleet-grid">
@@ -277,7 +288,7 @@
                         </div>
                         <div class="vehicle-pricing-row">
                             <div class="vehicle-price-info">
-                                <span class="km-rate">₹16 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="km-rate">₹18 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
                                 <span class="day-rate">₹2,000 / day</span>
                             </div>
                             <button class="btn btn-primary btn-book-sm" onclick="selectVehicle('sedan')">Book Dzire →</button>
@@ -302,7 +313,7 @@
                         </div>
                         <div class="vehicle-pricing-row">
                             <div class="vehicle-price-info">
-                                <span class="km-rate">₹16 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="km-rate">₹18 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
                                 <span class="day-rate">₹2,000 / day</span>
                             </div>
                             <button class="btn btn-primary btn-book-sm" onclick="selectVehicle('sedan')">Book Amaze →</button>
@@ -327,7 +338,7 @@
                         </div>
                         <div class="vehicle-pricing-row">
                             <div class="vehicle-price-info">
-                                <span class="km-rate">₹16 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="km-rate">₹18 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
                                 <span class="day-rate">₹2,000 / day</span>
                             </div>
                             <button class="btn btn-primary btn-book-sm" onclick="selectVehicle('sedan')">Book Etios →</button>
@@ -352,7 +363,7 @@
                         </div>
                         <div class="vehicle-pricing-row">
                             <div class="vehicle-price-info">
-                                <span class="km-rate">₹18 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="km-rate">₹20 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
                                 <span class="day-rate">₹2,000 / day</span>
                             </div>
                             <button class="btn btn-primary btn-book-sm" onclick="selectVehicle('suv')">Book Innova →</button>
@@ -377,7 +388,7 @@
                         </div>
                         <div class="vehicle-pricing-row">
                             <div class="vehicle-price-info">
-                                <span class="km-rate">₹18 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="km-rate">₹20 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
                                 <span class="day-rate">₹2,000 / day</span>
                             </div>
                             <button class="btn btn-primary btn-book-sm" onclick="selectVehicle('suv')">Book XUV700 →</button>
@@ -402,7 +413,7 @@
                         </div>
                         <div class="vehicle-pricing-row">
                             <div class="vehicle-price-info">
-                                <span class="km-rate">₹18 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="km-rate">₹20 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
                                 <span class="day-rate">₹2,000 / day</span>
                             </div>
                             <button class="btn btn-primary btn-book-sm" onclick="selectVehicle('suv')">Book Scorpio →</button>
@@ -427,7 +438,7 @@
                         </div>
                         <div class="vehicle-pricing-row">
                             <div class="vehicle-price-info">
-                                <span class="km-rate">₹18 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="km-rate">₹20 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
                                 <span class="day-rate">₹2,000 / day</span>
                             </div>
                             <button class="btn btn-primary btn-book-sm" onclick="selectVehicle('suv')">Book Ertiga →</button>
@@ -452,11 +463,158 @@
                         </div>
                         <div class="vehicle-pricing-row">
                             <div class="vehicle-price-info">
-                                <span class="km-rate">₹20 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
-                                <span class="day-rate">₹3,000 / day</span>
+                                <span class="km-rate">₹22 <small style="font-size: 0.8rem; font-weight: 500;">/ km</small></span>
+                                <span class="day-rate">₹2,500 / day</span>
                             </div>
                             <button class="btn btn-gold btn-book-sm" onclick="selectVehicle('traveller')">Book Traveller →</button>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Bike 1: Royal Enfield Classic 350 (For Men) -->
+                <div class="vehicle-fleet-card" data-category="bike">
+                    <div class="vehicle-card-img-wrap">
+                        <img src="images/classic350.jpg" alt="Royal Enfield Classic 350 for Men" loading="lazy">
+                        <span class="vehicle-type-badge bike-men-badge">🏍️ Men's Cruiser</span>
+                    </div>
+                    <div class="vehicle-card-content">
+                        <h3>Royal Enfield Classic 350</h3>
+                        <p class="vehicle-subtitle">Heavy Metal Cruiser For Men • Pure Thump & Highway Power</p>
+                        <div class="vehicle-specs">
+                            <div class="spec-item">⚙️ 349cc J-Series Engine</div>
+                            <div class="spec-item">🪖 ISI Helmet Included</div>
+                            <div class="spec-item">🏔️ Mountain & Ghat Ready</div>
+                            <div class="spec-item">🛡️ Valid Insurance & Docs</div>
+                        </div>
+                        <div class="vehicle-pricing-row">
+                            <div class="vehicle-price-info">
+                                <span class="km-rate">₹1,200 <small style="font-size: 0.8rem; font-weight: 500;">/ day</small></span>
+                                <span class="day-rate">Self-Drive Rental</span>
+                            </div>
+                            <button class="btn btn-primary btn-book-sm" style="background: linear-gradient(135deg, #1f2937, #111827);" onclick="selectVehicle('bike-classic')">Rent Classic 350 →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bike 2: TVS Jupiter Scooter (For Women) -->
+                <div class="vehicle-fleet-card" data-category="bike">
+                    <div class="vehicle-card-img-wrap">
+                        <img src="images/jupiter.jpg" alt="TVS Jupiter for Women" loading="lazy">
+                        <span class="vehicle-type-badge bike-women-badge">🛵 Women's Scooter</span>
+                    </div>
+                    <div class="vehicle-card-content">
+                        <h3>TVS Jupiter (Scooter)</h3>
+                        <p class="vehicle-subtitle">Lightweight, Smooth & Safe Scooter Specially for Women</p>
+                        <div class="vehicle-specs">
+                            <div class="spec-item">⚡ Easy Electric Push Start</div>
+                            <div class="spec-item">🪖 Lady Helmet Included</div>
+                            <div class="spec-item">🛍️ Large Boot & Bag Hooks</div>
+                            <div class="spec-item">⛽ 50+ kmpl High Mileage</div>
+                        </div>
+                        <div class="vehicle-pricing-row">
+                            <div class="vehicle-price-info">
+                                <span class="km-rate">₹600 <small style="font-size: 0.8rem; font-weight: 500;">/ day</small></span>
+                                <span class="day-rate">Self-Drive Rental</span>
+                            </div>
+                            <button class="btn btn-primary btn-book-sm" style="background: linear-gradient(135deg, #be185d, #9d174d);" onclick="selectVehicle('scooter-jupiter')">Rent Jupiter →</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bike & Scooter Rental Section -->
+    <section class="services" id="bikes" style="background: #ffffff; padding: 90px 0;">
+        <div class="container">
+            <h2 class="section-title">Two Wheeler & Bike Rentals</h2>
+            <p class="section-subtitle">Specially curated rides for Men & Women from Pollachi • Self-Drive with Safety Gear</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; max-width: 950px; margin: 0 auto;">
+                <!-- For Men -->
+                <div class="vehicle-fleet-card" style="border: 2px solid #2d3748;">
+                    <div class="vehicle-card-img-wrap" style="height: 250px;">
+                        <img src="images/classic350.jpg" alt="Royal Enfield Classic 350 for Men" loading="lazy">
+                        <span class="vehicle-type-badge" style="background: #1a202c; font-size: 0.85rem;">🏍️ Specially For Men</span>
+                    </div>
+                    <div class="vehicle-card-content">
+                        <h3>Royal Enfield Classic 350</h3>
+                        <p class="vehicle-subtitle" style="color: #718096;">The Ultimate Highway & Hill-Ride Thump for Men</p>
+                        <p style="font-size: 0.9rem; color: #4a5568; line-height: 1.6; margin-bottom: 15px;">
+                            Conquer the ghat roads of Ooty, Valparai, and Munnar with the legendary 350cc Royal Enfield Classic. Comes with mobile holder, charger port, and dual disc ABS.
+                        </p>
+                        <div class="vehicle-specs">
+                            <div class="spec-item">⚙️ 349cc Engine</div>
+                            <div class="spec-item">🪖 2 Helmets Included</div>
+                            <div class="spec-item">⛰️ Ghats & Long Trips</div>
+                            <div class="spec-item">📄 Valid Insurance</div>
+                        </div>
+                        <div class="vehicle-pricing-row">
+                            <div class="vehicle-price-info">
+                                <span class="km-rate">₹1,200 <small style="font-size: 0.8rem; font-weight: 500;">/ day</small></span>
+                                <span class="day-rate">Security Deposit Applicable</span>
+                            </div>
+                            <button class="btn btn-primary btn-book-sm" style="background: #1a202c;" onclick="selectVehicle('bike-classic')">Rent Classic 350 →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- For Women -->
+                <div class="vehicle-fleet-card" style="border: 2px solid #db2777;">
+                    <div class="vehicle-card-img-wrap" style="height: 250px;">
+                        <img src="images/jupiter.jpg" alt="TVS Jupiter Scooter for Women" loading="lazy">
+                        <span class="vehicle-type-badge" style="background: #db2777; font-size: 0.85rem;">🛵 Specially For Women</span>
+                    </div>
+                    <div class="vehicle-card-content">
+                        <h3>TVS Jupiter (Scooter)</h3>
+                        <p class="vehicle-subtitle" style="color: #be185d;">Lightweight, Effortless & Safe Scooter For Women</p>
+                        <p style="font-size: 0.9rem; color: #4a5568; line-height: 1.6; margin-bottom: 15px;">
+                            Ideal for women travellers, college students, and family commuting. Smooth suspension, effortless self-start, low seat height, and ample under-seat storage.
+                        </p>
+                        <div class="vehicle-specs">
+                            <div class="spec-item">⚡ Easy Push Button Start</div>
+                            <div class="spec-item">🪖 Lady Helmet Included</div>
+                            <div class="spec-item">🛍️ Bag Hooks & Big Boot</div>
+                            <div class="spec-item">⛽ 50+ kmpl High Mileage</div>
+                        </div>
+                        <div class="vehicle-pricing-row">
+                            <div class="vehicle-price-info">
+                                <span class="km-rate">₹600 <small style="font-size: 0.8rem; font-weight: 500;">/ day</small></span>
+                                <span class="day-rate">Affordable & Convenient</span>
+                            </div>
+                            <button class="btn btn-primary btn-book-sm" style="background: #db2777;" onclick="selectVehicle('scooter-jupiter')">Rent Jupiter →</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive India Route Map Section -->
+    <section class="india-map-section" id="map-section">
+        <div class="container">
+            <h2 class="section-title">📍 Live Destination Route Map (Pollachi ➔ India)</h2>
+            <p class="section-subtitle">Choose your destination above or below to see the interactive route from Pollachi to any city in India</p>
+
+            <div class="map-wrapper-card">
+                <div class="map-header-status" id="map-route-status">
+                    <div class="map-status-pill">📍 From: <strong>Pollachi, Tamil Nadu</strong></div>
+                    <div class="map-status-arrow">➔</div>
+                    <div class="map-status-pill dest">🎯 To: <strong>Ooty, Tamil Nadu</strong></div>
+                    <div class="map-status-pill distance">📏 Distance: <strong>95 km</strong> (Round trip: 190 km)</div>
+                </div>
+
+                <div id="india-route-map"></div>
+
+                <div class="map-footer-bar">
+                    <div class="map-legend-item">
+                        <span class="legend-dot origin"></span> <strong>Pollachi HQ:</strong> Your pickup point
+                    </div>
+                    <div class="map-legend-item">
+                        <span class="legend-dot dest"></span> <strong>Selected Destination:</strong> Anywhere in India
+                    </div>
+                    <div class="map-legend-item">
+                        <span class="legend-line"></span> <strong>Route Line:</strong> Direct travel path
                     </div>
                 </div>
             </div>
@@ -468,7 +626,7 @@
         <div class="container">
             <h2 class="section-title">Transparent Pricing Structure</h2>
             <p class="section-subtitle">No hidden charges • All rates from Pollachi with professional driver</p>
-            <div class="pricing-cards" style="grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); max-width: 1100px;">
+            <div class="pricing-cards" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); max-width: 1200px;">
                 <!-- Sedan Pricing -->
                 <div class="pricing-card">
                     <div class="pricing-header">
@@ -479,7 +637,7 @@
                     <div class="pricing-body">
                         <div class="price-row">
                             <span class="price-label">Per Kilometer</span>
-                            <span class="price-value"><span class="rupee">₹</span>16</span>
+                            <span class="price-value"><span class="rupee">₹</span>18</span>
                         </div>
                         <div class="price-row">
                             <span class="price-label">Per Day (Driver Bata)</span>
@@ -499,22 +657,22 @@
                         </div>
                     </div>
                     <div class="pricing-footer">
-                        <button class="btn btn-primary" onclick="selectVehicle('sedan')">Book Sedan (@ ₹16/km) →</button>
+                        <button class="btn btn-primary" onclick="selectVehicle('sedan')">Book Sedan (@ ₹18/km) →</button>
                     </div>
                 </div>
 
-                <!-- SUV Pricing -->
+                <!-- SUV / XUV Pricing -->
                 <div class="pricing-card popular">
                     <span class="popular-badge">Most Popular</span>
                     <div class="pricing-header">
                         <div class="vehicle-icon">🚙</div>
-                        <h3>SUVs</h3>
+                        <h3>SUVs / XUV</h3>
                         <p class="vehicle-desc">Innova Crysta • XUV700 • Scorpio • Ertiga</p>
                     </div>
                     <div class="pricing-body">
                         <div class="price-row">
                             <span class="price-label">Per Kilometer</span>
-                            <span class="price-value"><span class="rupee">₹</span>18</span>
+                            <span class="price-value"><span class="rupee">₹</span>20</span>
                         </div>
                         <div class="price-row">
                             <span class="price-label">Per Day (Driver Bata)</span>
@@ -534,7 +692,7 @@
                         </div>
                     </div>
                     <div class="pricing-footer">
-                        <button class="btn btn-primary" style="background: linear-gradient(135deg, #1b4d3e, #2d7a62);" onclick="selectVehicle('suv')">Book SUV (@ ₹18/km) →</button>
+                        <button class="btn btn-primary" style="background: linear-gradient(135deg, #1b4d3e, #2d7a62);" onclick="selectVehicle('suv')">Book SUV (@ ₹20/km) →</button>
                     </div>
                 </div>
 
@@ -548,11 +706,11 @@
                     <div class="pricing-body">
                         <div class="price-row">
                             <span class="price-label">Per Kilometer</span>
-                            <span class="price-value"><span class="rupee">₹</span>20</span>
+                            <span class="price-value"><span class="rupee">₹</span>22</span>
                         </div>
                         <div class="price-row">
                             <span class="price-label">Per Day (Driver Bata)</span>
-                            <span class="price-value"><span class="rupee">₹</span>3,000</span>
+                            <span class="price-value"><span class="rupee">₹</span>2,500</span>
                         </div>
                         <div class="price-row">
                             <span class="price-label">Seating Capacity</span>
@@ -568,7 +726,41 @@
                         </div>
                     </div>
                     <div class="pricing-footer">
-                        <button class="btn btn-gold" onclick="selectVehicle('traveller')">Book Traveller (@ ₹20/km) →</button>
+                        <button class="btn btn-gold" onclick="selectVehicle('traveller')">Book Traveller (@ ₹22/km) →</button>
+                    </div>
+                </div>
+
+                <!-- Bike Rental Pricing -->
+                <div class="pricing-card" style="border: 2px solid #db2777;">
+                    <div class="pricing-header">
+                        <div class="vehicle-icon">🏍️</div>
+                        <h3>Bike Rentals</h3>
+                        <p class="vehicle-desc">Classic 350 (Men) • TVS Jupiter (Women)</p>
+                    </div>
+                    <div class="pricing-body">
+                        <div class="price-row">
+                            <span class="price-label">Classic 350 (Men)</span>
+                            <span class="price-value"><span class="rupee">₹</span>1,200/day</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">TVS Jupiter (Women)</span>
+                            <span class="price-value"><span class="rupee">₹</span>600/day</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Type</span>
+                            <span class="price-value">Self Drive</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Helmets</span>
+                            <span class="price-value" style="color: #28a745;">✓ Included</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Requirements</span>
+                            <span class="price-value" style="font-size: 0.85rem;">Valid Driving License</span>
+                        </div>
+                    </div>
+                    <div class="pricing-footer">
+                        <button class="btn btn-primary" style="background: linear-gradient(135deg, #be185d, #1a202c);" onclick="document.getElementById('bikes').scrollIntoView({behavior:'smooth'})">Explore Bikes →</button>
                     </div>
                 </div>
             </div>
@@ -780,9 +972,11 @@
                         <label>Service Required</label>
                         <select required>
                             <option value="">Select a vehicle/service</option>
-                            <option value="sedan">🚗 Sedan Rental (₹16/km | ₹2,000/day)</option>
-                            <option value="suv">🚙 SUV Rental (₹18/km | ₹2,000/day)</option>
-                            <option value="traveller">🚐 Force Traveller Rental (₹20/km | ₹3,000/day)</option>
+                            <option value="sedan">🚗 Sedan Rental (₹18/km | ₹2,000/day)</option>
+                            <option value="suv">🚙 SUV / XUV Rental (₹20/km | ₹2,000/day)</option>
+                            <option value="traveller">🚐 Force Traveller Rental (₹22/km | ₹2,500/day)</option>
+                            <option value="bike-classic">🏍️ Royal Enfield Classic 350 Rental (₹1,200/day)</option>
+                            <option value="scooter-jupiter">🛵 TVS Jupiter Scooter Rental (₹600/day)</option>
                             <option value="tour-package">🗺️ All India Tour Package</option>
                             <option value="other">📝 Other Inquiry</option>
                         </select>
@@ -814,12 +1008,13 @@
                     </div>
                 </div>
                 <div class="footer-col">
-                    <h4>Our Fleet</h4>
+                    <h4>Our Fleet & Rentals</h4>
                     <ul>
-                        <li><a href="#fleet">Sedans (₹16/km)</a></li>
-                        <li><a href="#fleet">SUVs (₹18/km)</a></li>
-                        <li><a href="#fleet">Toyota Innova Crysta</a></li>
-                        <li><a href="#fleet">Force Traveller (12-20 Seater)</a></li>
+                        <li><a href="#fleet">Sedans (₹18/km)</a></li>
+                        <li><a href="#fleet">SUVs / XUV (₹20/km)</a></li>
+                        <li><a href="#fleet">Force Traveller (₹22/km)</a></li>
+                        <li><a href="#bikes">Classic 350 for Men</a></li>
+                        <li><a href="#bikes">TVS Jupiter for Women</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
