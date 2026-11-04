@@ -35,7 +35,7 @@
                 <a href="#map-section">India Route Map</a>
                 <a href="#pricing">Pricing</a>
                 <a href="#routes">Routes</a>
-                <a href="#contact">Contact</a>
+                <a href="book.html" class="btn btn-gold nav-btn">🗺️ Book a Car & Pay</a>
                 <a href="catering.html" class="btn btn-outline nav-btn">Catering Services</a>
             </div>
             <button class="mobile-menu-btn">☰</button>
@@ -202,9 +202,14 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-gold booking-btn">
-                        📞 Book Now
-                    </button>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button type="button" class="btn btn-gold booking-btn" style="flex: 1;" onclick="goToBookingPage()">
+                            🗺️ Book on Route Map & Pay →
+                        </button>
+                        <button type="submit" class="btn btn-primary booking-btn" style="flex: 1;">
+                            ⚡ Quick Request
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

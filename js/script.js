@@ -502,16 +502,13 @@ function handleCateringContact(event) {
 }
 
 // ===== SELECT VEHICLE SHORTCUT =====
-function selectVehicle(type) {
-    const vehicleSelect = document.getElementById('vehicle-type');
-    if (vehicleSelect) {
-        vehicleSelect.value = type;
-        calculateEstimate();
-        const bookingSection = document.getElementById('home') || document.querySelector('.hero-booking');
-        if (bookingSection) {
-            bookingSection.scrollIntoView({ behavior: 'smooth' });
-        }
+// Navigates directly to the dedicated full-page booking system
+function selectVehicle(type, destination) {
+    let targetUrl = `book.html?vehicle=${encodeURIComponent(type || 'sedan')}`;
+    if (destination) {
+        targetUrl += `&dest=${encodeURIComponent(destination)}`;
     }
+    window.location.href = targetUrl;
 }
 
 // ===== BACK TO TOP =====
@@ -544,12 +541,7 @@ function initLoader() {
 
 // ===== ROUTE CARDS CLICK =====
 function selectRoute(destination) {
-    const destSelect = document.getElementById('destination');
-    if (destSelect) {
-        destSelect.value = destination;
-        calculateEstimate();
-        document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
-    }
+    window.location.href = `book.html?dest=${encodeURIComponent(destination)}`;
 }
 
 // ===== CATERING MENU TABS =====
@@ -612,6 +604,13 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('ℹ️ EmailJS not configured — forms will work in demo mode');
     }
 });
+
+// ===== GO TO BOOKING PAGE SHORTCUT =====
+function goToBookingPage() {
+    const veh = document.getElementById('vehicle-type')?.value || 'sedan';
+    const dest = document.getElementById('destination')?.value || 'ooty';
+    window.location.href = `book.html?vehicle=${encodeURIComponent(veh)}&dest=${encodeURIComponent(dest)}`;
+}
 
 // ===== FLEET FILTER =====
 function filterFleet(category, btn) {

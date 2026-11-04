@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Ride - Sri Devi Tours & Travels</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+    <!-- Leaflet CSS & JS for Interactive Route Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <style>
+        .booking-page-body {
+            background: #f4f6f9;
+            min-height: 100vh;
+        }
+
+        .booking-page-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #5c0e0e 50%, #16213e 100%);
+            color: #ffffff;
+            padding: 100px 20px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .booking-page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .booking-page-header p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.05rem;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .booking-layout-grid {
+            display: grid;
+            grid-template-columns: 460px 1fr;
+            gap: 30px;
+            margin-top: -30px;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .booking-panel-card {
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            height: fit-content;
+        }
+
+        .booking-panel-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--off-white);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-group-location {
+            position: relative;
+        }
+
+        .loc-btn-current {
+            position: absolute;
+            right: 8px;
+            top: 36px;
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .loc-btn-current:hover {
+            background: #dcfce7;
+            transform: scale(1.02);
+        }
+
+        .booking-map-wrapper {
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .map-route-indicator {
+            padding: 16px 24px;
+            background: #1e1e38;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .map-route-indicator .pill {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .map-route-indicator .pill strong {
+            color: var(--gold-light);
+        }
+
+        .map-route-indicator .pill.dest strong {
+            color: #60a5fa;
+        }
+
+        .map-route-indicator .pill.dist {
+            margin-left: auto;
+            background: rgba(212, 168, 67, 0.25);
+            border: 1px solid rgba(212, 168, 67, 0.5);
+            color: #ffffff;
+        }
+
+        #full-booking-map {
+            width: 100%;
+            height: 520px;
+            background: #e5e3df;
+        }
+
+        /* Price Breakdown Card */
+        .price-breakdown-card {
+            background: #fffdfa;
+            border: 2px solid #ecd69f;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        .breakdown-row.total {
+            border-top: 2px dashed #d4a843;
+            margin-top: 10px;
+            padding-top: 14px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .breakdown-row.total span:last-child {
+            color: #b91c1c;
+        }
+
+        /* Payment Buttons */
+        .payment-action-box {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn-pay-now {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #15803d, #16a34a);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(22, 163, 74, 0.35);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-pay-now:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(22, 163, 74, 0.45);
+        }
+
+        .btn-pay-later {
+            width: 100%;
+            padding: 13px;
+            background: transparent;
+            color: var(--dark);
+            border: 2px solid #d1d5db;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-pay-later:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+
+        /* Payment Modal */
+        .pay-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .pay-modal-overlay.active {
+            display: flex;
+        }
+
+        .pay-modal {
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            max-width: 480px;
+            width: 100%;
+            padding: 35px 30px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            background: #f9fafb;
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .upi-badge {
+            display: inline-block;
+            background: #eef2ff;
+            color: #4338ca;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 992px) {
+            .booking-layout-grid {
+                grid-template-columns: 1fr;
+            }
+            #full-booking-map {
+                height: 380px;
+            }
+        }
+    </style>
+</head>
+
+<body class="booking-page-body">
+    <!-- Navbar -->
+    <nav class="navbar scrolled" style="background: rgba(255,255,255,0.98); box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+        <div class="container">
+            <a href="tours.html" class="logo">
+                <div class="logo-icon">SD</div>
+                <span class="logo-text" style="color: var(--primary);">Sri Devi Tours & Travels</span>
+            </a>
+            <div class="nav-links">
+                <a href="dashboard.html" style="color: var(--dark);">Home</a>
+                <a href="tours.html" style="color: var(--dark);">Fleet & Pricing</a>
+                <a href="tours.html#bikes" style="color: var(--dark);">Bike Rentals</a>
+                <a href="catering.html" style="color: var(--dark);">Catering Services</a>
+                <a href="tours.html" class="btn btn-primary nav-btn">← Back to Fleet</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="booking-page-header">
+        <div class="container">
+            <h1>Complete Your Ride Booking</h1>
+            <p>Select your starting location or use Current GPS Location, choose your destination anywhere in India, preview the live route on map, and confirm payment.</p>
+        </div>
+    </header>
+
+    <!-- Main Booking Section -->
+    <main class="container">
+        <div class="booking-layout-grid">
+            <!-- Left Form Panel -->
+            <div class="booking-panel-card">
+                <h2>📍 Ride Details</h2>
+
+                <form id="car-booking-full-form" onsubmit="handleProceedToPay(event)">
+                    <!-- Passenger Info -->
+                    <div class="form-group">
+                        <label for="book-user-name">Your Full Name *</label>
+                        <input type="text" id="book-user-name" placeholder="E.g. Ramesh Kumar" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="book-user-phone">Phone Number *</label>
+                            <input type="tel" id="book-user-phone" placeholder="+91 98765 XXXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="book-user-email">Email Address *</label>
+                            <input type="email" id="book-user-email" placeholder="ramesh@gmail.com" required>
+                        </div>
+                    </div>
+
+                    <!-- Pickup Location with Current Location Button -->
+                    <div class="form-group input-group-location">
+                        <label for="pickup-location">Starting / Pickup Location *</label>
+                        <input type="text" id="pickup-location" value="Pollachi, Tamil Nadu" placeholder="Enter starting city/address" required oninput="triggerRouteUpdate()">
+                        <button type="button" class="loc-btn-current" onclick="fetchCurrentLocation()">
+                            🎯 <span>Use Current Location</span>
+                        </button>
+                    </div>
+
+                    <!-- Destination Selection -->
+                    <div class="form-group">
+                        <label for="booking-destination-select">Choose Destination (Anywhere in India) *</label>
+                        <select id="booking-destination-select" onchange="onDestinationChanged()" required>
+                            <option value="">-- Select Destination --</option>
+                            <optgroup label="🔥 Nearby & Hill Stations">
+                                <option value="coimbatore">Coimbatore (40 km)</option>
+                                <option value="palakkad">Palakkad (50 km)</option>
+                                <option value="ooty" selected>Ooty (95 km)</option>
+                                <option value="kodaikanal">Kodaikanal (150 km)</option>
+                                <option value="munnar">Munnar (160 km)</option>
+                                <option value="erode">Erode (120 km)</option>
+                                <option value="thrissur">Thrissur (120 km)</option>
+                            </optgroup>
+                            <optgroup label="🏙️ Major South Indian Cities">
+                                <option value="kochi">Kochi (190 km)</option>
+                                <option value="madurai">Madurai (200 km)</option>
+                                <option value="salem">Salem (210 km)</option>
+                                <option value="trichy">Tiruchirappalli (260 km)</option>
+                                <option value="mysore">Mysore (280 km)</option>
+                                <option value="trivandrum">Thiruvananthapuram (300 km)</option>
+                                <option value="thanjavur">Thanjavur (300 km)</option>
+                                <option value="tirunelveli">Tirunelveli (310 km)</option>
+                                <option value="bangalore">Bangalore (370 km)</option>
+                                <option value="kanyakumari">Kanyakumari (370 km)</option>
+                                <option value="rameshwaram">Rameshwaram (380 km)</option>
+                                <option value="pondicherry">Pondicherry (400 km)</option>
+                                <option value="chennai">Chennai (510 km)</option>
+                            </optgroup>
+                            <optgroup label="✈️ Pan-India Long Distance">
+                                <option value="tirupati">Tirupati (550 km)</option>
+                                <option value="hyderabad">Hyderabad (750 km)</option>
+                                <option value="goa">Goa (850 km)</option>
+                                <option value="vizag">Visakhapatnam (1100 km)</option>
+                                <option value="mumbai">Mumbai (1100 km)</option>
+                                <option value="kolkata">Kolkata (1950 km)</option>
+                                <option value="jaipur">Jaipur (2000 km)</option>
+                                <option value="delhi">Delhi (2200 km)</option>
+                            </optgroup>
+                            <optgroup label="✍️ Custom Destination">
+                                <option value="custom">Other Custom Location (Enter km)...</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <!-- Custom KM Group if needed -->
+                    <div class="form-group" id="custom-km-wrap" style="display: none;">
+                        <label for="custom-km-input">Enter One-Way Distance in KM</label>
+                        <input type="number" id="custom-km-input" placeholder="E.g. 450" oninput="calculateBookingFare()">
+                    </div>
+
+                    <!-- Vehicle Selection -->
+                    <div class="form-group">
+                        <label for="booking-vehicle-select">Select Vehicle Type *</label>
+                        <select id="booking-vehicle-select" onchange="calculateBookingFare()" required>
+                            <option value="sedan">🚗 Sedan (Dzire / Amaze / Etios) — ₹18/km | ₹2,000/day</option>
+                            <option value="suv">🚙 SUV / XUV (Innova Crysta / XUV700 / Scorpio) — ₹20/km | ₹2,000/day</option>
+                            <option value="traveller">🚐 Force Traveller (12-20 Seater) — ₹22/km | ₹2,500/day</option>
+                            <option value="bike-classic">🏍️ Royal Enfield Classic 350 (Men) — ₹1,200/day</option>
+                            <option value="scooter-jupiter">🛵 TVS Jupiter Scooter (Women) — ₹600/day</option>
+                        </select>
+                    </div>
+
+                    <!-- Dates & Days -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="booking-start-date">Travel Date *</label>
+                            <input type="date" id="booking-start-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="booking-duration-days">Duration (Days) *</label>
+                            <select id="booking-duration-days" onchange="calculateBookingFare()">
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="7">7 Days (Week)</option>
+                                <option value="10">10 Days</option>
+                                <option value="15">15 Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Price Summary Box -->
+                    <div class="price-breakdown-card">
+                        <div class="breakdown-row">
+                            <span>Selected Vehicle:</span>
+                            <strong id="summary-vehicle-name">Sedan</strong>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>Route:</span>
+                            <strong id="summary-route-text">Pollachi ➔ Ooty</strong>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>Total Distance (Round Trip):</span>
+                            <strong id="summary-distance-text">190 km</strong>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>KM Rate Charge:</span>
+                            <span id="summary-km-charge">₹3,420 (@ ₹18/km)</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>Daily Bata / Day Charge:</span>
+                            <span id="summary-day-charge">₹2,000 (1 Day)</span>
+                        </div>
+                        <div class="breakdown-row total">
+                            <span>Total Estimated Fare:</span>
+                            <span id="summary-total-fare">₹3,420</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="payment-action-box">
+                        <button type="submit" class="btn-pay-now">
+                            💳 Pay & Confirm Booking →
+                        </button>
+                        <button type="button" class="btn-pay-later" onclick="handlePayLater()">
+                            📞 Book Now & Pay on Pickup (Cash / UPI)
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Interactive Map Wrapper -->
+            <div class="booking-map-wrapper">
+                <div class="map-route-indicator" id="booking-map-indicator">
+                    <div class="pill">📍 Pickup: <strong id="ind-origin">Pollachi</strong></div>
+                    <div style="color: var(--gold); font-size: 1.2rem;">➔</div>
+                    <div class="pill dest">🎯 Destination: <strong id="ind-dest">Ooty (Tamil Nadu)</strong></div>
+                    <div class="pill dist">📏 One-Way: <strong id="ind-km">95 km</strong></div>
+                </div>
+
+                <div id="full-booking-map"></div>
+
+                <div class="map-footer-bar">
+                    <div class="map-legend-item">
+                        <span class="legend-dot origin"></span> <strong>Green / Red Pin:</strong> Pickup Location
+                    </div>
+                    <div class="map-legend-item">
+                        <span class="legend-dot dest"></span> <strong>Blue Pin:</strong> Destination
+                    </div>
+                    <div class="map-legend-item">
+                        <span class="legend-line"></span> <strong>Dash Line:</strong> Highway Navigation Path
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Payment Modal (UPI / QR Code / NetBanking) -->
+    <div class="pay-modal-overlay" id="payment-modal">
+        <div class="pay-modal">
+            <span class="upi-badge">⚡ Instant UPI & Card Booking</span>
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--primary); margin-bottom: 5px;">Complete Ride Payment</h2>
+            <p style="color: #6b7280; font-size: 0.9rem;">Scan UPI QR code or pay using Google Pay / PhonePe / Paytm to confirm booking instantly</p>
+
+            <div class="qr-placeholder">
+                <div style="font-size: 3.5rem;">📱</div>
+                <div style="font-weight: 700; color: #111827; margin-top: 5px;">UPI ID: sridevigroups@upi</div>
+                <div style="font-size: 0.75rem; color: #6b7280;">GPay • PhonePe • Paytm • BHIM</div>
+            </div>
+
+            <div style="background: #fdf2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 12px; margin-bottom: 20px;">
+                <div style="font-size: 0.85rem; color: #991b1b;">Total Payable:</div>
+                <div style="font-size: 1.6rem; font-weight: 800; color: #b91c1c;" id="modal-pay-amount">₹3,420</div>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-primary" style="flex: 1; padding: 12px;" onclick="simulatePaymentSuccess()">
+                    ✅ I Have Paid / Verify
+                </button>
+                <button class="btn btn-outline" style="border-color: #9ca3af; color: #374151; padding: 12px;" onclick="closePayModal()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Confirmation Modal -->
+    <div class="pay-modal-overlay" id="success-confirm-modal">
+        <div class="pay-modal">
+            <div style="font-size: 4rem; margin-bottom: 10px;">🎉</div>
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 1.7rem; color: #15803d; margin-bottom: 8px;">Booking Confirmed!</h2>
+            <p style="color: #4b5563; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
+                Thank you, <strong id="confirm-user-name">Customer</strong>! Your driver and vehicle have been assigned from Pollachi. A trip confirmation SMS and email have been dispatched.
+            </p>
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 15px; margin-bottom: 20px; text-align: left; font-size: 0.88rem; color: #166534;">
+                <div>🚗 <strong>Vehicle:</strong> <span id="confirm-vehicle">Sedan</span></div>
+                <div>📍 <strong>Route:</strong> <span id="confirm-route">Pollachi ➔ Ooty</span></div>
+                <div>📅 <strong>Date:</strong> <span id="confirm-date">Tomorrow</span></div>
+                <div>💰 <strong>Total Amount:</strong> <span id="confirm-amount">₹3,420</span></div>
+            </div>
+            <a href="tours.html" class="btn btn-primary" style="display: block; padding: 13px;">Return to Tours & Travels</a>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Additional Booking Page Specific JS
+        let fullMap = null;
+        let originMarker = null;
+        let destMarker = null;
+        let navLine = null;
+        let originCoords = [10.6609, 77.0048]; // Default Pollachi
+
+        // Read query params if redirected from tours.html
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedVeh = urlParams.get('vehicle');
+            const selectedDest = urlParams.get('dest');
+
+            if (selectedVeh && document.getElementById('booking-vehicle-select')) {
+                document.getElementById('booking-vehicle-select').value = selectedVeh;
+            }
+            if (selectedDest && document.getElementById('booking-destination-select')) {
+                document.getElementById('booking-destination-select').value = selectedDest;
+            }
+
+            // Set default date to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('booking-start-date').value = tomorrow.toISOString().split('T')[0];
+            document.getElementById('booking-start-date').min = new Date().toISOString().split('T')[0];
+
+            initFullBookingMap();
+            calculateBookingFare();
+        });
+
+        function initFullBookingMap() {
+            if (fullMap) return;
+
+            fullMap = L.map('full-booking-map', {
+                scrollWheelZoom: true
+            }).setView([11.0, 77.0], 7);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '© OpenStreetMap contributors | Sri Devi Groups'
+            }).addTo(fullMap);
+
+            renderMapPins();
+        }
+
+        function renderMapPins() {
+            if (!fullMap) return;
+
+            const destKey = document.getElementById('booking-destination-select').value;
+            const destData = distances[destKey];
+
+            if (originMarker) fullMap.removeLayer(originMarker);
+            if (destMarker) fullMap.removeLayer(destMarker);
+            if (navLine) fullMap.removeLayer(navLine);
+
+            const pickupText = document.getElementById('pickup-location').value || 'Pickup Point';
+
+            // Origin Marker
+            const originIcon = L.divIcon({
+                className: 'custom-map-pin origin-pin',
+                html: `<div class="pin-badge origin">📍 <strong>${pickupText}</strong></div>`,
+                iconSize: [160, 40],
+                iconAnchor: [80, 20]
+            });
+            originMarker = L.marker(originCoords, { icon: originIcon }).addTo(fullMap);
+
+            if (destData && destData.lat && destData.lng) {
+                const destCoords = [destData.lat, destData.lng];
+
+                // Dest Marker
+                const destIcon = L.divIcon({
+                    className: 'custom-map-pin dest-pin',
+                    html: `<div class="pin-badge dest">🎯 <strong>${destData.name}</strong></div>`,
+                    iconSize: [150, 40],
+                    iconAnchor: [75, 20]
+                });
+                destMarker = L.marker(destCoords, { icon: destIcon }).addTo(fullMap);
+
+                // Polyline Route
+                navLine = L.polyline([originCoords, destCoords], {
+                    color: '#8B1A1A',
+                    weight: 5,
+                    dashArray: '12, 10',
+                    opacity: 0.9
+                }).addTo(fullMap);
+
+                fullMap.fitBounds(L.latLngBounds([originCoords, destCoords]), { padding: [50, 50] });
+
+                document.getElementById('ind-origin').textContent = pickupText;
+                document.getElementById('ind-dest').textContent = `${destData.name} (${destData.state})`;
+                document.getElementById('ind-km').textContent = `${destData.km} km`;
+            } else {
+                fullMap.setView(originCoords, 10);
+            }
+        }
+
+        function onDestinationChanged() {
+            const destSelect = document.getElementById('booking-destination-select');
+            const customWrap = document.getElementById('custom-km-wrap');
+            if (destSelect.value === 'custom') {
+                customWrap.style.display = 'block';
+            } else {
+                customWrap.style.display = 'none';
+            }
+            calculateBookingFare();
+            renderMapPins();
+        }
+
+        function triggerRouteUpdate() {
+            renderMapPins();
+        }
+
+        // Current GPS Location
+        function fetchCurrentLocation() {
+            const pickupInput = document.getElementById('pickup-location');
+            if (!navigator.geolocation) {
+                alert('Geolocation is not supported by your browser.');
+                return;
+            }
+
+            pickupInput.value = 'Locating GPS position...';
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    originCoords = [position.coords.latitude, position.coords.longitude];
+                    pickupInput.value = `My Current Location (${originCoords[0].toFixed(3)}, ${originCoords[1].toFixed(3)})`;
+                    renderMapPins();
+                    calculateBookingFare();
+                },
+                (error) => {
+                    alert('Could not retrieve current location. Please ensure location permissions are granted.');
+                    pickupInput.value = 'Pollachi, Tamil Nadu';
+                    originCoords = [10.6609, 77.0048];
+                }
+            );
+        }
+
+        function calculateBookingFare() {
+            const destSelect = document.getElementById('booking-destination-select');
+            const vehSelect = document.getElementById('booking-vehicle-select');
+            const daysSelect = document.getElementById('booking-duration-days');
+            const customKmInput = document.getElementById('custom-km-input');
+
+            if (!destSelect || !vehSelect) return;
+
+            const destKey = destSelect.value;
+            const vehKey = vehSelect.value;
+            const days = parseInt(daysSelect?.value) || 1;
+            const rate = pricing[vehKey] || pricing.sedan;
+
+            let oneWayKm = 0;
+            if (destKey === 'custom') {
+                oneWayKm = parseInt(customKmInput?.value) || 0;
+            } else if (distances[destKey]) {
+                oneWayKm = distances[destKey].km;
+            }
+
+            const roundTripKm = oneWayKm * 2;
+            let kmCharge = 0;
+            let dayCharge = 0;
+            let total = 0;
+
+            if (rate.isBike) {
+                dayCharge = days * rate.perDay;
+                total = dayCharge;
+                document.getElementById('summary-km-charge').textContent = 'Included standard';
+                document.getElementById('summary-day-charge').textContent = `₹${dayCharge.toLocaleString('en-IN')} (₹${rate.perDay}/day x ${days} days)`;
+            } else {
+                kmCharge = roundTripKm * rate.perKm;
+                dayCharge = days * rate.perDay;
+                total = Math.max(kmCharge, dayCharge);
+                document.getElementById('summary-km-charge').textContent = `₹${kmCharge.toLocaleString('en-IN')} (@ ₹${rate.perKm}/km)`;
+                document.getElementById('summary-day-charge').textContent = `₹${dayCharge.toLocaleString('en-IN')} (@ ₹${rate.perDay}/day)`;
+            }
+
+            const pickupText = document.getElementById('pickup-location').value || 'Pollachi';
+            const destText = destKey === 'custom' ? 'Custom Destination' : (distances[destKey]?.name || 'Destination');
+
+            document.getElementById('summary-vehicle-name').textContent = rate.name;
+            document.getElementById('summary-route-text').textContent = `${pickupText} ➔ ${destText}`;
+            document.getElementById('summary-distance-text').textContent = `${roundTripKm} km (Round Trip)`;
+            document.getElementById('summary-total-fare').textContent = `₹${total.toLocaleString('en-IN')}`;
+            document.getElementById('modal-pay-amount').textContent = `₹${total.toLocaleString('en-IN')}`;
+        }
+
+        function handleProceedToPay(event) {
+            event.preventDefault();
+            const totalFare = document.getElementById('summary-total-fare').textContent;
+            document.getElementById('modal-pay-amount').textContent = totalFare;
+            document.getElementById('payment-modal').classList.add('active');
+        }
+
+        function closePayModal() {
+            document.getElementById('payment-modal').classList.remove('active');
+        }
+
+        function simulatePaymentSuccess() {
+            closePayModal();
+            const name = document.getElementById('book-user-name').value;
+            const veh = document.getElementById('summary-vehicle-name').textContent;
+            const route = document.getElementById('summary-route-text').textContent;
+            const date = document.getElementById('booking-start-date').value;
+            const amount = document.getElementById('summary-total-fare').textContent;
+
+            document.getElementById('confirm-user-name').textContent = name;
+            document.getElementById('confirm-vehicle').textContent = veh;
+            document.getElementById('confirm-route').textContent = route;
+            document.getElementById('confirm-date').textContent = date;
+            document.getElementById('confirm-amount').textContent = amount;
+
+            document.getElementById('success-confirm-modal').classList.add('active');
+        }
+
+        function handlePayLater() {
+            const form = document.getElementById('car-booking-full-form');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            simulatePaymentSuccess();
+        }
+    </script>
+</body>
+
+</html>
