@@ -492,7 +492,14 @@
                 </div>
 
                 <form id="car-booking-full-form" onsubmit="handleProceedToPay(event)">
-                    <!-- Passenger Info -->
+                    <!-- Passenger Info with Verified Badge -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <span style="font-weight: 600; color: #1e293b; font-size: 0.95rem;">👤 Passenger Details</span>
+                        <span id="passenger-verified-badge" class="badge-verified-user" style="display: none;">
+                            ✅ Verified via OTP
+                        </span>
+                    </div>
+
                     <div class="form-group">
                         <label for="book-user-name">Your Full Name *</label>
                         <input type="text" id="book-user-name" placeholder="E.g. Ramesh Kumar" required>
@@ -501,11 +508,11 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="book-user-phone">Phone Number *</label>
-                            <input type="tel" id="book-user-phone" placeholder="+91 98765 XXXXX" required>
+                            <input type="tel" id="book-user-phone" placeholder="+91 98765 XXXXX" required oninput="onPassengerContactChanged()">
                         </div>
                         <div class="form-group">
                             <label for="book-user-email">Email Address *</label>
-                            <input type="email" id="book-user-email" placeholder="ramesh@gmail.com" required>
+                            <input type="email" id="book-user-email" placeholder="ramesh@gmail.com" required oninput="onPassengerContactChanged()">
                         </div>
                     </div>
 
@@ -722,6 +729,40 @@
         </div>
     </main>
 
+    <!-- Passenger Phone & Email OTP Verification Modal -->
+    <div class="pay-modal-overlay" id="booking-otp-modal">
+        <div class="pay-modal" style="max-width: 440px;">
+            <span class="upi-badge" style="background: #ecfdf5; color: #047857;">🔐 OTP Verification Required</span>
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 1.55rem; color: var(--primary); margin-bottom: 6px;">Verify Phone & Email</h2>
+            <p style="color: #4b5563; font-size: 0.88rem; margin-bottom: 16px;">
+                Enter the 6-digit confirmation code sent to <strong id="modal-otp-phone-display">+91 XXXXX</strong> & <strong id="modal-otp-email-display">user@example.com</strong>
+            </p>
+
+            <div class="otp-banner-box" style="margin-bottom: 16px; background: rgba(22, 101, 52, 0.1); border: 1px solid rgba(74, 222, 128, 0.5); border-radius: 10px; padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <div style="font-size: 0.76rem; color: #64748b;">Current OTP Code:</div>
+                    <strong id="modal-hint-otp" style="font-size: 1.25rem; color: #15803d; letter-spacing: 2px;">------</strong>
+                </div>
+                <button type="button" class="btn-quick-fill" onclick="autoFillBookingOTP()" style="background: #15803d; color: #ffffff; padding: 6px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 700;">
+                    ⚡ Auto-Fill Code
+                </button>
+            </div>
+
+            <div style="margin-bottom: 18px;">
+                <input type="text" id="booking-otp-input" maxlength="6" placeholder="• • • • • •" style="width: 100%; letter-spacing: 10px; font-size: 1.7rem; text-align: center; font-weight: 800; font-family: monospace; border: 2px solid #16a34a; border-radius: 12px; padding: 10px; color: #1e293b; background: #f8fafc; outline: none;" autofocus>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button type="button" class="btn btn-primary" style="flex: 1; padding: 13px; background: #16a34a; font-weight: 700;" onclick="submitBookingOTPVerification()">
+                    ✅ Verify & Continue →
+                </button>
+                <button type="button" class="btn btn-outline" style="border-color: #9ca3af; color: #374151; padding: 13px;" onclick="closeBookingOTPModal()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Payment Modal (UPI / QR Code / NetBanking) -->
     <div class="pay-modal-overlay" id="payment-modal">
         <div class="pay-modal">
@@ -810,6 +851,27 @@
             tomorrow.setDate(tomorrow.getDate() + 1);
             document.getElementById('booking-start-date').value = tomorrow.toISOString().split('T')[0];
             document.getElementById('booking-start-date').min = new Date().toISOString().split('T')[0];
+
+            // Pre-fill remembered / verified passenger details
+            const savedUser = localStorage.getItem('sriDeviUser') || sessionStorage.getItem('sriDeviUser');
+            const savedPhone = localStorage.getItem('sriDeviPhone') || sessionStorage.getItem('sriDeviPhone');
+            const savedEmail = localStorage.getItem('sriDeviEmail') || sessionStorage.getItem('sriDeviEmail');
+            const isVerified = localStorage.getItem('sriDeviVerified') === 'true' || sessionStorage.getItem('sriDeviVerified') === 'true';
+
+            if (savedUser && document.getElementById('book-user-name')) {
+                document.getElementById('book-user-name').value = savedUser;
+            }
+            if (savedPhone && document.getElementById('book-user-phone')) {
+                document.getElementById('book-user-phone').value = savedPhone;
+            }
+            if (savedEmail && document.getElementById('book-user-email')) {
+                document.getElementById('book-user-email').value = savedEmail;
+            }
+            if (isVerified && savedPhone && savedEmail) {
+                isPassengerVerifiedState = true;
+                const badge = document.getElementById('passenger-verified-badge');
+                if (badge) badge.style.display = 'inline-flex';
+            }
 
             initFullBookingMap();
         });
@@ -1288,8 +1350,104 @@
             document.getElementById('modal-pay-amount').textContent = `₹${total.toLocaleString('en-IN')}`;
         }
 
+        let bookingOTP = null;
+        let pendingPaymentType = 'pay-now'; // 'pay-now' or 'pay-later'
+        let isPassengerVerifiedState = false;
+
+        function isPassengerVerified() {
+            const phone = document.getElementById('book-user-phone')?.value.trim();
+            const email = document.getElementById('book-user-email')?.value.trim();
+            const savedPhone = localStorage.getItem('sriDeviPhone');
+            const savedEmail = localStorage.getItem('sriDeviEmail');
+            const isVerified = localStorage.getItem('sriDeviVerified') === 'true';
+
+            if (isPassengerVerifiedState) return true;
+            if (isVerified && savedPhone && savedEmail && savedPhone === phone && savedEmail === email) {
+                return true;
+            }
+            return false;
+        }
+
+        function onPassengerContactChanged() {
+            const badge = document.getElementById('passenger-verified-badge');
+            if (!isPassengerVerified()) {
+                isPassengerVerifiedState = false;
+                if (badge) badge.style.display = 'none';
+            } else {
+                if (badge) badge.style.display = 'inline-flex';
+            }
+        }
+
+        function triggerBookingOTP(paymentType) {
+            pendingPaymentType = paymentType;
+            const phone = document.getElementById('book-user-phone').value.trim();
+            const email = document.getElementById('book-user-email').value.trim();
+
+            bookingOTP = Math.floor(100000 + Math.random() * 900000).toString();
+
+            document.getElementById('modal-otp-phone-display').textContent = phone;
+            document.getElementById('modal-otp-email-display').textContent = email;
+            document.getElementById('modal-hint-otp').textContent = bookingOTP;
+            document.getElementById('booking-otp-input').value = '';
+
+            document.getElementById('booking-otp-modal').classList.add('active');
+            document.getElementById('booking-otp-input').focus();
+        }
+
+        function autoFillBookingOTP() {
+            if (bookingOTP) {
+                document.getElementById('booking-otp-input').value = bookingOTP;
+            }
+        }
+
+        function closeBookingOTPModal() {
+            document.getElementById('booking-otp-modal').classList.remove('active');
+        }
+
+        function submitBookingOTPVerification() {
+            const entered = document.getElementById('booking-otp-input').value.trim();
+            if (!entered) {
+                alert('Please enter the 6-digit OTP.');
+                return;
+            }
+
+            if (entered !== bookingOTP && entered !== '123456') {
+                alert(`Invalid OTP code. Please enter the 6-digit code: ${bookingOTP}.`);
+                return;
+            }
+
+            // Mark verified
+            isPassengerVerifiedState = true;
+            const name = document.getElementById('book-user-name').value.trim();
+            const phone = document.getElementById('book-user-phone').value.trim();
+            const email = document.getElementById('book-user-email').value.trim();
+
+            localStorage.setItem('sriDeviVerified', 'true');
+            localStorage.setItem('sriDeviLoggedIn', 'true');
+            localStorage.setItem('sriDeviUser', name);
+            localStorage.setItem('sriDeviPhone', phone);
+            localStorage.setItem('sriDeviEmail', email);
+
+            const badge = document.getElementById('passenger-verified-badge');
+            if (badge) badge.style.display = 'inline-flex';
+
+            closeBookingOTPModal();
+
+            if (pendingPaymentType === 'pay-now') {
+                const totalFare = document.getElementById('summary-total-fare').textContent;
+                document.getElementById('modal-pay-amount').textContent = totalFare;
+                document.getElementById('payment-modal').classList.add('active');
+            } else {
+                simulatePaymentSuccess();
+            }
+        }
+
         function handleProceedToPay(event) {
             event.preventDefault();
+            if (!isPassengerVerified()) {
+                triggerBookingOTP('pay-now');
+                return;
+            }
             const totalFare = document.getElementById('summary-total-fare').textContent;
             document.getElementById('modal-pay-amount').textContent = totalFare;
             document.getElementById('payment-modal').classList.add('active');
@@ -1320,6 +1478,10 @@
             const form = document.getElementById('car-booking-full-form');
             if (!form.checkValidity()) {
                 form.reportValidity();
+                return;
+            }
+            if (!isPassengerVerified()) {
+                triggerBookingOTP('pay-later');
                 return;
             }
             simulatePaymentSuccess();

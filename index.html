@@ -3,13 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Sri Devi Groups | Tours, Travels & Catering Services</title>
+    <title>Login & Verification - Sri Devi Groups | Tours, Travels & Catering</title>
+    
+    <!-- Check if already logged in earlier - do not ask for login again! -->
+    <script>
+        if (localStorage.getItem('sriDeviLoggedIn') === 'true' || sessionStorage.getItem('sriDeviLoggedIn') === 'true') {
+            window.location.replace('dashboard.html');
+        }
+    </script>
+
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
     <style>
         .love-login-wrapper {
@@ -72,9 +82,9 @@
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 24px;
-            padding: 48px 42px;
+            padding: 44px 40px;
             width: 100%;
-            max-width: 460px;
+            max-width: 480px;
             position: relative;
             z-index: 10;
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -84,13 +94,13 @@
 
         .login-brand-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 26px;
         }
 
         .brand-emblem {
             width: 76px;
             height: 76px;
-            margin: 0 auto 16px;
+            margin: 0 auto 14px;
             background: linear-gradient(135deg, #d4a843, #8b1a1a);
             border-radius: 20px;
             display: flex;
@@ -141,13 +151,13 @@
             margin-top: 10px;
         }
 
-        /* Demo Pill Box */
+        /* Demo credentials pill */
         .demo-credentials-banner {
             background: rgba(212, 168, 67, 0.12);
             border: 1px solid rgba(212, 168, 67, 0.3);
             border-radius: 14px;
             padding: 12px 16px;
-            margin-bottom: 24px;
+            margin-bottom: 22px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -181,7 +191,7 @@
 
         /* Form elements */
         .form-floating-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             position: relative;
         }
 
@@ -202,7 +212,7 @@
 
         .input-with-icon input {
             width: 100%;
-            padding: 14px 44px 14px 16px;
+            padding: 14px 16px;
             background: rgba(255, 255, 255, 0.07);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
@@ -223,49 +233,6 @@
             box-shadow: 0 0 0 4px rgba(212, 168, 67, 0.2);
         }
 
-        .field-icon {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 1.1rem;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .form-meta-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.84rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 24px;
-        }
-
-        .remember-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-
-        .remember-checkbox input[type="checkbox"] {
-            accent-color: #d4a843;
-            width: 16px;
-            height: 16px;
-        }
-
-        .forgot-link {
-            color: #f0d98c;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-        .forgot-link:hover {
-            color: #ffffff;
-            text-decoration: underline;
-        }
-
         .btn-love-login {
             width: 100%;
             padding: 15px;
@@ -282,6 +249,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            margin-top: 10px;
         }
 
         .btn-love-login:hover {
@@ -289,10 +257,34 @@
             box-shadow: 0 15px 35px rgba(212, 168, 67, 0.45);
         }
 
+        .btn-direct-book {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #15803d, #16a34a);
+            border: none;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(22, 163, 74, 0.35);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .btn-direct-book:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(22, 163, 74, 0.45);
+        }
+
         .btn-guest-entry {
             display: block;
             text-align: center;
-            margin-top: 18px;
+            margin-top: 16px;
             color: rgba(255, 255, 255, 0.75);
             font-size: 0.88rem;
             text-decoration: none;
@@ -314,7 +306,7 @@
             padding: 12px 16px;
             border-radius: 10px;
             font-size: 0.86rem;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             animation: fadeIn 0.3s ease;
         }
 
@@ -335,9 +327,66 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* OTP Input & Banner */
+        .otp-banner-box {
+            background: rgba(22, 101, 52, 0.28);
+            border: 1px solid rgba(74, 222, 128, 0.45);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #86efac;
+            font-size: 0.85rem;
+        }
+
+        .otp-banner-box strong {
+            color: #ffffff;
+            font-size: 1.15rem;
+            letter-spacing: 3px;
+        }
+
+        .otp-input-field {
+            width: 100%;
+            letter-spacing: 10px;
+            font-size: 1.8rem;
+            text-align: center;
+            font-weight: 800;
+            font-family: monospace, sans-serif;
+            background: rgba(255, 255, 255, 0.12);
+            border: 2px solid #d4a843;
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 12px;
+            outline: none;
+            box-shadow: 0 0 15px rgba(212, 168, 67, 0.25);
+            margin-bottom: 18px;
+        }
+
+        .otp-input-field:focus {
+            border-color: #f0d98c;
+            box-shadow: 0 0 20px rgba(212, 168, 67, 0.45);
+        }
+
+        .otp-helper-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.84rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 18px;
+        }
+
+        .otp-resend-link {
+            color: #f0d98c;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
         .login-footer-info {
             text-align: center;
-            margin-top: 24px;
+            margin-top: 22px;
             font-size: 0.78rem;
             color: rgba(255, 255, 255, 0.5);
             line-height: 1.5;
@@ -351,7 +400,7 @@
         <div class="glow-orb glow-orb-2"></div>
         <div class="glow-orb glow-orb-3"></div>
 
-        <!-- Glassmorphism Login Card -->
+        <!-- Glassmorphism Login & OTP Card -->
         <div class="love-login-card">
             <!-- Brand Header -->
             <div class="login-brand-header">
@@ -366,49 +415,88 @@
             <!-- Demo Credentials Helper -->
             <div class="demo-credentials-banner">
                 <div class="demo-text">
-                    <strong>Demo Access:</strong> admin / admin123
+                    <strong>Quick Verification:</strong> Phone & Email OTP
                 </div>
-                <button type="button" class="btn-quick-fill" onclick="autoFillDemo()">
-                    ⚡ 1-Click Auto Fill
+                <button type="button" class="btn-quick-fill" onclick="autoFillDemoDetails()">
+                    ⚡ Auto-Fill Demo
                 </button>
             </div>
 
             <!-- Feedback Alert -->
             <div id="login-alert-box" class="login-alert"></div>
 
-            <!-- Form -->
-            <form id="love-login-form" onsubmit="executeLogin(event)">
+            <!-- STAGE 1: Enter Phone Number & Email ID -->
+            <form id="details-entry-form" onsubmit="handleSendOTP(event)">
                 <div class="form-floating-group">
-                    <label for="login-username">👤 Username / Mobile Number</label>
+                    <label for="login-fullname">👤 Your Full Name</label>
                     <div class="input-with-icon">
-                        <input type="text" id="login-username" placeholder="E.g. admin or 9876543210" required autocomplete="username">
-                        <span class="field-icon">✨</span>
+                        <input type="text" id="login-fullname" placeholder="E.g. Ramesh Kumar" required value="Ramesh Kumar">
                     </div>
                 </div>
 
                 <div class="form-floating-group">
-                    <label for="login-password">🔒 Password</label>
+                    <label for="login-phone">📱 Mobile / Phone Number (for OTP)</label>
                     <div class="input-with-icon">
-                        <input type="password" id="login-password" placeholder="Enter password (e.g. admin123)" required autocomplete="current-password">
-                        <span class="field-icon" id="toggle-pwd-btn" onclick="togglePasswordVisibility()" title="Show/Hide Password">👁️</span>
+                        <input type="tel" id="login-phone" placeholder="E.g. 98765 43210" required value="+91 98765 43210">
                     </div>
                 </div>
 
-                <div class="form-meta-row">
-                    <label class="remember-checkbox">
-                        <input type="checkbox" id="remember-me" checked>
-                        <span>Remember me</span>
-                    </label>
-                    <a href="javascript:void(0)" class="forgot-link" onclick="handleForgotPassword()">Forgot password?</a>
+                <div class="form-floating-group">
+                    <label for="login-email">✉️ Email Address (for OTP Verification)</label>
+                    <div class="input-with-icon">
+                        <input type="email" id="login-email" placeholder="E.g. ramesh@example.com" required value="ramesh@example.com">
+                    </div>
                 </div>
 
-                <button type="submit" class="btn-love-login" id="btn-submit-login">
-                    <span>Sign In to Sri Devi Groups</span> →
+                <button type="submit" class="btn-love-login" id="btn-send-otp">
+                    <span>📩 Send Verification OTP</span> →
+                </button>
+
+                <button type="button" class="btn-direct-book" onclick="handleBookCarDirectly()">
+                    🚗 Book a Car Directly (Verify with OTP) →
                 </button>
 
                 <a href="dashboard.html" class="btn-guest-entry">
                     🚀 Continue as Guest Visitor →
                 </a>
+            </form>
+
+            <!-- STAGE 2: OTP Verification Form (Hidden Initially) -->
+            <form id="otp-verify-form" style="display: none;" onsubmit="handleVerifyOTP(event)">
+                <!-- OTP Notice Banner -->
+                <div class="otp-banner-box">
+                    <div>
+                        <div>📲 OTP Sent to:</div>
+                        <strong id="display-otp-target">+91 98765 XXXXX</strong>
+                    </div>
+                    <button type="button" class="btn-quick-fill" onclick="autoFillCurrentOTP()">
+                        ⚡ Fill OTP: <span id="hint-otp-code">------</span>
+                    </button>
+                </div>
+
+                <div class="form-floating-group">
+                    <label for="input-otp-code">🔐 Enter 6-Digit Verification OTP</label>
+                    <input type="text" id="input-otp-code" class="otp-input-field" maxlength="6" placeholder="• • • • • •" required autofocus>
+                </div>
+
+                <div class="otp-helper-row">
+                    <span>Didn't receive code?</span>
+                    <span class="otp-resend-link" onclick="resendOTP()">Resend OTP</span>
+                </div>
+
+                <button type="submit" class="btn-love-login" id="btn-verify-otp">
+                    <span>✅ Verify OTP & Enter Dashboard</span> →
+                </button>
+
+                <button type="button" class="btn-direct-book" onclick="verifyAndGoToBooking()">
+                    🚗 Verify & Book a Car Directly →
+                </button>
+
+                <div style="text-align: center; margin-top: 14px;">
+                    <a href="javascript:void(0)" style="color: rgba(255,255,255,0.7); font-size: 0.82rem; text-decoration: underline;" onclick="backToDetails()">
+                        ← Change Phone Number or Email
+                    </a>
+                </div>
             </form>
 
             <div class="login-footer-info">
@@ -419,33 +507,8 @@
     </div>
 
     <script>
-        // Check if already logged in and restore session
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedUser = sessionStorage.getItem('sriDeviUser') || localStorage.getItem('sriDeviUser');
-            if (savedUser) {
-                // Pre-fill username if remembered
-                const userInput = document.getElementById('login-username');
-                if (userInput) userInput.value = savedUser;
-            }
-        });
-
-        function togglePasswordVisibility() {
-            const pwdInput = document.getElementById('login-password');
-            const toggleIcon = document.getElementById('toggle-pwd-btn');
-            if (pwdInput.type === 'password') {
-                pwdInput.type = 'text';
-                toggleIcon.textContent = '🙈';
-            } else {
-                pwdInput.type = 'password';
-                toggleIcon.textContent = '👁️';
-            }
-        }
-
-        function autoFillDemo() {
-            document.getElementById('login-username').value = 'admin';
-            document.getElementById('login-password').value = 'admin123';
-            showAlert('Demo credentials filled! Click "Sign In" or press Enter.', 'success');
-        }
+        let generatedOTP = null;
+        let intendedAction = 'dashboard'; // 'dashboard' or 'book'
 
         function showAlert(message, type) {
             const alertBox = document.getElementById('login-alert-box');
@@ -454,46 +517,125 @@
             alertBox.style.display = 'block';
         }
 
-        function executeLogin(event) {
-            event.preventDefault();
-            const username = document.getElementById('login-username').value.trim();
-            const password = document.getElementById('login-password').value.trim();
-            const remember = document.getElementById('remember-me').checked;
-            const submitBtn = document.getElementById('btn-submit-login');
+        function autoFillDemoDetails() {
+            document.getElementById('login-fullname').value = 'Ramesh Kumar';
+            document.getElementById('login-phone').value = '+91 98765 43210';
+            document.getElementById('login-email').value = 'ramesh@example.com';
+            showAlert('Demo passenger details auto-filled. Click "Send Verification OTP" below.', 'success');
+        }
 
-            if (!username || !password) {
-                showAlert('⚠️ Please enter both username and password.', 'error');
+        // Generate 6-digit random OTP
+        function generateRandomOTP() {
+            return Math.floor(100000 + Math.random() * 900000).toString();
+        }
+
+        function handleSendOTP(event, nextAction = 'dashboard') {
+            if (event) event.preventDefault();
+
+            const name = document.getElementById('login-fullname').value.trim();
+            const phone = document.getElementById('login-phone').value.trim();
+            const email = document.getElementById('login-email').value.trim();
+
+            if (!name || !phone || !email) {
+                showAlert('⚠️ Please provide your full name, phone number, and email address.', 'error');
                 return;
             }
 
-            // Authentication verification (Demo admin / admin123, or user entrance)
-            submitBtn.innerHTML = '⏳ Verifying credentials...';
-            submitBtn.disabled = true;
+            intendedAction = nextAction;
+            generatedOTP = generateRandomOTP();
+
+            const btn = document.getElementById('btn-send-otp');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '⏳ Sending OTP...';
+            btn.disabled = true;
 
             setTimeout(() => {
-                if ((username.toLowerCase() === 'admin' && password === 'admin123') || (username.length >= 3 && password.length >= 4)) {
-                    showAlert('✅ Welcome back! Redirecting to Sri Devi Groups...', 'success');
-                    
-                    // Save authentication status
-                    sessionStorage.setItem('sriDeviLoggedIn', 'true');
-                    sessionStorage.setItem('sriDeviUser', username);
-                    if (remember) {
-                        localStorage.setItem('sriDeviUser', username);
-                    }
+                btn.innerHTML = originalText;
+                btn.disabled = false;
 
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 600);
-                } else {
-                    showAlert('❌ Invalid password. Use <strong>admin</strong> and <strong>admin123</strong> for demo access.', 'error');
-                    submitBtn.innerHTML = '<span>Sign In to Sri Devi Groups</span> →';
-                    submitBtn.disabled = false;
-                }
-            }, 500);
+                // Transition to OTP stage
+                document.getElementById('details-entry-form').style.display = 'none';
+                document.getElementById('otp-verify-form').style.display = 'block';
+
+                document.getElementById('display-otp-target').textContent = `${phone} & ${email}`;
+                document.getElementById('hint-otp-code').textContent = generatedOTP;
+
+                showAlert(`📲 OTP dispatched successfully! <strong>Your code is: ${generatedOTP}</strong> (Also sent to ${email})`, 'success');
+                document.getElementById('input-otp-code').focus();
+            }, 600);
         }
 
-        function handleForgotPassword() {
-            alert('🔐 Password Assistance:\n\nFor demo access, please use:\nUsername: admin\nPassword: admin123\n\nFor personal accounts, please contact Sri Devi Groups support at +91 98765 43210.');
+        function handleBookCarDirectly() {
+            handleSendOTP(null, 'book');
+        }
+
+        function autoFillCurrentOTP() {
+            if (generatedOTP) {
+                document.getElementById('input-otp-code').value = generatedOTP;
+                showAlert('✅ OTP filled! Click Verify & Proceed.', 'success');
+            }
+        }
+
+        function resendOTP() {
+            generatedOTP = generateRandomOTP();
+            document.getElementById('hint-otp-code').textContent = generatedOTP;
+            showAlert(`🔄 New OTP dispatched: <strong>${generatedOTP}</strong>`, 'success');
+        }
+
+        function backToDetails() {
+            document.getElementById('otp-verify-form').style.display = 'none';
+            document.getElementById('details-entry-form').style.display = 'block';
+            document.getElementById('login-alert-box').style.display = 'none';
+        }
+
+        function handleVerifyOTP(event) {
+            if (event) event.preventDefault();
+            verifyAndFinish(intendedAction);
+        }
+
+        function verifyAndGoToBooking() {
+            verifyAndFinish('book');
+        }
+
+        function verifyAndFinish(action) {
+            const entered = document.getElementById('input-otp-code').value.trim();
+            const name = document.getElementById('login-fullname').value.trim();
+            const phone = document.getElementById('login-phone').value.trim();
+            const email = document.getElementById('login-email').value.trim();
+
+            if (!entered) {
+                showAlert('⚠️ Please enter the 6-digit OTP code.', 'error');
+                return;
+            }
+
+            if (entered !== generatedOTP && entered !== '123456') {
+                showAlert(`❌ Invalid OTP. Enter the 6-digit code shown above (e.g. <strong>${generatedOTP}</strong>).`, 'error');
+                return;
+            }
+
+            // Verification successful!
+            showAlert('🎉 Phone & Email Verified Successfully! Redirecting...', 'success');
+
+            // Save verified session permanently in localStorage so user is NEVER asked for login again!
+            localStorage.setItem('sriDeviLoggedIn', 'true');
+            localStorage.setItem('sriDeviVerified', 'true');
+            localStorage.setItem('sriDeviUser', name);
+            localStorage.setItem('sriDeviPhone', phone);
+            localStorage.setItem('sriDeviEmail', email);
+
+            sessionStorage.setItem('sriDeviLoggedIn', 'true');
+            sessionStorage.setItem('sriDeviVerified', 'true');
+            sessionStorage.setItem('sriDeviUser', name);
+            sessionStorage.setItem('sriDeviPhone', phone);
+            sessionStorage.setItem('sriDeviEmail', email);
+
+            setTimeout(() => {
+                if (action === 'book') {
+                    window.location.href = 'book.html';
+                } else {
+                    window.location.href = 'dashboard.html';
+                }
+            }, 700);
         }
     </script>
 </body>

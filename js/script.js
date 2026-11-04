@@ -631,6 +631,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 600);
 
+    // Pre-fill passenger info across all forms if saved
+    const savedUser = localStorage.getItem('sriDeviUser') || sessionStorage.getItem('sriDeviUser');
+    const savedPhone = localStorage.getItem('sriDeviPhone') || sessionStorage.getItem('sriDeviPhone');
+    const savedEmail = localStorage.getItem('sriDeviEmail') || sessionStorage.getItem('sriDeviEmail');
+
+    if (savedUser) {
+        const nameInput = document.getElementById('booking-name');
+        if (nameInput && !nameInput.value) nameInput.value = savedUser;
+    }
+    if (savedPhone) {
+        const phoneInput = document.getElementById('booking-phone');
+        if (phoneInput && !phoneInput.value) phoneInput.value = savedPhone;
+    }
+    if (savedEmail) {
+        const emailInput = document.getElementById('booking-email');
+        if (emailInput && !emailInput.value) emailInput.value = savedEmail;
+    }
+
     // Set minimum date for travel date picker
     const dateInput = document.getElementById('travel-date');
     if (dateInput) {
@@ -715,5 +733,10 @@ function initAuthNav() {
 function handleLogout() {
     sessionStorage.removeItem('sriDeviLoggedIn');
     sessionStorage.removeItem('sriDeviUser');
+    sessionStorage.removeItem('sriDeviPhone');
+    sessionStorage.removeItem('sriDeviEmail');
+    sessionStorage.removeItem('sriDeviVerified');
+    localStorage.removeItem('sriDeviLoggedIn');
+    localStorage.removeItem('sriDeviVerified');
     window.location.href = 'index.html';
 }
