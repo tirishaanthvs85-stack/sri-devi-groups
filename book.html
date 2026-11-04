@@ -108,17 +108,136 @@
             border: 1px solid rgba(0, 0, 0, 0.06);
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
         .map-route-indicator {
-            padding: 16px 24px;
-            background: #1e1e38;
+            padding: 16px 20px;
+            background: #1a1a2e;
             color: #ffffff;
             display: flex;
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
             border-bottom: 3px solid var(--gold);
+        }
+
+        .map-view-switcher {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 3px;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .map-view-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.85);
+            padding: 5px 12px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .map-view-btn.active, .map-view-btn:hover {
+            background: #ffffff;
+            color: #1a1a2e;
+        }
+
+        /* Floating Google Maps Style Navigation Card on top of Map */
+        .gmap-nav-floating-card {
+            position: absolute;
+            top: 115px;
+            left: 20px;
+            z-index: 1000;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border: 1px solid rgba(0,0,0,0.08);
+            max-width: 380px;
+            pointer-events: auto;
+        }
+
+        .gmap-maneuver-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #1a73e8;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(26,115,232,0.4);
+        }
+
+        .gmap-nav-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gmap-nav-time {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #1e8e3e;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .gmap-nav-time small {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #5f6368;
+        }
+
+        .gmap-nav-subtext {
+            font-size: 0.82rem;
+            color: #3c4043;
+            font-weight: 500;
+        }
+
+        /* Google Maps Pin Markers */
+        .gmap-marker-pin {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #ffffff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+            font-size: 0.82rem;
+            font-weight: 700;
+            border: 2px solid #1a73e8;
+            white-space: nowrap;
+        }
+
+        .gmap-marker-pin.origin {
+            border-color: #34a853;
+            color: #137333;
+        }
+
+        .gmap-marker-pin.dest {
+            border-color: #ea4335;
+            color: #c5221f;
+        }
+
+        .gmap-pulse-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #34a853;
+            box-shadow: 0 0 0 3px rgba(52, 168, 83, 0.3);
+            display: inline-block;
         }
 
         .map-route-indicator .pill {
@@ -354,62 +473,67 @@
 
                     <!-- Pickup Location with Current Location Button -->
                     <div class="form-group input-group-location">
-                        <label for="pickup-location">Starting / Pickup Location *</label>
-                        <input type="text" id="pickup-location" value="Pollachi, Tamil Nadu" placeholder="Enter starting city/address" required oninput="triggerRouteUpdate()">
+                        <label for="pickup-location">Starting / Pickup Location (Anywhere in India) *</label>
+                        <input type="text" id="pickup-location" value="Pollachi, Tamil Nadu" placeholder="Type city, airport, hotel, or street address in India" required oninput="triggerRouteUpdate()">
                         <button type="button" class="loc-btn-current" onclick="fetchCurrentLocation()">
-                            🎯 <span>Use Current Location</span>
+                            🎯 <span>Use My Current GPS Location</span>
                         </button>
                     </div>
 
-                    <!-- Destination Selection -->
+                    <!-- Destination Selection with Free-form Input -->
                     <div class="form-group">
-                        <label for="booking-destination-select">Choose Destination (Anywhere in India) *</label>
+                        <label for="booking-destination-select">Choose or Search Destination (Any City / Town in India) *</label>
                         <select id="booking-destination-select" onchange="onDestinationChanged()" required>
                             <option value="">-- Select Destination --</option>
                             <optgroup label="🔥 Nearby & Hill Stations">
-                                <option value="coimbatore">Coimbatore (40 km)</option>
-                                <option value="palakkad">Palakkad (50 km)</option>
-                                <option value="ooty" selected>Ooty (95 km)</option>
-                                <option value="kodaikanal">Kodaikanal (150 km)</option>
-                                <option value="munnar">Munnar (160 km)</option>
-                                <option value="erode">Erode (120 km)</option>
-                                <option value="thrissur">Thrissur (120 km)</option>
+                                <option value="coimbatore">Coimbatore, Tamil Nadu (40 km)</option>
+                                <option value="palakkad">Palakkad, Kerala (50 km)</option>
+                                <option value="ooty" selected>Ooty (Udhagamandalam), Tamil Nadu (95 km)</option>
+                                <option value="kodaikanal">Kodaikanal, Tamil Nadu (150 km)</option>
+                                <option value="munnar">Munnar, Kerala (160 km)</option>
+                                <option value="valparai">Valparai, Tamil Nadu (65 km)</option>
+                                <option value="erode">Erode, Tamil Nadu (120 km)</option>
+                                <option value="thrissur">Thrissur, Kerala (120 km)</option>
                             </optgroup>
                             <optgroup label="🏙️ Major South Indian Cities">
-                                <option value="kochi">Kochi (190 km)</option>
-                                <option value="madurai">Madurai (200 km)</option>
-                                <option value="salem">Salem (210 km)</option>
-                                <option value="trichy">Tiruchirappalli (260 km)</option>
-                                <option value="mysore">Mysore (280 km)</option>
-                                <option value="trivandrum">Thiruvananthapuram (300 km)</option>
-                                <option value="thanjavur">Thanjavur (300 km)</option>
-                                <option value="tirunelveli">Tirunelveli (310 km)</option>
-                                <option value="bangalore">Bangalore (370 km)</option>
-                                <option value="kanyakumari">Kanyakumari (370 km)</option>
-                                <option value="rameshwaram">Rameshwaram (380 km)</option>
-                                <option value="pondicherry">Pondicherry (400 km)</option>
-                                <option value="chennai">Chennai (510 km)</option>
+                                <option value="kochi">Kochi / Cochin, Kerala (190 km)</option>
+                                <option value="madurai">Madurai, Tamil Nadu (200 km)</option>
+                                <option value="salem">Salem, Tamil Nadu (210 km)</option>
+                                <option value="trichy">Tiruchirappalli, Tamil Nadu (260 km)</option>
+                                <option value="mysore">Mysore, Karnataka (280 km)</option>
+                                <option value="trivandrum">Thiruvananthapuram, Kerala (300 km)</option>
+                                <option value="thanjavur">Thanjavur, Tamil Nadu (300 km)</option>
+                                <option value="tirunelveli">Tirunelveli, Tamil Nadu (310 km)</option>
+                                <option value="bangalore">Bangalore / Bengaluru, Karnataka (370 km)</option>
+                                <option value="kanyakumari">Kanyakumari, Tamil Nadu (370 km)</option>
+                                <option value="rameshwaram">Rameshwaram, Tamil Nadu (380 km)</option>
+                                <option value="pondicherry">Puducherry / Pondicherry (400 km)</option>
+                                <option value="chennai">Chennai, Tamil Nadu (510 km)</option>
                             </optgroup>
                             <optgroup label="✈️ Pan-India Long Distance">
-                                <option value="tirupati">Tirupati (550 km)</option>
-                                <option value="hyderabad">Hyderabad (750 km)</option>
-                                <option value="goa">Goa (850 km)</option>
-                                <option value="vizag">Visakhapatnam (1100 km)</option>
-                                <option value="mumbai">Mumbai (1100 km)</option>
-                                <option value="kolkata">Kolkata (1950 km)</option>
-                                <option value="jaipur">Jaipur (2000 km)</option>
-                                <option value="delhi">Delhi (2200 km)</option>
+                                <option value="tirupati">Tirupati, Andhra Pradesh (550 km)</option>
+                                <option value="hyderabad">Hyderabad, Telangana (750 km)</option>
+                                <option value="goa">Panaji / Goa (850 km)</option>
+                                <option value="vizag">Visakhapatnam, Andhra Pradesh (1100 km)</option>
+                                <option value="mumbai">Mumbai, Maharashtra (1100 km)</option>
+                                <option value="pune">Pune, Maharashtra (980 km)</option>
+                                <option value="kolkata">Kolkata, West Bengal (1950 km)</option>
+                                <option value="jaipur">Jaipur, Rajasthan (2000 km)</option>
+                                <option value="delhi">New Delhi / NCR (2200 km)</option>
                             </optgroup>
-                            <optgroup label="✍️ Custom Destination">
-                                <option value="custom">Other Custom Location (Enter km)...</option>
+                            <optgroup label="✍️ Custom Destination Anywhere in India">
+                                <option value="custom">🔍 Search / Type Any Custom City in India...</option>
                             </optgroup>
                         </select>
                     </div>
 
-                    <!-- Custom KM Group if needed -->
-                    <div class="form-group" id="custom-km-wrap" style="display: none;">
-                        <label for="custom-km-input">Enter One-Way Distance in KM</label>
-                        <input type="number" id="custom-km-input" placeholder="E.g. 450" oninput="calculateBookingFare()">
+                    <!-- Custom Address / City Search Input -->
+                    <div class="form-group" id="custom-dest-input-wrap" style="display: none;">
+                        <label for="custom-destination-name">Enter Destination City / Address in India</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="custom-destination-name" placeholder="E.g. Wayanad, Kerala or Shimla, HP" onkeydown="if(event.key==='Enter'){event.preventDefault();searchCustomDestination();}">
+                            <button type="button" class="btn btn-primary" style="padding: 10px 18px; font-size: 0.85rem;" onclick="searchCustomDestination()">Find Route</button>
+                        </div>
                     </div>
 
                     <!-- Vehicle Selection -->
@@ -485,18 +609,33 @@
                 </form>
             </div>
 
-            <!-- Right Interactive Map Wrapper -->
+            <!-- Right Interactive Map Wrapper (Google Maps Style Experience) -->
             <div class="booking-map-wrapper">
                 <div class="map-route-indicator" id="booking-map-indicator">
                     <div class="pill">📍 Pickup: <strong id="ind-origin">Pollachi</strong></div>
                     <div style="color: var(--gold); font-size: 1.2rem;">➔</div>
                     <div class="pill dest">🎯 Destination: <strong id="ind-dest">Ooty (Tamil Nadu)</strong></div>
-                    <div class="pill dist">🛣️ Exact Road: <strong id="ind-km">95 km</strong></div>
+                    <div class="map-view-switcher">
+                        <button type="button" class="map-view-btn active" id="btn-layer-streets" onclick="switchMapLayer('streets')">🗺️ Map</button>
+                        <button type="button" class="map-view-btn" id="btn-layer-satellite" onclick="switchMapLayer('satellite')">🛰️ Satellite</button>
+                    </div>
+                </div>
+
+                <!-- Google Maps Style Turn-by-Turn Header Card -->
+                <div class="gmap-nav-floating-card">
+                    <div class="gmap-maneuver-icon">🚗</div>
+                    <div class="gmap-nav-details">
+                        <div class="gmap-nav-time">
+                            <span id="gmap-nav-duration">3 hrs 15 mins</span>
+                            <small id="gmap-nav-km">(144 km)</small>
+                        </div>
+                        <div class="gmap-nav-subtext" id="gmap-nav-via">Fastest road route with typical traffic</div>
+                    </div>
                 </div>
 
                 <!-- Live Route Status Strip -->
                 <div id="live-route-info-strip" style="background: #fdfaf0; border-bottom: 1px solid #fae8b4; padding: 10px 20px; font-size: 0.84rem; color: #78350f; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-                    <div>🛣️ <strong>Turn-by-Turn Road Routing:</strong> <span id="route-highway-status">Calculating exact highway path...</span></div>
+                    <div>🛣️ <strong>Google Navigation Style Routing:</strong> <span id="route-highway-status">Calculating accurate highway path...</span></div>
                     <div>⏱️ <strong>Est. Drive Time:</strong> <span id="route-drive-time" style="font-weight: 700; color: #92400e;">--</span></div>
                 </div>
 
@@ -504,13 +643,13 @@
 
                 <div class="map-footer-bar">
                     <div class="map-legend-item">
-                        <span class="legend-dot origin"></span> <strong>Green / Red Pin:</strong> Pickup Location
+                        <span class="gmap-pulse-dot"></span> <strong>Green:</strong> Starting Location (GPS / Any City)
                     </div>
                     <div class="map-legend-item">
-                        <span class="legend-dot dest"></span> <strong>Blue Pin:</strong> Destination
+                        <span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:#ea4335;"></span> <strong>Red Pin:</strong> Destination in India
                     </div>
                     <div class="map-legend-item">
-                        <span style="display:inline-block; width:25px; height:5px; background:#b91c1c; border-radius:3px;"></span> <strong>Solid Road Line:</strong> Exact Real-World Highway Route
+                        <span style="display:inline-block; width:28px; height:6px; background:#1a73e8; border-radius:3px; box-shadow: 0 1px 3px rgba(0,0,0,0.3);"></span> <strong>Blue Navigation Line:</strong> Google-Style Highway Route
                     </div>
                 </div>
             </div>
@@ -566,15 +705,19 @@
 
     <script src="js/script.js"></script>
     <script>
-        // Additional Booking Page Specific JS
+        // Google Maps Navigation Engine for Sri Devi Groups
         let fullMap = null;
         let originMarker = null;
         let destMarker = null;
         let navLine = null;
         let navLineBorder = null;
+        let streetLayer = null;
+        let satelliteLayer = null;
+
         let originCoords = [10.6609, 77.0048]; // Default Pollachi
         let currentDestCoords = [11.4102, 76.6950]; // Default Ooty
-        let activeRouteKm = 95; // One-way distance in km
+        let activeRouteKm = 95;
+        let currentDestinationName = 'Ooty';
 
         // Read query params if redirected from tours.html
         window.addEventListener('DOMContentLoaded', () => {
@@ -601,29 +744,58 @@
         function initFullBookingMap() {
             if (fullMap) return;
 
-            fullMap = L.map('full-booking-map', {
-                scrollWheelZoom: true
-            }).setView([11.0, 77.0], 7);
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
+            // Street layer
+            streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
                 attribution: '© OpenStreetMap contributors | Sri Devi Groups'
-            }).addTo(fullMap);
+            });
+
+            // Satellite Imagery (Esri World Imagery)
+            satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                maxZoom: 19,
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            });
+
+            fullMap = L.map('full-booking-map', {
+                scrollWheelZoom: true,
+                layers: [streetLayer]
+            }).setView([11.0, 77.0], 7);
 
             renderMapPins();
         }
 
-        // Fetch exact highway road geometry using Open Source Routing Machine (OSRM)
+        function switchMapLayer(layerType) {
+            const btnStreet = document.getElementById('btn-layer-streets');
+            const btnSat = document.getElementById('btn-layer-satellite');
+
+            if (layerType === 'satellite') {
+                if (fullMap.hasLayer(streetLayer)) fullMap.removeLayer(streetLayer);
+                if (!fullMap.hasLayer(satelliteLayer)) fullMap.addLayer(satelliteLayer);
+                btnSat.classList.add('active');
+                btnStreet.classList.remove('active');
+            } else {
+                if (fullMap.hasLayer(satelliteLayer)) fullMap.removeLayer(satelliteLayer);
+                if (!fullMap.hasLayer(streetLayer)) fullMap.addLayer(streetLayer);
+                btnStreet.classList.add('active');
+                btnSat.classList.remove('active');
+            }
+        }
+
+        // Fetch exact road route and Google Maps style live stats
         async function fetchExactRoadRoute(origin, dest) {
             const statusEl = document.getElementById('route-highway-status');
             const timeEl = document.getElementById('route-drive-time');
-            if (statusEl) statusEl.textContent = 'Fetching exact highway turn-by-turn road path...';
+            const gmapDuration = document.getElementById('gmap-nav-duration');
+            const gmapKm = document.getElementById('gmap-nav-km');
+            const gmapVia = document.getElementById('gmap-nav-via');
 
-            const url = `https://router.project-osrm.org/route/v1/driving/${origin[1]},${origin[0]};${dest[1]},${dest[0]}?overview=full&geometries=geojson`;
+            if (statusEl) statusEl.textContent = 'Navigating exact highway path via OSRM...';
+
+            const url = `https://router.project-osrm.org/route/v1/driving/${origin[1]},${origin[0]};${dest[1]},${dest[0]}?overview=full&geometries=geojson&steps=true`;
 
             try {
                 const response = await fetch(url);
-                if (!response.ok) throw new Error('OSRM routing request failed');
+                if (!response.ok) throw new Error('Routing engine failed');
                 const data = await response.json();
 
                 if (data.routes && data.routes.length > 0) {
@@ -633,60 +805,72 @@
 
                     const hours = Math.floor(durationMins / 60);
                     const mins = durationMins % 60;
-                    const driveTimeStr = hours > 0 ? `${hours} hrs ${mins} mins` : `${mins} mins`;
+                    const driveTimeStr = hours > 0 ? `${hours} hr ${mins} min` : `${mins} min`;
+
+                    // Detect major road if available
+                    let roadName = 'Fastest national highway route';
+                    if (route.legs && route.legs[0] && route.legs[0].steps) {
+                        for (let step of route.legs[0].steps) {
+                            if (step.name && (step.name.includes('NH') || step.name.includes('SH') || step.name.includes('Road') || step.name.includes('Highway'))) {
+                                roadName = `Via ${step.name}`;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (gmapDuration) gmapDuration.textContent = driveTimeStr;
+                    if (gmapKm) gmapKm.textContent = `(${distanceKm} km)`;
+                    if (gmapVia) gmapVia.textContent = roadName;
 
                     if (timeEl) timeEl.textContent = driveTimeStr;
-                    if (statusEl) statusEl.textContent = `Exact highway route plotted (${route.geometry.coordinates.length} road coordinates)`;
+                    if (statusEl) statusEl.textContent = `Google Maps style live road navigation: ${distanceKm} km (${driveTimeStr})`;
 
-                    // GeoJSON coordinates come as [lng, lat], convert to [lat, lng] for Leaflet
                     const latLngs = route.geometry.coordinates.map(coord => [coord[1], coord[0]]);
 
-                    // Draw styled exact road polyline with dark outer border
+                    // Google Maps Navigation Line (Blue with crisp white/dark border)
                     if (navLineBorder) fullMap.removeLayer(navLineBorder);
                     if (navLine) fullMap.removeLayer(navLine);
 
                     navLineBorder = L.polyline(latLngs, {
-                        color: '#450a0a',
-                        weight: 8,
+                        color: '#1557b0',
+                        weight: 9,
                         opacity: 0.9,
                         lineCap: 'round',
                         lineJoin: 'round'
                     }).addTo(fullMap);
 
                     navLine = L.polyline(latLngs, {
-                        color: '#dc2626',
-                        weight: 5,
-                        opacity: 0.95,
+                        color: '#1a73e8', // Official Google Maps Blue
+                        weight: 6,
+                        opacity: 1.0,
                         lineCap: 'round',
                         lineJoin: 'round'
                     }).addTo(fullMap);
 
-                    fullMap.fitBounds(L.latLngBounds(latLngs), { padding: [50, 50] });
+                    fullMap.fitBounds(L.latLngBounds(latLngs), { padding: [60, 60] });
 
-                    // Update actual road distance
                     activeRouteKm = distanceKm;
-                    document.getElementById('ind-km').textContent = `${distanceKm} km (Real Road)`;
+                    document.getElementById('ind-km').textContent = `${distanceKm} km`;
                     calculateBookingFare(distanceKm);
                     return;
                 }
             } catch (err) {
-                console.warn('OSRM Highway routing failed, falling back to direct trajectory:', err);
-                if (statusEl) statusEl.textContent = 'Direct route trajectory active';
-                if (timeEl) timeEl.textContent = '--';
+                console.warn('Highway routing failed:', err);
+                if (statusEl) statusEl.textContent = 'Direct route line active';
             }
 
-            // Fallback straight path if offline or server timeout
+            // Fallback direct path
             if (navLineBorder) fullMap.removeLayer(navLineBorder);
             if (navLine) fullMap.removeLayer(navLine);
 
             navLine = L.polyline([origin, dest], {
-                color: '#dc2626',
+                color: '#1a73e8',
                 weight: 5,
-                dashArray: '10, 8',
+                dashArray: '8, 8',
                 opacity: 0.9
             }).addTo(fullMap);
 
-            fullMap.fitBounds(L.latLngBounds([origin, dest]), { padding: [50, 50] });
+            fullMap.fitBounds(L.latLngBounds([origin, dest]), { padding: [60, 60] });
             calculateBookingFare();
         }
 
@@ -701,32 +885,44 @@
 
             const pickupText = document.getElementById('pickup-location').value || 'Pickup Point';
 
-            // Origin Marker
+            // Google Maps Style Origin Pin (Green with pulse)
             const originIcon = L.divIcon({
-                className: 'custom-map-pin origin-pin',
-                html: `<div class="pin-badge origin">📍 <strong>${pickupText}</strong></div>`,
-                iconSize: [160, 40],
-                iconAnchor: [80, 20]
+                className: 'custom-map-pin',
+                html: `<div class="gmap-marker-pin origin"><span class="gmap-pulse-dot"></span> 📍 <strong>${pickupText.split(',')[0]}</strong></div>`,
+                iconSize: [160, 36],
+                iconAnchor: [80, 18]
             });
             originMarker = L.marker(originCoords, { icon: originIcon }).addTo(fullMap);
 
-            if (destData && destData.lat && destData.lng) {
+            if (destKey === 'custom') {
+                if (currentDestCoords) {
+                    const destIcon = L.divIcon({
+                        className: 'custom-map-pin',
+                        html: `<div class="gmap-marker-pin dest">🎯 <strong>${currentDestinationName}</strong></div>`,
+                        iconSize: [150, 36],
+                        iconAnchor: [75, 18]
+                    });
+                    destMarker = L.marker(currentDestCoords, { icon: destIcon }).addTo(fullMap);
+                    document.getElementById('ind-origin').textContent = pickupText.split(',')[0];
+                    document.getElementById('ind-dest').textContent = currentDestinationName;
+                    fetchExactRoadRoute(originCoords, currentDestCoords);
+                }
+            } else if (destData && destData.lat && destData.lng) {
                 currentDestCoords = [destData.lat, destData.lng];
+                currentDestinationName = destData.name;
 
-                // Dest Marker
+                // Google Maps Style Destination Pin (Red)
                 const destIcon = L.divIcon({
-                    className: 'custom-map-pin dest-pin',
-                    html: `<div class="pin-badge dest">🎯 <strong>${destData.name}</strong></div>`,
-                    iconSize: [150, 40],
-                    iconAnchor: [75, 20]
+                    className: 'custom-map-pin',
+                    html: `<div class="gmap-marker-pin dest">🎯 <strong>${destData.name}</strong></div>`,
+                    iconSize: [150, 36],
+                    iconAnchor: [75, 18]
                 });
                 destMarker = L.marker(currentDestCoords, { icon: destIcon }).addTo(fullMap);
 
-                document.getElementById('ind-origin').textContent = pickupText;
+                document.getElementById('ind-origin').textContent = pickupText.split(',')[0];
                 document.getElementById('ind-dest').textContent = `${destData.name} (${destData.state})`;
-                document.getElementById('ind-km').textContent = `${destData.km} km`;
 
-                // Fetch exact road route from origin to destination
                 fetchExactRoadRoute(originCoords, currentDestCoords);
             } else {
                 fullMap.setView(originCoords, 10);
@@ -735,13 +931,37 @@
 
         function onDestinationChanged() {
             const destSelect = document.getElementById('booking-destination-select');
-            const customWrap = document.getElementById('custom-km-wrap');
+            const customWrap = document.getElementById('custom-dest-input-wrap');
             if (destSelect.value === 'custom') {
                 customWrap.style.display = 'block';
+                document.getElementById('custom-destination-name').focus();
             } else {
                 customWrap.style.display = 'none';
+                renderMapPins();
             }
-            renderMapPins();
+        }
+
+        // Search any custom city in India
+        async function searchCustomDestination() {
+            const destName = document.getElementById('custom-destination-name').value.trim();
+            if (!destName) return;
+
+            const statusEl = document.getElementById('route-highway-status');
+            if (statusEl) statusEl.textContent = `Searching "${destName}" in India...`;
+
+            try {
+                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(destName + ', India')}&limit=1`);
+                const data = await res.json();
+                if (data && data.length > 0) {
+                    currentDestCoords = [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+                    currentDestinationName = data[0].display_name.split(',')[0];
+                    renderMapPins();
+                } else {
+                    alert(`Could not find "${destName}" on India map. Please verify the spelling or try adding state name.`);
+                }
+            } catch (e) {
+                alert('Search service timed out. Please try again.');
+            }
         }
 
         let debounceTimer = null;
@@ -752,7 +972,7 @@
             }, 800);
         }
 
-        // Geocode custom typed pickup location
+        // Geocode custom typed pickup location anywhere in India
         async function geocodePickupLocation() {
             const pickupText = document.getElementById('pickup-location').value.trim();
             if (!pickupText || pickupText.includes('Current Location')) return;
@@ -765,11 +985,11 @@
                     renderMapPins();
                 }
             } catch (e) {
-                console.warn('Geocode lookup error:', e);
+                console.warn('Geocode error:', e);
             }
         }
 
-        // Current GPS Location
+        // Current GPS Location Anywhere in India with Instant Reverse Geocoding
         function fetchCurrentLocation() {
             const pickupInput = document.getElementById('pickup-location');
             if (!navigator.geolocation) {
@@ -777,19 +997,35 @@
                 return;
             }
 
-            pickupInput.value = 'Locating GPS position...';
+            pickupInput.value = 'Locating your current GPS position in India...';
 
             navigator.geolocation.getCurrentPosition(
-                (position) => {
+                async (position) => {
                     originCoords = [position.coords.latitude, position.coords.longitude];
-                    pickupInput.value = `My Current Location (${originCoords[0].toFixed(3)}, ${originCoords[1].toFixed(3)})`;
+                    
+                    // Reverse geocode GPS coords to human readable city name
+                    try {
+                        const revRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${originCoords[0]}&lon=${originCoords[1]}`);
+                        const revData = await revRes.json();
+                        if (revData && revData.display_name) {
+                            const parts = revData.display_name.split(',');
+                            const shortLoc = `${parts[0].trim()}, ${parts[1] ? parts[1].trim() : ''}`;
+                            pickupInput.value = `📍 ${shortLoc} (Current Location)`;
+                        } else {
+                            pickupInput.value = `📍 My Location (${originCoords[0].toFixed(3)}, ${originCoords[1].toFixed(3)})`;
+                        }
+                    } catch (e) {
+                        pickupInput.value = `📍 My Location (${originCoords[0].toFixed(3)}, ${originCoords[1].toFixed(3)})`;
+                    }
+
                     renderMapPins();
                 },
                 (error) => {
-                    alert('Could not retrieve current location. Please ensure location permissions are granted.');
+                    alert('Could not retrieve current GPS position. Please ensure location services are enabled on your device.');
                     pickupInput.value = 'Pollachi, Tamil Nadu';
                     originCoords = [10.6609, 77.0048];
-                }
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
             );
         }
 
@@ -797,7 +1033,6 @@
             const destSelect = document.getElementById('booking-destination-select');
             const vehSelect = document.getElementById('booking-vehicle-select');
             const daysSelect = document.getElementById('booking-duration-days');
-            const customKmInput = document.getElementById('custom-km-input');
 
             if (!destSelect || !vehSelect) return;
 
@@ -809,10 +1044,10 @@
             let oneWayKm = 0;
             if (computedKm) {
                 oneWayKm = computedKm;
-            } else if (destKey === 'custom') {
-                oneWayKm = parseInt(customKmInput?.value) || 0;
             } else if (distances[destKey]) {
                 oneWayKm = distances[destKey].km;
+            } else {
+                oneWayKm = activeRouteKm || 95;
             }
 
             const roundTripKm = oneWayKm * 2;
@@ -833,12 +1068,12 @@
                 document.getElementById('summary-day-charge').textContent = `₹${dayCharge.toLocaleString('en-IN')} (@ ₹${rate.perDay}/day)`;
             }
 
-            const pickupText = document.getElementById('pickup-location').value || 'Pollachi';
-            const destText = destKey === 'custom' ? 'Custom Destination' : (distances[destKey]?.name || 'Destination');
+            const pickupText = document.getElementById('pickup-location').value || 'Pickup Point';
+            const destText = currentDestinationName || (distances[destKey]?.name || 'Destination');
 
             document.getElementById('summary-vehicle-name').textContent = rate.name;
-            document.getElementById('summary-route-text').textContent = `${pickupText} ➔ ${destText}`;
-            document.getElementById('summary-distance-text').textContent = `${roundTripKm} km (Round Trip)`;
+            document.getElementById('summary-route-text').textContent = `${pickupText.split(',')[0]} ➔ ${destText}`;
+            document.getElementById('summary-distance-text').textContent = `${roundTripKm} km (${oneWayKm} km one-way)`;
             document.getElementById('summary-total-fare').textContent = `₹${total.toLocaleString('en-IN')}`;
             document.getElementById('modal-pay-amount').textContent = `₹${total.toLocaleString('en-IN')}`;
         }
