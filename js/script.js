@@ -203,6 +203,7 @@ let indiaMap = null;
 let pollachiMarker = null;
 let destinationMarker = null;
 let routeLine = null;
+let routeLineBorder = null;
 
 function initIndiaMap() {
     const mapContainer = document.getElementById('india-route-map');
@@ -236,7 +237,7 @@ function initIndiaMap() {
     pollachiMarker.bindPopup(`<b>Sri Devi Groups Headquarters</b><br>Pollachi, Tamil Nadu<br>Trip Origin Point`);
 }
 
-function updateMapRoute(destKey, roundTripKm) {
+async function updateMapRoute(destKey, roundTripKm) {
     if (!indiaMap || typeof L === 'undefined') {
         initIndiaMap();
         if (!indiaMap) return;
@@ -256,6 +257,7 @@ function updateMapRoute(destKey, roundTripKm) {
 
     // Remove existing destination marker and line
     if (destinationMarker) indiaMap.removeLayer(destinationMarker);
+    if (routeLineBorder) indiaMap.removeLayer(routeLineBorder);
     if (routeLine) indiaMap.removeLayer(routeLine);
 
     // Custom Icon for Destination
@@ -269,16 +271,60 @@ function updateMapRoute(destKey, roundTripKm) {
     destinationMarker = L.marker(destCoords, { icon: destIcon }).addTo(indiaMap);
     destinationMarker.bindPopup(`<b>Destination: ${destData.name}</b><br>${destData.state}<br>One-way: ${destData.km} km | Round-trip: ${roundTripKm} km`).openPopup();
 
-    // Curved or geodesic-like polyline
+    // Fetch exact highway geometry from OSRM
+    const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${POLLACHI_COORDS[1]},${POLLACHI_COORDS[0]};${destCoords[1]},${destCoords[0]}?overview=full&geometries=geojson`;
+
+    try {
+        const resp = await fetch(osrmUrl);
+        if (resp.ok) {
+            const json = await resp.json();
+            if (json.routes && json.routes.length > 0) {
+                const r = json.routes[0];
+                const realKm = Math.round(r.distance / 1000);
+                const roadLatLngs = r.geometry.coordinates.map(c => [c[1], c[0]]);
+
+                routeLineBorder = L.polyline(roadLatLngs, {
+                    color: '#450a0a',
+                    weight: 8,
+                    opacity: 0.9,
+                    lineCap: 'round',
+                    lineJoin: 'round'
+                }).addTo(indiaMap);
+
+                routeLine = L.polyline(roadLatLngs, {
+                    color: '#dc2626',
+                    weight: 5,
+                    opacity: 0.95,
+                    lineCap: 'round',
+                    lineJoin: 'round'
+                }).addTo(indiaMap);
+
+                indiaMap.fitBounds(L.latLngBounds(roadLatLngs), { padding: [60, 60] });
+
+                if (mapStatus) {
+                    mapStatus.innerHTML = `
+                        <div class="map-status-pill">📍 From: <strong>Pollachi, TN</strong></div>
+                        <div class="map-status-arrow">➔</div>
+                        <div class="map-status-pill dest">🎯 To: <strong>${destData.name} (${destData.state})</strong></div>
+                        <div class="map-status-pill distance">🛣️ Exact Road: <strong>${realKm} km</strong> (Round trip: ${realKm * 2} km)</div>
+                    `;
+                }
+                return;
+            }
+        }
+    } catch (e) {
+        console.warn('OSRM error, using fallback line:', e);
+    }
+
+    // Fallback straight path
     routeLine = L.polyline([POLLACHI_COORDS, destCoords], {
-        color: '#8B1A1A',
+        color: '#dc2626',
         weight: 5,
         opacity: 0.85,
         dashArray: '10, 10',
         lineCap: 'round'
     }).addTo(indiaMap);
 
-    // Fit map bounds to show both points with padding
     const bounds = L.latLngBounds([POLLACHI_COORDS, destCoords]);
     indiaMap.fitBounds(bounds, { padding: [60, 60] });
 

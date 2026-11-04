@@ -491,7 +491,13 @@
                     <div class="pill">📍 Pickup: <strong id="ind-origin">Pollachi</strong></div>
                     <div style="color: var(--gold); font-size: 1.2rem;">➔</div>
                     <div class="pill dest">🎯 Destination: <strong id="ind-dest">Ooty (Tamil Nadu)</strong></div>
-                    <div class="pill dist">📏 One-Way: <strong id="ind-km">95 km</strong></div>
+                    <div class="pill dist">🛣️ Exact Road: <strong id="ind-km">95 km</strong></div>
+                </div>
+
+                <!-- Live Route Status Strip -->
+                <div id="live-route-info-strip" style="background: #fdfaf0; border-bottom: 1px solid #fae8b4; padding: 10px 20px; font-size: 0.84rem; color: #78350f; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                    <div>🛣️ <strong>Turn-by-Turn Road Routing:</strong> <span id="route-highway-status">Calculating exact highway path...</span></div>
+                    <div>⏱️ <strong>Est. Drive Time:</strong> <span id="route-drive-time" style="font-weight: 700; color: #92400e;">--</span></div>
                 </div>
 
                 <div id="full-booking-map"></div>
@@ -504,7 +510,7 @@
                         <span class="legend-dot dest"></span> <strong>Blue Pin:</strong> Destination
                     </div>
                     <div class="map-legend-item">
-                        <span class="legend-line"></span> <strong>Dash Line:</strong> Highway Navigation Path
+                        <span style="display:inline-block; width:25px; height:5px; background:#b91c1c; border-radius:3px;"></span> <strong>Solid Road Line:</strong> Exact Real-World Highway Route
                     </div>
                 </div>
             </div>
@@ -565,7 +571,10 @@
         let originMarker = null;
         let destMarker = null;
         let navLine = null;
+        let navLineBorder = null;
         let originCoords = [10.6609, 77.0048]; // Default Pollachi
+        let currentDestCoords = [11.4102, 76.6950]; // Default Ooty
+        let activeRouteKm = 95; // One-way distance in km
 
         // Read query params if redirected from tours.html
         window.addEventListener('DOMContentLoaded', () => {
@@ -587,7 +596,6 @@
             document.getElementById('booking-start-date').min = new Date().toISOString().split('T')[0];
 
             initFullBookingMap();
-            calculateBookingFare();
         });
 
         function initFullBookingMap() {
@@ -605,6 +613,83 @@
             renderMapPins();
         }
 
+        // Fetch exact highway road geometry using Open Source Routing Machine (OSRM)
+        async function fetchExactRoadRoute(origin, dest) {
+            const statusEl = document.getElementById('route-highway-status');
+            const timeEl = document.getElementById('route-drive-time');
+            if (statusEl) statusEl.textContent = 'Fetching exact highway turn-by-turn road path...';
+
+            const url = `https://router.project-osrm.org/route/v1/driving/${origin[1]},${origin[0]};${dest[1]},${dest[0]}?overview=full&geometries=geojson`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('OSRM routing request failed');
+                const data = await response.json();
+
+                if (data.routes && data.routes.length > 0) {
+                    const route = data.routes[0];
+                    const distanceKm = Math.round(route.distance / 1000);
+                    const durationMins = Math.round(route.duration / 60);
+
+                    const hours = Math.floor(durationMins / 60);
+                    const mins = durationMins % 60;
+                    const driveTimeStr = hours > 0 ? `${hours} hrs ${mins} mins` : `${mins} mins`;
+
+                    if (timeEl) timeEl.textContent = driveTimeStr;
+                    if (statusEl) statusEl.textContent = `Exact highway route plotted (${route.geometry.coordinates.length} road coordinates)`;
+
+                    // GeoJSON coordinates come as [lng, lat], convert to [lat, lng] for Leaflet
+                    const latLngs = route.geometry.coordinates.map(coord => [coord[1], coord[0]]);
+
+                    // Draw styled exact road polyline with dark outer border
+                    if (navLineBorder) fullMap.removeLayer(navLineBorder);
+                    if (navLine) fullMap.removeLayer(navLine);
+
+                    navLineBorder = L.polyline(latLngs, {
+                        color: '#450a0a',
+                        weight: 8,
+                        opacity: 0.9,
+                        lineCap: 'round',
+                        lineJoin: 'round'
+                    }).addTo(fullMap);
+
+                    navLine = L.polyline(latLngs, {
+                        color: '#dc2626',
+                        weight: 5,
+                        opacity: 0.95,
+                        lineCap: 'round',
+                        lineJoin: 'round'
+                    }).addTo(fullMap);
+
+                    fullMap.fitBounds(L.latLngBounds(latLngs), { padding: [50, 50] });
+
+                    // Update actual road distance
+                    activeRouteKm = distanceKm;
+                    document.getElementById('ind-km').textContent = `${distanceKm} km (Real Road)`;
+                    calculateBookingFare(distanceKm);
+                    return;
+                }
+            } catch (err) {
+                console.warn('OSRM Highway routing failed, falling back to direct trajectory:', err);
+                if (statusEl) statusEl.textContent = 'Direct route trajectory active';
+                if (timeEl) timeEl.textContent = '--';
+            }
+
+            // Fallback straight path if offline or server timeout
+            if (navLineBorder) fullMap.removeLayer(navLineBorder);
+            if (navLine) fullMap.removeLayer(navLine);
+
+            navLine = L.polyline([origin, dest], {
+                color: '#dc2626',
+                weight: 5,
+                dashArray: '10, 8',
+                opacity: 0.9
+            }).addTo(fullMap);
+
+            fullMap.fitBounds(L.latLngBounds([origin, dest]), { padding: [50, 50] });
+            calculateBookingFare();
+        }
+
         function renderMapPins() {
             if (!fullMap) return;
 
@@ -613,7 +698,6 @@
 
             if (originMarker) fullMap.removeLayer(originMarker);
             if (destMarker) fullMap.removeLayer(destMarker);
-            if (navLine) fullMap.removeLayer(navLine);
 
             const pickupText = document.getElementById('pickup-location').value || 'Pickup Point';
 
@@ -627,7 +711,7 @@
             originMarker = L.marker(originCoords, { icon: originIcon }).addTo(fullMap);
 
             if (destData && destData.lat && destData.lng) {
-                const destCoords = [destData.lat, destData.lng];
+                currentDestCoords = [destData.lat, destData.lng];
 
                 // Dest Marker
                 const destIcon = L.divIcon({
@@ -636,21 +720,14 @@
                     iconSize: [150, 40],
                     iconAnchor: [75, 20]
                 });
-                destMarker = L.marker(destCoords, { icon: destIcon }).addTo(fullMap);
-
-                // Polyline Route
-                navLine = L.polyline([originCoords, destCoords], {
-                    color: '#8B1A1A',
-                    weight: 5,
-                    dashArray: '12, 10',
-                    opacity: 0.9
-                }).addTo(fullMap);
-
-                fullMap.fitBounds(L.latLngBounds([originCoords, destCoords]), { padding: [50, 50] });
+                destMarker = L.marker(currentDestCoords, { icon: destIcon }).addTo(fullMap);
 
                 document.getElementById('ind-origin').textContent = pickupText;
                 document.getElementById('ind-dest').textContent = `${destData.name} (${destData.state})`;
                 document.getElementById('ind-km').textContent = `${destData.km} km`;
+
+                // Fetch exact road route from origin to destination
+                fetchExactRoadRoute(originCoords, currentDestCoords);
             } else {
                 fullMap.setView(originCoords, 10);
             }
@@ -664,12 +741,32 @@
             } else {
                 customWrap.style.display = 'none';
             }
-            calculateBookingFare();
             renderMapPins();
         }
 
+        let debounceTimer = null;
         function triggerRouteUpdate() {
-            renderMapPins();
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                geocodePickupLocation();
+            }, 800);
+        }
+
+        // Geocode custom typed pickup location
+        async function geocodePickupLocation() {
+            const pickupText = document.getElementById('pickup-location').value.trim();
+            if (!pickupText || pickupText.includes('Current Location')) return;
+
+            try {
+                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(pickupText + ', India')}&limit=1`);
+                const data = await res.json();
+                if (data && data.length > 0) {
+                    originCoords = [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+                    renderMapPins();
+                }
+            } catch (e) {
+                console.warn('Geocode lookup error:', e);
+            }
         }
 
         // Current GPS Location
@@ -687,7 +784,6 @@
                     originCoords = [position.coords.latitude, position.coords.longitude];
                     pickupInput.value = `My Current Location (${originCoords[0].toFixed(3)}, ${originCoords[1].toFixed(3)})`;
                     renderMapPins();
-                    calculateBookingFare();
                 },
                 (error) => {
                     alert('Could not retrieve current location. Please ensure location permissions are granted.');
@@ -697,7 +793,7 @@
             );
         }
 
-        function calculateBookingFare() {
+        function calculateBookingFare(computedKm) {
             const destSelect = document.getElementById('booking-destination-select');
             const vehSelect = document.getElementById('booking-vehicle-select');
             const daysSelect = document.getElementById('booking-duration-days');
@@ -711,7 +807,9 @@
             const rate = pricing[vehKey] || pricing.sedan;
 
             let oneWayKm = 0;
-            if (destKey === 'custom') {
+            if (computedKm) {
+                oneWayKm = computedKm;
+            } else if (destKey === 'custom') {
                 oneWayKm = parseInt(customKmInput?.value) || 0;
             } else if (distances[destKey]) {
                 oneWayKm = distances[destKey].km;
@@ -785,3 +883,4 @@
 </body>
 
 </html>
+
