@@ -539,6 +539,15 @@
                         </button>
                     </div>
 
+                    <!-- Pickup Location Quick-Pick Chips -->
+                    <div class="quick-chips-row">
+                        <span class="quick-dest-chip" onclick="setPickupLocation('Pollachi, Tamil Nadu')">📍 Pollachi HQ</span>
+                        <span class="quick-dest-chip" onclick="setPickupLocation('Coimbatore International Airport, Tamil Nadu')">✈️ Coimbatore Airport</span>
+                        <span class="quick-dest-chip" onclick="setPickupLocation('Coimbatore Junction Railway Station, Tamil Nadu')">🚆 Coimbatore Jn</span>
+                        <span class="quick-dest-chip" onclick="setPickupLocation('Tiruppur, Tamil Nadu')">📍 Tiruppur</span>
+                        <span class="quick-dest-chip" onclick="setPickupLocation('Palakkad, Kerala')">📍 Palakkad</span>
+                    </div>
+
                     <!-- Swap Location Button -->
                     <div class="route-swap-container">
                         <button type="button" class="btn-swap-locations" onclick="swapRouteLocations()" title="Swap Pickup & Destination">
@@ -591,6 +600,18 @@
                                 <option value="custom">🔍 Search / Type Any Custom City in India...</option>
                             </optgroup>
                         </select>
+                    </div>
+
+                    <!-- Destination Quick-Pick Chips -->
+                    <div class="quick-chips-row">
+                        <span class="quick-dest-chip" onclick="setDestinationDirect('ooty')">⛰️ Ooty (95 km)</span>
+                        <span class="quick-dest-chip" onclick="setDestinationDirect('kodaikanal')">🌲 Kodaikanal (150 km)</span>
+                        <span class="quick-dest-chip" onclick="setDestinationDirect('munnar')">🍃 Munnar (160 km)</span>
+                        <span class="quick-dest-chip" onclick="setDestinationDirect('valparai')">🌿 Valparai (65 km)</span>
+                        <span class="quick-dest-chip" onclick="setDestinationDirect('bangalore')">🌆 Bangalore (370 km)</span>
+                        <span class="quick-dest-chip" onclick="setDestinationDirect('chennai')">🏙️ Chennai (510 km)</span>
+                        <span class="quick-dest-chip" onclick="setDestinationDirect('madurai')">🛕 Madurai (200 km)</span>
+                        <span class="quick-dest-chip" onclick="setDestinationDirect('tirupati')">🙏 Tirupati (550 km)</span>
                     </div>
 
                     <!-- Custom Address / City Search Input -->
@@ -867,6 +888,25 @@
                         <span style="background: #eef2ff; color: #4338ca; padding: 4px 10px; border-radius: 6px; font-size: 0.76rem; font-weight: 700;" id="confirm-payment-badge">
                             ⚡ Paid via UPI
                         </span>
+                    </div>
+                </div>
+
+                <!-- Dynamic UPI QR Payment Box -->
+                <div id="confirm-upi-box" style="display: none; margin-top: 14px;">
+                    <div class="upi-qr-card">
+                        <div style="font-weight: 700; color: #166534; font-size: 0.86rem; margin-bottom: 2px;">
+                            ⚡ Scan with Any UPI App to Pay & Confirm Ride
+                        </div>
+                        <img id="confirm-upi-qr-img" src="" class="upi-qr-img" alt="UPI Payment QR Code">
+                        <div style="font-size: 0.78rem; color: #4b5563; margin-top: 4px;">
+                            UPI ID: <strong style="color: #111827;">sridevigroups@upi</strong> • Sri Devi Tours & Travels (Verified Merchant)
+                        </div>
+                        <div class="upi-apps-row">
+                            <span class="upi-app-badge">Google Pay</span>
+                            <span class="upi-app-badge">PhonePe</span>
+                            <span class="upi-app-badge">Paytm</span>
+                            <span class="upi-app-badge">BHIM UPI</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1341,10 +1381,13 @@
         function fetchCurrentLocation() {
             const pickupInput = document.getElementById('pickup-location');
             if (!navigator.geolocation) {
-                alert('Geolocation is not supported by your browser.');
+                showToast('GPS Error', 'Geolocation is not supported by your browser.', 'error');
                 return;
             }
 
+            const btn = document.querySelector('.loc-btn-current');
+            const origText = btn ? btn.innerHTML : '';
+            if (btn) btn.innerHTML = '⏳ <span>Detecting GPS...</span>';
             pickupInput.value = 'Locating your current GPS position in India...';
 
             navigator.geolocation.getCurrentPosition(
@@ -1358,23 +1401,47 @@
                         if (revData && revData.display_name) {
                             const parts = revData.display_name.split(',');
                             const shortLoc = `${parts[0].trim()}, ${parts[1] ? parts[1].trim() : ''}`;
-                            pickupInput.value = `📍 ${shortLoc} (Current Location)`;
+                            pickupInput.value = `📍 ${shortLoc} (GPS Detected)`;
+                            showToast('GPS Locked', `Starting from ${shortLoc}`, 'success');
                         } else {
-                            pickupInput.value = `📍 My Location (${originCoords[0].toFixed(3)}, ${originCoords[1].toFixed(3)})`;
+                            pickupInput.value = `📍 Current Location (${originCoords[0].toFixed(3)}, ${originCoords[1].toFixed(3)})`;
+                            showToast('GPS Locked', 'Coordinates detected successfully', 'success');
                         }
                     } catch (e) {
-                        pickupInput.value = `📍 My Location (${originCoords[0].toFixed(3)}, ${originCoords[1].toFixed(3)})`;
+                        pickupInput.value = `📍 Current Location (${originCoords[0].toFixed(3)}, ${originCoords[1].toFixed(3)})`;
+                        showToast('GPS Locked', 'Location loaded successfully', 'success');
                     }
 
+                    if (btn) btn.innerHTML = origText;
                     renderMapPins();
                 },
                 (error) => {
-                    alert('Could not retrieve current GPS position. Please ensure location services are enabled on your device.');
+                    if (btn) btn.innerHTML = origText;
+                    showToast('GPS Unavailable', 'Could not detect GPS position. Defaulted to Pollachi HQ.', 'info');
                     pickupInput.value = 'Pollachi, Tamil Nadu';
                     originCoords = [10.6609, 77.0048];
+                    renderMapPins();
                 },
                 { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
             );
+        }
+
+        function setPickupLocation(loc) {
+            const input = document.getElementById('pickup-location');
+            if (input) {
+                input.value = loc;
+                triggerRouteUpdate();
+                showToast('Pickup Updated', `Starting point set to ${loc}`, 'info');
+            }
+        }
+
+        function setDestinationDirect(destKey) {
+            const select = document.getElementById('booking-destination-select');
+            if (select) {
+                select.value = destKey;
+                onDestinationChanged();
+                showToast('Destination Updated', `Route updated to ${destKey.toUpperCase()}`, 'info');
+            }
         }
 
         function calculateBookingFare(computedKm) {
@@ -1658,11 +1725,25 @@
             document.getElementById('confirm-amount').textContent = amount;
 
             const badgeEl = document.getElementById('confirm-payment-badge');
-            if (badgeEl) {
-                badgeEl.textContent = paymentMethod === 'Cash on Pickup' ? '💵 Cash on Pickup' : '⚡ Paid via UPI Instant';
+            const upiBox = document.getElementById('confirm-upi-box');
+            if (paymentMethod === 'Cash on Pickup') {
+                if (badgeEl) badgeEl.textContent = '💵 Cash on Pickup';
+                if (upiBox) upiBox.style.display = 'none';
+            } else {
+                if (badgeEl) badgeEl.textContent = '⚡ UPI Instant Pay';
+                if (upiBox) {
+                    upiBox.style.display = 'block';
+                    const numAmt = amount.replace(/[^0-9]/g, '');
+                    const upiString = `upi://pay?pa=sridevigroups@upi&pn=SriDeviGroups&am=${numAmt}&cu=INR&tn=${randomTripId}`;
+                    const qrImg = document.getElementById('confirm-upi-qr-img');
+                    if (qrImg) {
+                        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(upiString)}`;
+                    }
+                }
             }
 
             document.getElementById('success-confirm-modal').classList.add('active');
+            showToast('Trip Confirmed', `Booking ${randomTripId} generated successfully!`, 'success');
         }
 
         function handlePayLater() {

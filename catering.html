@@ -126,6 +126,82 @@
         </div>
     </section>
 
+    <!-- Interactive Catering Calculator -->
+    <section class="calculator-section" id="calculator" style="background: #fdfaf5; padding: 70px 0;">
+        <div class="container">
+            <h2 class="section-title">Instant Catering Cost Calculator</h2>
+            <p class="section-subtitle">Select your desired feast package & guest count for a transparent instant quotation</p>
+
+            <div class="catering-calculator-box">
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #8b1a1a; margin-bottom: 8px;">
+                    1. Choose Catering Package
+                </h3>
+                <div class="calc-pkg-grid">
+                    <div class="calc-pkg-card active" id="pkg-card-banana-leaf" onclick="selectCateringPkg('banana-leaf')">
+                        <div class="pkg-icon">🍃</div>
+                        <h4>Banana Leaf Feast</h4>
+                        <div class="pkg-rate">₹320 <small style="font-size:0.8rem; font-weight:500;">/ plate</small></div>
+                        <div class="pkg-desc">Traditional South Indian lunch with 21+ varieties, payasam, appalam, vadai & filter coffee.</div>
+                    </div>
+                    <div class="calc-pkg-card" id="pkg-card-wedding-buffet" onclick="selectCateringPkg('wedding-buffet')">
+                        <div class="pkg-icon">💒</div>
+                        <h4>Royal Wedding Buffet</h4>
+                        <div class="pkg-rate">₹480 <small style="font-size:0.8rem; font-weight:500;">/ plate</small></div>
+                        <div class="pkg-desc">Grand wedding banquet: Live counter starters, Dum Biryani, Paneer/Chicken gravies & desserts.</div>
+                    </div>
+                    <div class="calc-pkg-card" id="pkg-card-corporate-meal" onclick="selectCateringPkg('corporate-meal')">
+                        <div class="pkg-icon">🏢</div>
+                        <h4>Corporate High Tea & Lunch</h4>
+                        <div class="pkg-rate">₹240 <small style="font-size:0.8rem; font-weight:500;">/ plate</small></div>
+                        <div class="pkg-desc">Hygienic executive lunch / buffet with beverage counter, fresh cut fruits & evening snacks.</div>
+                    </div>
+                    <div class="calc-pkg-card" id="pkg-card-satvik-pooja" onclick="selectCateringPkg('satvik-pooja')">
+                        <div class="pkg-icon">🛕</div>
+                        <h4>Temple & Pooja Satvik</h4>
+                        <div class="pkg-rate">₹180 <small style="font-size:0.8rem; font-weight:500;">/ plate</small></div>
+                        <div class="pkg-desc">Pure satvik vegetarian cooking without onion/garlic, with traditional ghee sweets & payasam.</div>
+                    </div>
+                </div>
+
+                <div class="calc-slider-wrap">
+                    <div class="calc-slider-header">
+                        <div>
+                            <h4 style="font-weight: 700; color: #111827; font-size: 1.05rem;">2. Estimated Guest Count</h4>
+                            <p style="font-size: 0.82rem; color: #6b7280;">Slide to adjust guests (50 to 2,000+)</p>
+                        </div>
+                        <div class="calc-guest-display" id="calc-guest-display">250 Guests</div>
+                    </div>
+                    <input type="range" class="calc-range-slider" min="50" max="2000" step="25" value="250" oninput="onGuestsSliderChange(this.value)">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.78rem; color: #9ca3af; margin-top: 6px;">
+                        <span>50 guests</span>
+                        <span>500 guests</span>
+                        <span>1,000 guests</span>
+                        <span>2,000+ guests</span>
+                    </div>
+                </div>
+
+                <div class="calc-summary-card">
+                    <div class="calc-quote-info">
+                        <h5>Estimated Investment</h5>
+                        <div class="calc-quote-price" id="calc-quote-price">₹80,000</div>
+                        <div class="calc-quote-subtitle" id="calc-quote-pkg-name">Traditional Banana Leaf Feast (21+ Items) • ₹320/plate</div>
+                        <div style="font-size: 0.78rem; color: #94a3b8; margin-top: 4px;" id="calc-quote-subtitle">
+                            Includes complete banquet setup, uniform staff & 100% pure RO cooking.
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <button class="btn btn-gold" onclick="bookCateringViaWhatsApp()" style="box-shadow: 0 8px 25px rgba(212, 168, 67, 0.4);">
+                            💬 Book via WhatsApp →
+                        </button>
+                        <a href="#contact" class="btn btn-outline" style="border-color: rgba(255,255,255,0.4); color: #fff;">
+                            Request Callback
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Catering Services -->
     <section class="catering-services" id="services">
         <div class="container">

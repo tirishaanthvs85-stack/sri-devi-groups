@@ -3,11 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sri Devi Groups - Dashboard</title>
+    <title>Sri Devi Groups - Luxury Travel & Royal Catering Services | Pollachi</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        .dashboard-hero-premium {
+            background: radial-gradient(circle at 20% 30%, #5c0e0e 0%, #1a1a2e 70%, #0d1117 100%);
+            color: #ffffff;
+            padding: 100px 20px 80px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .dashboard-hero-premium::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d4a843' fill-opacity='0.04' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .hero-trust-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 168, 67, 0.15);
+            border: 1px solid rgba(212, 168, 67, 0.45);
+            color: #f5d061;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .dashboard-hero-premium h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            color: #ffffff;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .dashboard-hero-premium h1 span {
+            background: linear-gradient(135deg, #f5d061, #d4a843, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dashboard-hero-premium p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.15rem;
+            max-width: 780px;
+            margin: 0 auto 35px;
+            line-height: 1.6;
+        }
+
+        .quick-booking-dock {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 28px 32px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+            max-width: 980px;
+            margin: 0 auto;
+            border: 1px solid rgba(212, 168, 67, 0.35);
+            color: #1a1a2e;
+            text-align: left;
+        }
+
+        .dock-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 12px;
+        }
+
+        .dock-tab-btn {
+            background: transparent;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #64748b;
+            padding: 8px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dock-tab-btn.active {
+            background: #fdf6e2;
+            color: #8b1a1a;
+            box-shadow: 0 4px 12px rgba(139, 26, 26, 0.08);
+        }
+
+        .dock-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) 160px;
+            gap: 15px;
+            align-items: flex-end;
+        }
+
+        .dock-field label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+
+        .dock-field select, .dock-field input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1.5px solid #cbd5e1;
+            font-size: 0.9rem;
+            font-family: inherit;
+            background: #ffffff;
+            color: #1e293b;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .dock-field select:focus, .dock-field input:focus {
+            border-color: #8b1a1a;
+        }
+
+        .stats-counter-strip {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 35px 20px;
+        }
+
+        .stats-counter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-box-val {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #8b1a1a;
+            margin-bottom: 4px;
+        }
+
+        .stat-box-lbl {
+            font-size: 0.88rem;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .popular-tours-section {
+            padding: 80px 20px;
+            background: #f8fafc;
+        }
+
+        .tour-dest-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .tour-dest-card {
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tour-dest-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .tour-dest-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .tour-dest-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(17, 24, 39, 0.85);
+            color: #f5d061;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            backdrop-filter: blur(6px);
+        }
+
+        .tour-dest-body {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .tour-dest-body h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .tour-dest-body p {
+            font-size: 0.84rem;
+            color: #64748b;
+            line-height: 1.4;
+            margin-bottom: 14px;
+        }
+
+        .tour-dest-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 12px;
+            margin-top: 8px;
+        }
+
+        .tour-dest-fare {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #8b1a1a;
+        }
+
+        @media (max-width: 900px) {
+            .dock-grid {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-hero-premium h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Page Loader -->
@@ -15,11 +268,11 @@
         <div class="loader"></div>
     </div>
 
-    <!-- Top Bar -->
+    <!-- Top Announcement Bar -->
     <div class="top-announcement-bar">
         <div class="container">
             <div style="display: flex; align-items: center; gap: 16px;">
-                <span>📍 Headquarters: Pollachi, Tamil Nadu</span>
+                <span>📍 Corporate HQ: Pollachi, Tamil Nadu</span>
                 <span>📞 24/7 Helpline: +91 98765 43210</span>
             </div>
             <div style="display: flex; align-items: center; gap: 14px;">
@@ -30,119 +283,388 @@
     </div>
 
     <!-- Navbar -->
-    <nav class="navbar scrolled" style="background: rgba(255,255,255,0.97);">
+    <nav class="navbar scrolled" style="background: rgba(255,255,255,0.98); box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
         <div class="container">
             <a href="dashboard.html" class="logo">
-                <div class="logo-icon">SD</div>
-                <span class="logo-text" style="color: var(--primary);">Sri Devi Groups</span>
+                <div class="logo-icon">SDG</div>
+                <div>
+                    <span class="logo-text" style="color: var(--primary); font-size: 1.3rem;">Sri Devi Groups</span>
+                    <span style="display: block; font-size: 0.65rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Tours & Travels • Luxury Catering</span>
+                </div>
             </a>
             <div class="nav-links">
-                <a href="dashboard.html" style="color: var(--dark);">Home</a>
+                <a href="dashboard.html" style="color: var(--primary); font-weight: 700;">Home</a>
                 <a href="tours.html" style="color: var(--dark);">Tours & Travels</a>
                 <a href="catering.html" style="color: var(--dark);">Catering Services</a>
-                <a href="tours.html#home" class="btn btn-primary nav-btn">Book Now</a>
+                <a href="book.html" class="btn btn-primary nav-btn" style="box-shadow: 0 4px 15px rgba(139,26,26,0.35);">
+                    🗺️ Book a Ride & Map
+                </a>
             </div>
             <button class="mobile-menu-btn" style="color: var(--dark);">☰</button>
         </div>
     </nav>
 
     <!-- Dashboard Hero -->
-    <section class="dashboard-hero">
-        <div class="container" style="position: relative;">
-            <div class="welcome-badge">✨ Welcome to Sri Devi Groups</div>
-            <h1>Sri Devi Groups</h1>
-            <p>Your trusted partner for premium travel and catering services across India</p>
+    <section class="dashboard-hero-premium">
+        <div class="container" style="position: relative; z-index: 2;">
+            <div class="hero-trust-pill">
+                🏆 South India's Premier Mobility & Royal Hospitality Group • Est. 2010
+            </div>
+            <h1>Two Decades of <span>Excellence</span> on Road & Celebrations</h1>
+            <p>From seamless highway journeys across India in premium Sedans, SUVs, and Force Travellers to authentic 21-variety banana leaf feasts and royal wedding banquets — Sri Devi Groups delivers perfection from Pollachi.</p>
+
+            <!-- Quick Booking Dock -->
+            <div class="quick-booking-dock">
+                <div class="dock-tabs">
+                    <button class="dock-tab-btn active" onclick="switchDockTab('ride', this)">
+                        🚗 Book Ride / Traveller / Bike
+                    </button>
+                    <button class="dock-tab-btn" onclick="switchDockTab('catering', this)">
+                        🍽️ Plan Wedding & Event Feast
+                    </button>
+                </div>
+
+                <!-- Tab 1: Travel Dock -->
+                <div id="dock-panel-ride" class="dock-panel">
+                    <div class="dock-grid">
+                        <div class="dock-field">
+                            <label>Origin Location</label>
+                            <select id="dock-origin">
+                                <option value="Pollachi" selected>📍 Pollachi Headquarters</option>
+                                <option value="Coimbatore Airport">✈️ Coimbatore Airport (CJB)</option>
+                                <option value="Coimbatore Junction">🚆 Coimbatore Junction</option>
+                                <option value="Tiruppur">📍 Tiruppur</option>
+                                <option value="Palakkad">📍 Palakkad</option>
+                            </select>
+                        </div>
+                        <div class="dock-field">
+                            <label>Destination</label>
+                            <select id="dock-destination">
+                                <option value="ooty" selected>⛰️ Ooty Queen of Hills (95 km)</option>
+                                <option value="kodaikanal">🌲 Kodaikanal (150 km)</option>
+                                <option value="valparai">🌿 Valparai 40 Bends (65 km)</option>
+                                <option value="munnar">🍃 Munnar Tea Hills (160 km)</option>
+                                <option value="bangalore">🌆 Bangalore (370 km)</option>
+                                <option value="chennai">🏙️ Chennai (510 km)</option>
+                                <option value="madurai">🛕 Madurai Meenakshi (200 km)</option>
+                                <option value="rameshwaram">🌊 Rameshwaram (380 km)</option>
+                                <option value="tirupati">🙏 Tirupati Balaji (550 km)</option>
+                            </select>
+                        </div>
+                        <div class="dock-field">
+                            <label>Vehicle Type</label>
+                            <select id="dock-vehicle">
+                                <option value="sedan" selected>Sedan (₹18/km, ₹2000/day)</option>
+                                <option value="suv">SUV / XUV (₹20/km, ₹2000/day)</option>
+                                <option value="traveller">Force Traveller (₹22/km, ₹2500/day)</option>
+                                <option value="bike-classic">Royal Enfield Classic 350 (₹1200/day)</option>
+                                <option value="scooter-jupiter">TVS Jupiter (₹600/day)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary" style="width: 100%; padding: 14px; font-weight: 700;" onclick="submitDockRide()">
+                                View Route & Price →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Catering Dock -->
+                <div id="dock-panel-catering" class="dock-panel" style="display: none;">
+                    <div class="dock-grid">
+                        <div class="dock-field">
+                            <label>Event Type</label>
+                            <select id="dock-event">
+                                <option value="Wedding" selected>💒 Grand Wedding & Reception</option>
+                                <option value="House Warming">🏠 Grihapravesam / House Warming</option>
+                                <option value="Corporate">🏢 Corporate Banquet / Conference</option>
+                                <option value="Birthday">🎂 Birthday / Anniversary</option>
+                                <option value="Pooja">🛕 Temple Festival / Satvik Pooja</option>
+                            </select>
+                        </div>
+                        <div class="dock-field">
+                            <label>Feast Style</label>
+                            <select id="dock-menu-style">
+                                <option value="Banana Leaf Feast" selected>🍃 Traditional Banana Leaf (₹320/plate)</option>
+                                <option value="Royal Wedding Buffet">👑 Royal Grand Buffet (₹480/plate)</option>
+                                <option value="Satvik Pooja Meals">🛕 Pure Satvik Vegetarian (₹180/plate)</option>
+                                <option value="Executive Lunch">🍱 Corporate High Tea & Lunch (₹240/plate)</option>
+                            </select>
+                        </div>
+                        <div class="dock-field">
+                            <label>Estimated Guests</label>
+                            <select id="dock-guests">
+                                <option value="100">100 Guests</option>
+                                <option value="250" selected>250 Guests</option>
+                                <option value="500">500 Guests</option>
+                                <option value="1000">1,000 Guests</option>
+                                <option value="2000+">2,000+ Guests</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-gold" style="width: 100%; padding: 14px; font-weight: 700;" onclick="submitDockCatering()">
+                                Calculate Quote →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Dashboard Cards -->
-    <section class="dashboard-section">
-        <div class="dashboard-cards">
-            <!-- Tours & Travels Card -->
-            <a href="tours.html" class="dashboard-card">
-                <div class="card-image-photo">
-                    <img src="images/dashboard-tours.jpg" alt="Sri Devi Tours & Travels Fleet">
-                    <span class="card-photo-tag">🚗 Cars, Travellers & Bike Rentals</span>
-                </div>
-                <div class="card-body">
-                    <h2>Sri Devi Tours & Travels</h2>
-                    <p>Rent Sedans (₹18/km), SUVs/XUVs (₹20/km) & Force Travellers (₹22/km) with experienced drivers, plus Bike Rentals: Royal Enfield Classic 350 for Men and TVS Jupiter for Women from Pollachi across India.</p>
-                    <div class="card-features">
-                        <div class="card-feature">
-                            <span class="icon">🚗</span> Sedans (₹18/km)
-                        </div>
-                        <div class="card-feature">
-                            <span class="icon">🚙</span> SUVs / XUV (₹20/km)
-                        </div>
-                        <div class="card-feature">
-                            <span class="icon">🚐</span> Force Traveller (₹22/km)
-                        </div>
-                        <div class="card-feature">
-                            <span class="icon">🏍️</span> Bikes (Men & Women)
-                        </div>
-                    </div>
-                    <div class="card-arrow">
-                        Explore Vehicles, Bikes & Route Map →
-                    </div>
-                </div>
-            </a>
-
-            <!-- Catering Services Card -->
-            <a href="catering.html" class="dashboard-card">
-                <div class="card-image-photo">
-                    <img src="images/dashboard-catering.jpg" alt="Sri Devi Catering Grand Setup">
-                    <span class="card-photo-tag" style="border-color: rgba(231,76,60,0.5);">🍽️ Premium Catering</span>
-                </div>
-                <div class="card-body">
-                    <h2>Sri Devi Catering Services</h2>
-                    <p>Authentic South Indian & multi-cuisine catering for weddings, corporate gatherings, and celebrations. Traditional banana leaf feasts, biryani, and live counters.</p>
-                    <div class="card-features">
-                        <div class="card-feature">
-                            <span class="icon">💒</span> Weddings
-                        </div>
-                        <div class="card-feature">
-                            <span class="icon">🍃</span> Banana Leaf Feast
-                        </div>
-                        <div class="card-feature">
-                            <span class="icon">🥘</span> Biryani & Buffets
-                        </div>
-                        <div class="card-feature">
-                            <span class="icon">✨</span> 100% Pure Hygiene
-                        </div>
-                    </div>
-                    <div class="card-arrow">
-                        View Menu & Get Quote →
-                    </div>
-                </div>
-            </a>
-        </div>
-    </section>
-
-    <!-- Quick Stats -->
-    <section style="padding: 60px 20px 100px; background: var(--white);">
+    <!-- Trust Stats Counter Strip -->
+    <section class="stats-counter-strip">
         <div class="container">
-            <h2 class="section-title">Why Choose Sri Devi Groups?</h2>
-            <p class="section-subtitle">Trusted by thousands of customers across Tamil Nadu and beyond</p>
+            <div class="stats-counter-grid">
+                <div>
+                    <div class="stat-box-val">15+</div>
+                    <div class="stat-box-lbl">Years of Hospitality</div>
+                </div>
+                <div>
+                    <div class="stat-box-val">50,000+</div>
+                    <div class="stat-box-lbl">Happy Travellers</div>
+                </div>
+                <div>
+                    <div class="stat-box-val">1,200+</div>
+                    <div class="stat-box-lbl">Grand Weddings Catered</div>
+                </div>
+                <div>
+                    <div class="stat-box-val">100%</div>
+                    <div class="stat-box-lbl">Verified Drivers & Pure RO Kitchen</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Group Divisions -->
+    <section class="dashboard-section" style="padding: 70px 20px;">
+        <div class="container">
+            <h2 class="section-title">Our Two Pillars of Excellence</h2>
+            <p class="section-subtitle">Delivering unmatched quality, punctuality, and trust across South India</p>
+
+            <div class="dashboard-cards" style="margin-top: 30px;">
+                <!-- Division 1: Sri Devi Tours & Travels -->
+                <div class="dashboard-card" style="cursor: default;">
+                    <div class="card-image-photo">
+                        <img src="images/dashboard-tours.jpg" alt="Sri Devi Tours & Travels Fleet">
+                        <span class="card-photo-tag">🚗 Car & Bike Rental Division</span>
+                    </div>
+                    <div class="card-body">
+                        <h2>Sri Devi Tours & Travels</h2>
+                        <p>Specialized luxury passenger mobility with experienced highway chauffeurs. Chilled AC, sanitized cabins, live GPS route tracking, and clear transparent billing.</p>
+                        <div class="card-features">
+                            <div class="card-feature">
+                                <span class="icon">🚗</span> <strong>Sedans</strong> (Dzire, Amaze, Etios): ₹18/km, ₹2,000/day
+                            </div>
+                            <div class="card-feature">
+                                <span class="icon">🚙</span> <strong>SUVs / XUVs</strong> (Innova Crysta, XUV700, Scorpio): ₹20/km, ₹2,000/day
+                            </div>
+                            <div class="card-feature">
+                                <span class="icon">🚐</span> <strong>Force Traveller</strong> (12-20 Seater): ₹22/km, ₹2,500/day
+                            </div>
+                            <div class="card-feature">
+                                <span class="icon">🏍️</span> <strong>Bikes</strong>: Classic 350 for Men (₹1200/d) & TVS Jupiter for Women (₹600/d)
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap;">
+                            <a href="book.html" class="btn btn-primary" style="flex: 1; padding: 12px 20px; font-size: 0.92rem;">
+                                🗺️ Open Live Route Map & Book
+                            </a>
+                            <a href="tours.html" class="btn btn-outline" style="flex: 1; padding: 12px 20px; font-size: 0.92rem; border-color: #8b1a1a; color: #8b1a1a;">
+                                View Full Fleet Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Division 2: Sri Devi Catering Services -->
+                <div class="dashboard-card" style="cursor: default;">
+                    <div class="card-image-photo">
+                        <img src="images/dashboard-catering.jpg" alt="Sri Devi Catering Grand Setup">
+                        <span class="card-photo-tag" style="border-color: rgba(231,76,60,0.5);">🍽️ Royal Catering Division</span>
+                    </div>
+                    <div class="card-body">
+                        <h2>Sri Devi Catering Services</h2>
+                        <p>Authentic South Indian culinary mastery for grand weddings, house warmings, and corporate banquets. Traditional banana leaf feasts, aromatic dum biryani, and live counters.</p>
+                        <div class="card-features">
+                            <div class="card-feature">
+                                <span class="icon">🍃</span> <strong>Banana Leaf Feast</strong>: 21+ varieties, pure ghee sweets & payasam
+                            </div>
+                            <div class="card-feature">
+                                <span class="icon">👑</span> <strong>Wedding Gala Buffets</strong>: Live counters, starters & multi-cuisine
+                            </div>
+                            <div class="card-feature">
+                                <span class="icon">🧼</span> <strong>100% Pure RO Kitchen</strong>: Modern stainless steel steam cooking
+                            </div>
+                            <div class="card-feature">
+                                <span class="icon">👨‍🍳</span> <strong>Master Chauffeur Staff</strong>: Traditional courteous banquet service
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap;">
+                            <a href="catering.html#calculator" class="btn btn-gold" style="flex: 1; padding: 12px 20px; font-size: 0.92rem;">
+                                ⚡ Instant Cost Calculator
+                            </a>
+                            <a href="catering.html" class="btn btn-outline" style="flex: 1; padding: 12px 20px; font-size: 0.92rem; border-color: #d4a843; color: #8b1a1a;">
+                                View Food Menu & Gallery
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Tour Destinations from Pollachi -->
+    <section class="popular-tours-section">
+        <div class="container">
+            <h2 class="section-title">Popular Getaways from Pollachi</h2>
+            <p class="section-subtitle">Direct pickups with experienced drivers who know every scenic route</p>
+
+            <div class="tour-dest-grid">
+                <!-- Ooty -->
+                <div class="tour-dest-card">
+                    <div class="tour-dest-img" style="background-image: url('images/tours-hero.jpg');">
+                        <span class="tour-dest-badge">95 km • ~2.5 hrs</span>
+                    </div>
+                    <div class="tour-dest-body">
+                        <div>
+                            <h3>Ooty — Queen of Hill Stations</h3>
+                            <p>Tea plantations, Botanical Gardens, Doddabetta Peak, and scenic mountain roads.</p>
+                        </div>
+                        <div class="tour-dest-meta">
+                            <span class="tour-dest-fare">Sedan from ₹3,710</span>
+                            <a href="book.html?dest=ooty&vehicle=sedan" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.8rem;">
+                                Book Ride →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kodaikanal -->
+                <div class="tour-dest-card">
+                    <div class="tour-dest-img" style="background-image: url('images/dashboard-tours.jpg');">
+                        <span class="tour-dest-badge">150 km • ~4.5 hrs</span>
+                    </div>
+                    <div class="tour-dest-body">
+                        <div>
+                            <h3>Kodaikanal — Princess of Hills</h3>
+                            <p>Silver Cascade waterfalls, Kodai Lake boating, Coaker's Walk, and pine forests.</p>
+                        </div>
+                        <div class="tour-dest-meta">
+                            <span class="tour-dest-fare">Sedan from ₹4,700</span>
+                            <a href="book.html?dest=kodaikanal&vehicle=sedan" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.8rem;">
+                                Book Ride →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Munnar -->
+                <div class="tour-dest-card">
+                    <div class="tour-dest-img" style="background-image: url('images/tours-hero.jpg');">
+                        <span class="tour-dest-badge">160 km • ~4.5 hrs</span>
+                    </div>
+                    <div class="tour-dest-body">
+                        <div>
+                            <h3>Munnar — Tea Paradise</h3>
+                            <p>Via Udumalpet & Chinnar Wildlife Sanctuary: Mattupetty Dam, Eravikulam National Park.</p>
+                        </div>
+                        <div class="tour-dest-meta">
+                            <span class="tour-dest-fare">SUV from ₹5,200</span>
+                            <a href="book.html?dest=munnar&vehicle=suv" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.8rem;">
+                                Book Ride →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Valparai -->
+                <div class="tour-dest-card">
+                    <div class="tour-dest-img" style="background-image: url('images/dashboard-tours.jpg');">
+                        <span class="tour-dest-badge">65 km • 40 Hairpins</span>
+                    </div>
+                    <div class="tour-dest-body">
+                        <div>
+                            <h3>Valparai — Annamalai Hills</h3>
+                            <p>40 thrilling hairpin bends, Aliyar Dam, Monkey Falls, and Sholayar Reservoir.</p>
+                        </div>
+                        <div class="tour-dest-meta">
+                            <span class="tour-dest-fare">Classic 350 / Car</span>
+                            <a href="book.html?dest=valparai&vehicle=bike-classic" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.8rem;">
+                                Book Ride →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Sri Devi Groups -->
+    <section style="padding: 80px 20px; background: var(--white);">
+        <div class="container">
+            <h2 class="section-title">The Sri Devi Groups Promise</h2>
+            <p class="section-subtitle">Why families and corporations choose us repeatedly</p>
             <div class="services-grid">
                 <div class="service-card">
-                    <div class="service-icon">🏆</div>
-                    <h3>10+ Years Experience</h3>
-                    <p>Over a decade of excellence in providing top-notch travel and catering services.</p>
+                    <div class="service-icon">🛡️</div>
+                    <h3>Verified Chauffeurs</h3>
+                    <p>Background-verified, disciplined drivers with 10+ years experience on hill roads and highways.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">😊</div>
-                    <h3>5000+ Happy Customers</h3>
-                    <p>Thousands of satisfied customers who trust us for their travel and event needs.</p>
+                    <div class="service-icon">🧭</div>
+                    <h3>Google Route Navigation</h3>
+                    <p>Accurate road mileage calculation with live turn-by-turn routing format and transparent billing.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">🌟</div>
-                    <h3>Quality Guaranteed</h3>
-                    <p>We maintain the highest standards of quality, safety, and customer satisfaction.</p>
+                    <div class="service-icon">🍃</div>
+                    <h3>100% Pure Hygiene Food</h3>
+                    <p>Traditional wood & steam cooking using pure RO water, cold-pressed oils, and farm fresh vegetables.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">💰</div>
-                    <h3>Best Prices</h3>
-                    <p>Competitive pricing with no hidden charges. Transparent billing always.</p>
+                    <h3>Zero Hidden Surcharges</h3>
+                    <p>Clear rate cards (Sedan ₹18/km, SUV ₹20/km, Traveller ₹22/km) with upfront toll & tax clarity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Testimonials -->
+    <section style="padding: 70px 20px; background: #fdfaf5; border-top: 1px solid #f1e6ce;">
+        <div class="container">
+            <h2 class="section-title">Verified Customer Experiences</h2>
+            <p class="section-subtitle">Real feedback from clients across Pollachi, Coimbatore, and Chennai</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 30px;">
+                <div style="background: #ffffff; padding: 24px; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.04);">
+                    <div style="color: #f59e0b; margin-bottom: 8px;">⭐⭐⭐⭐⭐</div>
+                    <p style="font-size: 0.9rem; color: #475569; font-style: italic; line-height: 1.5;">
+                        "We booked the Toyota Innova Crysta for our family trip from Pollachi to Munnar and Kodaikanal. Driver Murugan was extremely courteous, driving was smooth on the hairpin turns, and billing was completely honest."
+                    </p>
+                    <div style="margin-top: 14px; font-weight: 700; color: #1e293b; font-size: 0.88rem;">
+                        — Dr. S. K. Sundaram, Coimbatore
+                    </div>
+                </div>
+
+                <div style="background: #ffffff; padding: 24px; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.04);">
+                    <div style="color: #f59e0b; margin-bottom: 8px;">⭐⭐⭐⭐⭐</div>
+                    <p style="font-size: 0.9rem; color: #475569; font-style: italic; line-height: 1.5;">
+                        "Sri Devi Catering handled our daughter's wedding reception for 1,200 guests in Pollachi. The traditional banana leaf feast with Mysore Pak and Degree Filter Coffee was praised by every single relative!"
+                    </p>
+                    <div style="margin-top: 14px; font-weight: 700; color: #1e293b; font-size: 0.88rem;">
+                        — K. Ramanathan, Pollachi
+                    </div>
+                </div>
+
+                <div style="background: #ffffff; padding: 24px; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.04);">
+                    <div style="color: #f59e0b; margin-bottom: 8px;">⭐⭐⭐⭐⭐</div>
+                    <p style="font-size: 0.9rem; color: #475569; font-style: italic; line-height: 1.5;">
+                        "Rented the Royal Enfield Classic 350 for a solo weekend ride up the Valparai tea estates. Bike was in showroom condition with fresh engine oil and crisp brakes. Truly professional service!"
+                    </p>
+                    <div style="margin-top: 14px; font-weight: 700; color: #1e293b; font-size: 0.88rem;">
+                        — Ashwin Raj, Bangalore
+                    </div>
                 </div>
             </div>
         </div>
@@ -153,55 +675,86 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <span class="logo-text" style="font-family: 'Playfair Display', serif; font-size: 1.5rem;">Sri Devi Groups</span>
-                    <p>Your trusted partner for premium travel and catering services. Serving customers from Pollachi since 2015.</p>
-                    <div class="footer-social">
-                        <a href="#">📘</a>
-                        <a href="#">📸</a>
-                        <a href="#">🐦</a>
-                        <a href="#">📱</a>
+                    <span class="logo-text" style="font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #ffffff;">Sri Devi Groups</span>
+                    <p style="margin-top: 8px; color: rgba(255,255,255,0.7); font-size: 0.88rem;">
+                        Pollachi's trusted conglomerate for passenger mobility, luxury rentals, and grand celebration catering. Serving South India with pride since 2010.
+                    </p>
+                    <div class="footer-social" style="margin-top: 15px;">
+                        <a href="https://wa.me/919876543210" target="_blank">📱</a>
+                        <a href="tel:+919876543210">📞</a>
+                        <a href="mailto:info@sridevigroups.com">✉️</a>
                     </div>
                 </div>
                 <div class="footer-col">
-                    <h4>Our Services</h4>
+                    <h4>Mobility & Rentals</h4>
                     <ul>
-                        <li><a href="tours.html">Car Rentals</a></li>
-                        <li><a href="tours.html">Traveller Rentals</a></li>
-                        <li><a href="catering.html">Wedding Catering</a></li>
-                        <li><a href="catering.html">Event Catering</a></li>
+                        <li><a href="book.html?vehicle=sedan">Sedans (₹18/km, ₹2000/day)</a></li>
+                        <li><a href="book.html?vehicle=suv">SUVs / XUV (₹20/km, ₹2000/day)</a></li>
+                        <li><a href="book.html?vehicle=traveller">Force Traveller (₹22/km, ₹2500/day)</a></li>
+                        <li><a href="book.html?vehicle=bike-classic">Classic 350 for Men (₹1200/day)</a></li>
+                        <li><a href="book.html?vehicle=scooter-jupiter">TVS Jupiter for Women (₹600/day)</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Quick Links</h4>
+                    <h4>Royal Catering</h4>
                     <ul>
-                        <li><a href="dashboard.html">Home</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Careers</a></li>
+                        <li><a href="catering.html#calculator">Banana Leaf Feast (21+ items)</a></li>
+                        <li><a href="catering.html#calculator">Royal Wedding Gala Buffet</a></li>
+                        <li><a href="catering.html#menu">Seeraga Samba Dum Biryani</a></li>
+                        <li><a href="catering.html#menu">Pure Ghee Sweets & Desserts</a></li>
+                        <li><a href="catering.html#calculator">Instant Event Estimator</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Contact</h4>
+                    <h4>Corporate Office</h4>
                     <ul>
-                        <li><a href="#">📍 Pollachi, Tamil Nadu</a></li>
-                        <li><a href="#">📞 +91 98765 43210</a></li>
-                        <li><a href="#">✉️ info@sridevigroups.com</a></li>
+                        <li><a href="#">📍 Main Road, Pollachi, Tamil Nadu - 642001</a></li>
+                        <li><a href="tel:+919876543210">📞 Helpline: +91 98765 43210</a></li>
+                        <li><a href="tel:+918765432109">📞 Booking: +91 87654 32109</a></li>
+                        <li><a href="mailto:contact@sridevigroups.com">✉️ contact@sridevigroups.com</a></li>
+                        <li><a href="#">⏰ Available 24/7 All 365 Days</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2024 Sri Devi Groups. All Rights Reserved. | Designed with ❤️ in Pollachi</p>
+                <p>© 2026 Sri Devi Groups (Sri Devi Tours & Travels & Sri Devi Catering Services). All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- WhatsApp Button -->
-    <a href="https://wa.me/919876543210" class="whatsapp-btn" target="_blank">💬</a>
+    <a href="https://wa.me/919876543210?text=Hi%20Sri%20Devi%20Groups!%20I%20would%20like%20to%20inquire%20about%20your%20services." class="whatsapp-btn" target="_blank" title="Chat on WhatsApp">💬</a>
 
     <!-- Back to Top -->
     <button class="back-to-top">↑</button>
 
     <script src="js/script.js"></script>
+    <script>
+        function switchDockTab(tab, btn) {
+            document.querySelectorAll('.dock-tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const ridePanel = document.getElementById('dock-panel-ride');
+            const catPanel = document.getElementById('dock-panel-catering');
+
+            if (tab === 'ride') {
+                ridePanel.style.display = 'block';
+                catPanel.style.display = 'none';
+            } else {
+                ridePanel.style.display = 'none';
+                catPanel.style.display = 'block';
+            }
+        }
+
+        function submitDockRide() {
+            const dest = document.getElementById('dock-destination').value;
+            const veh = document.getElementById('dock-vehicle').value;
+            window.location.href = `book.html?dest=${encodeURIComponent(dest)}&vehicle=${encodeURIComponent(veh)}`;
+        }
+
+        function submitDockCatering() {
+            window.location.href = `catering.html#calculator`;
+        }
+    </script>
 </body>
 </html>
-

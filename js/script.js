@@ -670,6 +670,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+function quickSelectDest(destKey) {
+    const destSelect = document.getElementById('destination');
+    if (destSelect) {
+        destSelect.value = destKey;
+        calculateEstimate();
+        showToast('Route Updated', `Selected ${destKey.toUpperCase()} from Pollachi`, 'info');
+    }
+}
+
 // ===== GO TO BOOKING PAGE SHORTCUT =====
 function goToBookingPage() {
     const veh = document.getElementById('vehicle-type')?.value || 'sedan';
@@ -696,8 +705,14 @@ function initAuthNav() {
     const navLinks = document.querySelector('.nav-links');
     if (!navLinks) return;
 
-    const loggedIn = sessionStorage.getItem('sriDeviLoggedIn') === 'true';
-    const user = sessionStorage.getItem('sriDeviUser') || 'admin';
+    const loggedIn = sessionStorage.getItem('sriDeviLoggedIn') === 'true' || localStorage.getItem('sriDeviLoggedIn') === 'true';
+    let user = sessionStorage.getItem('sriDeviUser') || localStorage.getItem('sriDeviUser');
+    const phone = sessionStorage.getItem('sriDeviPhone') || localStorage.getItem('sriDeviPhone');
+
+    if (!user && phone) {
+        user = '+91 ••••• ' + phone.slice(-4);
+    }
+    if (!user) user = 'Guest User';
 
     // Remove any existing auth badge
     const existing = document.getElementById('nav-user-auth-badge');
@@ -712,16 +727,16 @@ function initAuthNav() {
 
     if (loggedIn) {
         authContainer.innerHTML = `
-            <span style="background: rgba(212, 168, 67, 0.18); border: 1px solid rgba(212, 168, 67, 0.5); color: #8b1a1a; padding: 4px 12px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px;">
-                👤 <span>${user}</span>
+            <span style="background: rgba(212, 168, 67, 0.18); border: 1px solid rgba(212, 168, 67, 0.5); color: #8b1a1a; padding: 5px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; display: inline-flex; align-items: center; gap: 5px;">
+                <span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:#10b981;"></span> <span>${user}</span>
             </span>
-            <button onclick="handleLogout()" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #dc2626; padding: 4px 10px; border-radius: 6px; font-size: 0.76rem; cursor: pointer; font-weight: 600; transition: all 0.2s ease;" title="Sign Out">
+            <button onclick="handleLogout()" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #dc2626; padding: 5px 12px; border-radius: 8px; font-size: 0.78rem; cursor: pointer; font-weight: 700; transition: all 0.2s ease;" title="Sign Out">
                 Sign Out
             </button>
         `;
     } else {
         authContainer.innerHTML = `
-            <a href="index.html" style="background: rgba(139, 26, 26, 0.1); border: 1px solid rgba(139, 26, 26, 0.3); color: #8b1a1a; padding: 5px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s ease;">
+            <a href="index.html" style="background: rgba(139, 26, 26, 0.1); border: 1px solid rgba(139, 26, 26, 0.3); color: #8b1a1a; padding: 6px 16px; border-radius: 20px; font-size: 0.84rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: all 0.2s ease;">
                 🔐 <span>Sign In</span>
             </a>
         `;
@@ -737,6 +752,112 @@ function handleLogout() {
     sessionStorage.removeItem('sriDeviEmail');
     sessionStorage.removeItem('sriDeviVerified');
     localStorage.removeItem('sriDeviLoggedIn');
+    localStorage.removeItem('sriDeviUser');
+    localStorage.removeItem('sriDeviPhone');
+    localStorage.removeItem('sriDeviEmail');
     localStorage.removeItem('sriDeviVerified');
-    window.location.href = 'index.html';
+    showToast('Signed Out', 'You have been safely signed out.', 'info');
+    setTimeout(() => {
+        window.location.href = 'index.html';
+    }, 600);
 }
+
+// ===== MODERN TOAST NOTIFICATIONS =====
+function showToast(title, message, type = 'info', duration = 4000) {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+
+    let icon = 'ℹ️';
+    if (type === 'success') icon = '✅';
+    if (type === 'error') icon = '⚠️';
+
+    toast.innerHTML = `
+        <span class="toast-icon">${icon}</span>
+        <div class="toast-body">
+            <div class="toast-title">${title}</div>
+            <div class="toast-msg">${message}</div>
+        </div>
+        <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+    `;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('toast-hide');
+        setTimeout(() => toast.remove(), 320);
+    }, duration);
+}
+
+// ===== INTERACTIVE CATERING ESTIMATOR =====
+const cateringPackages = {
+    'banana-leaf': {
+        name: 'Traditional Banana Leaf Feast (21+ Items)',
+        rate: 320,
+        desc: 'Complete traditional meals on fresh banana leaf with payasam, vadai, appalam, sweets & degree filter coffee.'
+    },
+    'wedding-buffet': {
+        name: 'Royal Wedding Grand Buffet',
+        rate: 480,
+        desc: 'Lavish multi-cuisine buffet: Live starters, Dum Biryani, Paneer/Chicken gravies, breads, desserts & ice cream.'
+    },
+    'corporate-meal': {
+        name: 'Corporate Executive Lunch & High Tea',
+        rate: 240,
+        desc: 'Clean hygienic packed lunch / buffet with beverage counter, fresh cut fruits & evening snacks.'
+    },
+    'satvik-pooja': {
+        name: 'Temple & Pooja Satvik Feast',
+        rate: 180,
+        desc: 'Pure satvik vegetarian cooking without onion/garlic, with traditional ghee sweets and payasam.'
+    }
+};
+
+let currentCateringPkg = 'banana-leaf';
+let currentCateringGuests = 250;
+
+function selectCateringPkg(pkgKey) {
+    currentCateringPkg = pkgKey;
+    document.querySelectorAll('.calc-pkg-card').forEach(c => c.classList.remove('active'));
+    const target = document.getElementById('pkg-card-' + pkgKey);
+    if (target) target.classList.add('active');
+    updateCateringEstimate();
+}
+
+function onGuestsSliderChange(value) {
+    currentCateringGuests = parseInt(value) || 100;
+    const display = document.getElementById('calc-guest-display');
+    if (display) display.textContent = `${currentCateringGuests.toLocaleString()} Guests`;
+    updateCateringEstimate();
+}
+
+function updateCateringEstimate() {
+    const pkg = cateringPackages[currentCateringPkg];
+    if (!pkg) return;
+
+    const totalEstimate = currentCateringGuests * pkg.rate;
+
+    const priceEl = document.getElementById('calc-quote-price');
+    const infoEl = document.getElementById('calc-quote-pkg-name');
+    const subtitleEl = document.getElementById('calc-quote-subtitle');
+
+    if (priceEl) priceEl.textContent = `₹${totalEstimate.toLocaleString()}`;
+    if (infoEl) infoEl.textContent = `${pkg.name} • ₹${pkg.rate}/plate`;
+    if (subtitleEl) subtitleEl.textContent = `All-inclusive estimate for ${currentCateringGuests.toLocaleString()} guests with full kitchen setup & serving staff`;
+}
+
+function bookCateringViaWhatsApp() {
+    const pkg = cateringPackages[currentCateringPkg];
+    const totalEstimate = currentCateringGuests * pkg.rate;
+    const text = encodeURIComponent(
+        `Namaste Sri Devi Catering! 🙏\n\nI want to book catering service for my upcoming event:\n• Package: ${pkg.name}\n• Guest Count: ${currentCateringGuests} guests\n• Estimated Quote: ₹${totalEstimate.toLocaleString()} (₹${pkg.rate}/plate)\n• Location: Pollachi / Nearby\n\nPlease confirm availability and menu customization.`
+    );
+    window.open(`https://wa.me/919876543210?text=${text}`, '_blank');
+}
+
