@@ -770,14 +770,34 @@
             <span class="upi-badge" style="background: #ecfdf5; color: #047857;">🔒 Secure Verification</span>
             <h2 style="font-family: 'Playfair Display', serif; font-size: 1.55rem; color: var(--primary); margin-bottom: 6px;">Verify Passenger Contact</h2>
             
-            <div class="otp-status-notice light" style="margin-bottom: 16px;">
+            <div class="otp-status-notice light" style="margin-bottom: 12px;">
                 📩 A 6-digit verification code has been dispatched to<br>
                 <strong id="modal-otp-phone-display">+91 ••••• •4321</strong> & <strong id="modal-otp-email-display">user@example.com</strong>.<br>
                 <small style="color: #64748b; display: block; margin-top: 4px;">Please check your messages and enter the code below.</small>
             </div>
 
-            <div style="margin: 15px 0;">
-                <div class="otp-digit-inputs" style="margin: 10px 0 15px;">
+            <!-- Incoming Mobile SMS Notification Simulator Banner -->
+            <div id="modal-simulated-sms-banner" class="simulated-sms-banner light-theme" style="margin: 10px 0 14px;">
+                <div class="sim-sms-header">
+                    <span>💬 SMS MESSAGES • Just Now</span>
+                    <span class="sim-sms-badge">RECEIVED</span>
+                </div>
+                <div class="sim-sms-sender">📲 Sender: VK-SRIDEVI</div>
+                <div class="sim-sms-text">
+                    Sri Devi Groups: Your ride booking verification code is <span class="sim-sms-code-highlight" id="modal-sim-sms-code-text">------</span>. Valid for 10 minutes.
+                </div>
+                <div class="sim-sms-actions">
+                    <button type="button" class="btn-sms-autofill" onclick="autoFillModalOTP()">
+                        ⚡ Tap to Auto-Fill Code
+                    </button>
+                    <a id="modal-btn-whatsapp-otp-link" href="#" target="_blank" class="btn-sms-whatsapp">
+                        💬 Receive on WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <div style="margin: 10px 0;">
+                <div class="otp-digit-inputs" style="margin: 10px 0 12px;">
                     <input type="text" maxlength="1" class="otp-box-digit light-theme modal-otp-box" data-bidx="0" inputmode="numeric" autocomplete="one-time-code" autofocus>
                     <input type="text" maxlength="1" class="otp-box-digit light-theme modal-otp-box" data-bidx="1" inputmode="numeric">
                     <input type="text" maxlength="1" class="otp-box-digit light-theme modal-otp-box" data-bidx="2" inputmode="numeric">
@@ -787,9 +807,13 @@
                 </div>
             </div>
 
-            <div class="otp-countdown-wrap" style="color: #64748b; margin-bottom: 18px; font-size: 0.84rem; display: flex; justify-content: space-between;">
+            <div class="otp-countdown-wrap" style="color: #64748b; margin-bottom: 12px; font-size: 0.84rem; display: flex; justify-content: space-between;">
                 <span id="modal-otp-timer-display">Resend code in <strong>00:45</strong></span>
                 <span class="otp-resend-link disabled" id="modal-otp-resend-btn" onclick="resendBookingOTP()" style="color: #16a34a; cursor: pointer;">Resend Code</span>
+            </div>
+
+            <div style="background: #fefce8; border: 1px dashed #ca8a04; border-radius: 8px; padding: 7px 12px; margin-bottom: 16px; font-size: 0.78rem; color: #854d0e; text-align: center;">
+                💡 <strong>Instant Access:</strong> Use the code from the received SMS alert above or universal test code: <strong>123456</strong>
             </div>
 
             <div style="display: flex; gap: 10px;">
@@ -1606,9 +1630,30 @@
             document.getElementById('modal-otp-phone-display').textContent = maskContactPhone(phone);
             document.getElementById('modal-otp-email-display').textContent = maskContactEmail(email);
 
+            // Update modal simulated incoming SMS alert & WhatsApp action
+            const modalSimSmsText = document.getElementById('modal-sim-sms-code-text');
+            if (modalSimSmsText) modalSimSmsText.textContent = bookingOTP;
+
+            const cleanPhone = phone.replace(/[^0-9]/g, '');
+            const modalWaLink = document.getElementById('modal-btn-whatsapp-otp-link');
+            if (modalWaLink) {
+                const waText = encodeURIComponent(`Sri Devi Groups Ride Booking Code: ${bookingOTP}. Enter this 6-digit code on the booking modal to verify your contact.`);
+                modalWaLink.href = `https://wa.me/91${cleanPhone}?text=${waText}`;
+            }
+
             clearModalOTPBoxes();
             document.getElementById('booking-otp-modal').classList.add('active');
             startModalResendTimer();
+        }
+
+        function autoFillModalOTP() {
+            if (!bookingOTP) return;
+            const boxes = document.querySelectorAll('.modal-otp-box');
+            for (let i = 0; i < 6; i++) {
+                boxes[i].value = bookingOTP[i];
+            }
+            boxes[5].focus();
+            showToast('Code Applied', 'Verification code filled from received SMS notification.', 'success');
         }
 
         function startModalResendTimer() {
@@ -1638,6 +1683,19 @@
 
             bookingOTP = Math.floor(100000 + Math.random() * 900000).toString();
             console.log(`🔐 [Sri Devi Groups Security] Resent verification code: ${bookingOTP}`);
+
+            const modalSimSmsText = document.getElementById('modal-sim-sms-code-text');
+            if (modalSimSmsText) modalSimSmsText.textContent = bookingOTP;
+
+            const phone = document.getElementById('book-user-phone').value.trim();
+            const cleanPhone = phone.replace(/[^0-9]/g, '');
+            const modalWaLink = document.getElementById('modal-btn-whatsapp-otp-link');
+            if (modalWaLink) {
+                const waText = encodeURIComponent(`Sri Devi Groups Ride Booking Code: ${bookingOTP}. Enter this 6-digit code on the booking modal to verify your contact.`);
+                modalWaLink.href = `https://wa.me/91${cleanPhone}?text=${waText}`;
+            }
+
+            showToast('New Code Dispatched', 'A new verification code has arrived in your SMS alert above.', 'info');
             clearModalOTPBoxes();
             startModalResendTimer();
         }
@@ -1650,13 +1708,13 @@
         function submitBookingOTPVerification() {
             const entered = getModalEnteredOTP();
             if (entered.length < 6) {
-                alert('Please enter all 6 digits of the verification code.');
+                showToast('Incomplete Code', 'Please enter all 6 digits of the verification code.', 'error');
                 return;
             }
 
             // Authentic verification check (matches dispatched OTP or standard universal test code 123456)
             if (entered !== bookingOTP && entered !== '123456') {
-                alert('Incorrect verification code. Please check your email inbox / SMS and try again.');
+                showToast('Incorrect Code', 'Incorrect verification code. Please check your SMS and try again.', 'error');
                 clearModalOTPBoxes();
                 return;
             }
@@ -1672,6 +1730,8 @@
             localStorage.setItem('sriDeviUser', name);
             localStorage.setItem('sriDeviPhone', phone);
             localStorage.setItem('sriDeviEmail', email);
+
+            showToast('Verified', 'Contact verified successfully!', 'success');
 
             const badge = document.getElementById('passenger-verified-badge');
             if (badge) badge.style.display = 'inline-flex';

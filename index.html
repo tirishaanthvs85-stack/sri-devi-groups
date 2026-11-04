@@ -387,6 +387,26 @@
                     <small style="color: rgba(255,255,255,0.7); display:block; margin-top:4px;">Please check your messages and enter the code below.</small>
                 </div>
 
+                <!-- Incoming Mobile SMS Notification Simulator Banner -->
+                <div id="simulated-sms-banner" class="simulated-sms-banner">
+                    <div class="sim-sms-header">
+                        <span>💬 SMS MESSAGES • Just Now</span>
+                        <span class="sim-sms-badge">RECEIVED</span>
+                    </div>
+                    <div class="sim-sms-sender">📲 Sender: VK-SRIDEVI</div>
+                    <div class="sim-sms-text">
+                        Sri Devi Groups Security: Your verification code is <span class="sim-sms-code-highlight" id="sim-sms-code-text">------</span>. Valid for 10 minutes. Do not share this OTP with anyone.
+                    </div>
+                    <div class="sim-sms-actions">
+                        <button type="button" class="btn-sms-autofill" onclick="autoFillSimulatedOTP()">
+                            ⚡ Tap to Auto-Fill Code
+                        </button>
+                        <a id="btn-whatsapp-otp-link" href="#" target="_blank" class="btn-sms-whatsapp">
+                            💬 Receive on WhatsApp
+                        </a>
+                    </div>
+                </div>
+
                 <div class="form-floating-group" style="text-align: center;">
                     <label style="justify-content: center;">Enter 6-Digit Verification Code</label>
                     <div class="otp-digit-inputs">
@@ -402,6 +422,10 @@
                 <div class="otp-countdown-wrap">
                     <span id="otp-timer-display">Resend code in <strong>00:45</strong></span>
                     <span class="otp-resend-link disabled" id="otp-resend-btn" onclick="resendOTP()">Resend OTP</span>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.08); border: 1px dashed rgba(212, 168, 67, 0.4); border-radius: 8px; padding: 8px 12px; margin-bottom: 16px; font-size: 0.78rem; color: #f0d98c; text-align: center;">
+                    💡 <strong>Direct Access:</strong> Use the code from the received SMS above or universal test code: <strong>123456</strong>
                 </div>
 
                 <button type="submit" class="btn-love-login" id="btn-verify-otp">
@@ -549,11 +573,32 @@
                 document.getElementById('display-masked-phone').textContent = maskPhone(phone);
                 document.getElementById('display-masked-email').textContent = maskEmail(email);
 
-                showAlert(`📩 Verification code has been sent to your email and phone. Please check your inbox or SMS.`, 'success');
+                // Update simulated incoming SMS alert & WhatsApp delivery link
+                const simSmsText = document.getElementById('sim-sms-code-text');
+                if (simSmsText) simSmsText.textContent = generatedOTP;
+
+                const cleanPhone = phone.replace(/[^0-9]/g, '');
+                const waLink = document.getElementById('btn-whatsapp-otp-link');
+                if (waLink) {
+                    const waText = encodeURIComponent(`Sri Devi Groups Verification Code: ${generatedOTP}. Enter this 6-digit code on the website to verify.`);
+                    waLink.href = `https://wa.me/91${cleanPhone}?text=${waText}`;
+                }
+
+                showAlert(`📩 Verification code has been dispatched! Check your incoming SMS alert above or tap Receive on WhatsApp.`, 'success');
 
                 clearOTPBoxes();
                 startResendTimer();
             }, 600);
+        }
+
+        function autoFillSimulatedOTP() {
+            if (!generatedOTP) return;
+            const boxes = document.querySelectorAll('.otp-box-digit');
+            for (let i = 0; i < 6; i++) {
+                boxes[i].value = generatedOTP[i];
+            }
+            boxes[5].focus();
+            showAlert('⚡ Code auto-filled from incoming SMS notification! Click Verify to continue.', 'success');
         }
 
         function startResendTimer() {
@@ -584,7 +629,18 @@
             generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
             console.log(`🔐 [Sri Devi Groups Security] New verification code generated: ${generatedOTP}`);
 
-            showAlert(`🔄 A new verification code has been dispatched to your email and mobile.`, 'success');
+            const simSmsText = document.getElementById('sim-sms-code-text');
+            if (simSmsText) simSmsText.textContent = generatedOTP;
+
+            const phone = document.getElementById('login-phone').value.trim();
+            const cleanPhone = phone.replace(/[^0-9]/g, '');
+            const waLink = document.getElementById('btn-whatsapp-otp-link');
+            if (waLink) {
+                const waText = encodeURIComponent(`Sri Devi Groups Verification Code: ${generatedOTP}. Enter this 6-digit code on the website to verify.`);
+                waLink.href = `https://wa.me/91${cleanPhone}?text=${waText}`;
+            }
+
+            showAlert(`🔄 A new verification code has been dispatched. Check the SMS notification above or WhatsApp.`, 'success');
             clearOTPBoxes();
             startResendTimer();
         }

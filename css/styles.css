@@ -2828,3 +2828,150 @@ img {
         display: none !important;
     }
 }
+
+
+/* ==========================================================
+   SIMULATED INCOMING SMS & OTP DELIVERY BANNER
+   ========================================================== */
+.simulated-sms-banner {
+    background: linear-gradient(135deg, #1f2937, #111827);
+    color: #ffffff;
+    border: 1px solid rgba(212, 168, 67, 0.45);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin: 16px 0;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    position: relative;
+    animation: smsSlideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    text-align: left;
+}
+
+.simulated-sms-banner.light-theme {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #1e293b;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+@keyframes smsSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-12px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.sim-sms-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.74rem;
+    color: #9ca3af;
+    margin-bottom: 5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sim-sms-badge {
+    background: #10b981;
+    color: #ffffff;
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+.sim-sms-sender {
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #f5d061;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.simulated-sms-banner.light-theme .sim-sms-sender {
+    color: #8b1a1a;
+}
+
+.sim-sms-text {
+    font-size: 0.86rem;
+    color: #e5e7eb;
+    line-height: 1.45;
+    margin-bottom: 10px;
+}
+
+.simulated-sms-banner.light-theme .sim-sms-text {
+    color: #334155;
+}
+
+.sim-sms-code-highlight {
+    background: rgba(212, 168, 67, 0.25);
+    color: #fef08a;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: 2px;
+    border: 1px dashed rgba(212, 168, 67, 0.5);
+    display: inline-block;
+}
+
+.simulated-sms-banner.light-theme .sim-sms-code-highlight {
+    background: #fef3c7;
+    color: #b45309;
+    border-color: #f59e0b;
+}
+
+.sim-sms-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.btn-sms-autofill {
+    background: #10b981;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 15px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-sms-autofill:hover {
+    background: #059669;
+    transform: translateY(-1px);
+}
+
+.btn-sms-whatsapp {
+    background: #25d366;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 15px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-sms-whatsapp:hover {
+    background: #1ebe5d;
+    transform: translateY(-1px);
+}
