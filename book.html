@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Your Ride - Sri Devi Tours & Travels</title>
+    <title>Book Your Ride - Google Route Navigation | Sri Devi Tours & Travels</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
@@ -155,14 +155,14 @@
             left: 20px;
             z-index: 1000;
             background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+            border-radius: 14px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.18);
             padding: 14px 18px;
             display: flex;
             align-items: center;
             gap: 14px;
             border: 1px solid rgba(0,0,0,0.08);
-            max-width: 380px;
+            max-width: 420px;
             pointer-events: auto;
         }
 
@@ -183,19 +183,20 @@
         .gmap-nav-details {
             display: flex;
             flex-direction: column;
+            flex: 1;
         }
 
         .gmap-nav-time {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 800;
-            color: #1e8e3e;
+            color: #137333;
             display: flex;
             align-items: baseline;
             gap: 8px;
         }
 
         .gmap-nav-time small {
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             font-weight: 600;
             color: #5f6368;
         }
@@ -204,6 +205,26 @@
             font-size: 0.82rem;
             color: #3c4043;
             font-weight: 500;
+        }
+
+        .btn-toggle-steps-badge {
+            background: #e8f0fe;
+            color: #1a73e8;
+            border: 1px solid #cce0ff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-toggle-steps-badge:hover {
+            background: #d2e3fc;
         }
 
         /* Google Maps Pin Markers */
@@ -255,17 +276,11 @@
             color: #60a5fa;
         }
 
-        .map-route-indicator .pill.dist {
-            margin-left: auto;
-            background: rgba(212, 168, 67, 0.25);
-            border: 1px solid rgba(212, 168, 67, 0.5);
-            color: #ffffff;
-        }
-
         #full-booking-map {
             width: 100%;
             height: 520px;
             background: #e5e3df;
+            position: relative;
         }
 
         /* Price Breakdown Card */
@@ -416,6 +431,15 @@
             #full-booking-map {
                 height: 380px;
             }
+            .gmap-nav-floating-card {
+                position: relative;
+                top: 0;
+                left: 0;
+                max-width: 100%;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
         }
     </style>
 </head>
@@ -435,6 +459,7 @@
                 <a href="catering.html" style="color: var(--dark);">Catering Services</a>
                 <a href="tours.html" class="btn btn-primary nav-btn">← Back to Fleet</a>
             </div>
+            <button class="mobile-menu-btn" style="color: var(--dark);">☰</button>
         </div>
     </nav>
 
@@ -442,7 +467,7 @@
     <header class="booking-page-header">
         <div class="container">
             <h1>Complete Your Ride Booking</h1>
-            <p>Select your starting location or use Current GPS Location, choose your destination anywhere in India, preview the live route on map, and confirm payment.</p>
+            <p>Google Maps style live routing from anywhere in India to your chosen destination. Calculate accurate road distance, view step-by-step turns, and confirm booking.</p>
         </div>
     </header>
 
@@ -451,7 +476,20 @@
         <div class="booking-layout-grid">
             <!-- Left Form Panel -->
             <div class="booking-panel-card">
-                <h2>📍 Ride Details</h2>
+                <h2>📍 Google Maps Route & Fare</h2>
+
+                <!-- Transit Mode Selector -->
+                <div class="gmap-transit-modes">
+                    <button type="button" class="gmap-mode-tab active" id="mode-tab-car" onclick="selectTransitMode('car')">
+                        🚗 Drive (Car)
+                    </button>
+                    <button type="button" class="gmap-mode-tab" id="mode-tab-traveller" onclick="selectTransitMode('traveller')">
+                        🚐 Force Traveller
+                    </button>
+                    <button type="button" class="gmap-mode-tab" id="mode-tab-bike" onclick="selectTransitMode('bike')">
+                        🏍️ Bike / Scooter
+                    </button>
+                </div>
 
                 <form id="car-booking-full-form" onsubmit="handleProceedToPay(event)">
                     <!-- Passenger Info -->
@@ -475,14 +513,21 @@
                     <div class="form-group input-group-location">
                         <label for="pickup-location">Starting / Pickup Location (Anywhere in India) *</label>
                         <input type="text" id="pickup-location" value="Pollachi, Tamil Nadu" placeholder="Type city, airport, hotel, or street address in India" required oninput="triggerRouteUpdate()">
-                        <button type="button" class="loc-btn-current" onclick="fetchCurrentLocation()">
-                            🎯 <span>Use My Current GPS Location</span>
+                        <button type="button" class="loc-btn-current" onclick="fetchCurrentLocation()" title="Detect current GPS coordinates">
+                            🎯 <span>Use GPS Current Location</span>
+                        </button>
+                    </div>
+
+                    <!-- Swap Location Button -->
+                    <div class="route-swap-container">
+                        <button type="button" class="btn-swap-locations" onclick="swapRouteLocations()" title="Swap Pickup & Destination">
+                            ⇅
                         </button>
                     </div>
 
                     <!-- Destination Selection with Free-form Input -->
                     <div class="form-group">
-                        <label for="booking-destination-select">Choose or Search Destination (Any City / Town in India) *</label>
+                        <label for="booking-destination-select">Destination (Any City / Town in India) *</label>
                         <select id="booking-destination-select" onchange="onDestinationChanged()" required>
                             <option value="">-- Select Destination --</option>
                             <optgroup label="🔥 Nearby & Hill Stations">
@@ -580,7 +625,7 @@
                             <strong id="summary-route-text">Pollachi ➔ Ooty</strong>
                         </div>
                         <div class="breakdown-row">
-                            <span>Total Distance (Round Trip):</span>
+                            <span>Exact Distance (Round Trip):</span>
                             <strong id="summary-distance-text">190 km</strong>
                         </div>
                         <div class="breakdown-row">
@@ -630,6 +675,9 @@
                             <small id="gmap-nav-km">(144 km)</small>
                         </div>
                         <div class="gmap-nav-subtext" id="gmap-nav-via">Fastest road route with typical traffic</div>
+                        <button type="button" class="btn-toggle-steps-badge" onclick="toggleDirectionsPanel()">
+                            🧭 <span>Toggle Turn Steps</span>
+                        </button>
                     </div>
                 </div>
 
@@ -639,7 +687,25 @@
                     <div>⏱️ <strong>Est. Drive Time:</strong> <span id="route-drive-time" style="font-weight: 700; color: #92400e;">--</span></div>
                 </div>
 
-                <div id="full-booking-map"></div>
+                <!-- Full Map Canvas -->
+                <div id="full-booking-map">
+                    <!-- Floating GPS Locate Button -->
+                    <button type="button" class="gmap-locate-btn" onclick="fetchCurrentLocation()" title="Center to My GPS Location">
+                        🎯
+                    </button>
+                </div>
+
+                <!-- Google Maps Turn-by-Turn Navigation Steps Panel -->
+                <div class="gmap-directions-panel" id="gmap-directions-panel">
+                    <div class="gmap-directions-header" onclick="toggleDirectionsPanel()">
+                        <span>🧭 Turn-by-Turn Directions (Google Maps Format) <small id="gmap-steps-count" style="color: #64748b; font-weight: normal;"></small></span>
+                        <span id="gmap-panel-toggle-arrow">▼ Expand Steps</span>
+                    </div>
+                    <div id="gmap-steps-list">
+                        <!-- Populated by OSRM steps -->
+                        <div style="padding: 14px 20px; color: #64748b; font-size: 0.86rem;">Loading route directions...</div>
+                    </div>
+                </div>
 
                 <div class="map-footer-bar">
                     <div class="map-legend-item">
@@ -727,6 +793,13 @@
 
             if (selectedVeh && document.getElementById('booking-vehicle-select')) {
                 document.getElementById('booking-vehicle-select').value = selectedVeh;
+                if (selectedVeh.includes('traveller')) {
+                    selectTransitMode('traveller');
+                } else if (selectedVeh.includes('bike') || selectedVeh.includes('jupiter')) {
+                    selectTransitMode('bike');
+                } else {
+                    selectTransitMode('car');
+                }
             }
             if (selectedDest && document.getElementById('booking-destination-select')) {
                 document.getElementById('booking-destination-select').value = selectedDest;
@@ -781,7 +854,25 @@
             }
         }
 
-        // Fetch exact road route and Google Maps style live stats
+        function selectTransitMode(mode) {
+            document.querySelectorAll('.gmap-mode-tab').forEach(b => b.classList.remove('active'));
+            const tabBtn = document.getElementById('mode-tab-' + mode);
+            if (tabBtn) tabBtn.classList.add('active');
+
+            const vehSelect = document.getElementById('booking-vehicle-select');
+            if (vehSelect) {
+                if (mode === 'car') {
+                    vehSelect.value = 'sedan';
+                } else if (mode === 'traveller') {
+                    vehSelect.value = 'traveller';
+                } else if (mode === 'bike') {
+                    vehSelect.value = 'bike-classic';
+                }
+                calculateBookingFare();
+            }
+        }
+
+        // Fetch exact road route and Google Maps style live stats + Turn-by-Turn steps
         async function fetchExactRoadRoute(origin, dest) {
             const statusEl = document.getElementById('route-highway-status');
             const timeEl = document.getElementById('route-drive-time');
@@ -789,7 +880,7 @@
             const gmapKm = document.getElementById('gmap-nav-km');
             const gmapVia = document.getElementById('gmap-nav-via');
 
-            if (statusEl) statusEl.textContent = 'Navigating exact highway path via OSRM...';
+            if (statusEl) statusEl.textContent = 'Navigating exact highway path via Google routing format...';
 
             const url = `https://router.project-osrm.org/route/v1/driving/${origin[1]},${origin[0]};${dest[1]},${dest[0]}?overview=full&geometries=geojson&steps=true`;
 
@@ -807,14 +898,21 @@
                     const mins = durationMins % 60;
                     const driveTimeStr = hours > 0 ? `${hours} hr ${mins} min` : `${mins} min`;
 
-                    // Detect major road if available
+                    // Detect major road names
                     let roadName = 'Fastest national highway route';
-                    if (route.legs && route.legs[0] && route.legs[0].steps) {
-                        for (let step of route.legs[0].steps) {
-                            if (step.name && (step.name.includes('NH') || step.name.includes('SH') || step.name.includes('Road') || step.name.includes('Highway'))) {
-                                roadName = `Via ${step.name}`;
-                                break;
+                    let steps = [];
+                    if (route.legs && route.legs[0]) {
+                        steps = route.legs[0].steps || [];
+                        const highwayNames = [];
+                        for (let step of steps) {
+                            if (step.name && (step.name.includes('NH') || step.name.includes('SH') || step.name.includes('Road') || step.name.includes('Highway') || step.name.includes('Expressway'))) {
+                                if (!highwayNames.includes(step.name)) {
+                                    highwayNames.push(step.name);
+                                }
                             }
+                        }
+                        if (highwayNames.length > 0) {
+                            roadName = `Via ${highwayNames.slice(0, 2).join(' & ')}`;
                         }
                     }
 
@@ -823,11 +921,11 @@
                     if (gmapVia) gmapVia.textContent = roadName;
 
                     if (timeEl) timeEl.textContent = driveTimeStr;
-                    if (statusEl) statusEl.textContent = `Google Maps style live road navigation: ${distanceKm} km (${driveTimeStr})`;
+                    if (statusEl) statusEl.textContent = `Google Maps style live navigation: ${distanceKm} km (${driveTimeStr}) • ${roadName}`;
 
                     const latLngs = route.geometry.coordinates.map(coord => [coord[1], coord[0]]);
 
-                    // Google Maps Navigation Line (Blue with crisp white/dark border)
+                    // Google Maps Navigation Line (Blue with crisp casing)
                     if (navLineBorder) fullMap.removeLayer(navLineBorder);
                     if (navLine) fullMap.removeLayer(navLine);
 
@@ -850,8 +948,11 @@
                     fullMap.fitBounds(L.latLngBounds(latLngs), { padding: [60, 60] });
 
                     activeRouteKm = distanceKm;
-                    document.getElementById('ind-km').textContent = `${distanceKm} km`;
                     calculateBookingFare(distanceKm);
+
+                    // Render turn-by-turn steps
+                    const pickupText = document.getElementById('pickup-location').value || 'Pickup Point';
+                    renderNavigationSteps(steps, pickupText.split(',')[0], currentDestinationName);
                     return;
                 }
             } catch (err) {
@@ -872,6 +973,115 @@
 
             fullMap.fitBounds(L.latLngBounds([origin, dest]), { padding: [60, 60] });
             calculateBookingFare();
+        }
+
+        // Render step-by-step navigation maneuvers from OSRM
+        function renderNavigationSteps(steps, originName, destName) {
+            const listEl = document.getElementById('gmap-steps-list');
+            const countEl = document.getElementById('gmap-steps-count');
+            if (!listEl) return;
+
+            if (!steps || steps.length === 0) {
+                listEl.innerHTML = `<div style="padding: 14px 20px; color: #64748b; font-size: 0.86rem;">Direct road route calculated. Follow national highway signs toward ${destName}.</div>`;
+                if (countEl) countEl.textContent = '';
+                return;
+            }
+
+            if (countEl) countEl.textContent = `(${steps.length} turns/maneuvers)`;
+
+            let html = `
+                <div class="gmap-step-item">
+                    <div class="gmap-step-icon start">🟢</div>
+                    <div class="gmap-step-content">
+                        <div class="gmap-step-instruction">Depart from <strong>${originName || 'Starting Location'}</strong></div>
+                        <div class="gmap-step-dist">Start of journey</div>
+                    </div>
+                </div>
+            `;
+
+            steps.forEach((step) => {
+                const type = step.maneuver ? step.maneuver.type : '';
+                const modifier = step.maneuver ? step.maneuver.modifier : '';
+                const name = step.name || '';
+                const distM = Math.round(step.distance || 0);
+                const distStr = distM >= 1000 ? `${(distM / 1000).toFixed(1)} km` : `${distM} m`;
+
+                let icon = '⬆️';
+                let text = '';
+
+                if (type === 'depart') {
+                    icon = '🟢';
+                    text = `Head ${modifier || 'out'}${name ? ' on <strong>' + name + '</strong>' : ''}`;
+                } else if (type === 'arrive') {
+                    icon = '🏁';
+                    text = `Arrive at destination <strong>${destName || 'Destination'}</strong>`;
+                } else if (type === 'roundabout' || type === 'rotary') {
+                    icon = '🔄';
+                    text = `At the roundabout, take exit${name ? ' onto <strong>' + name + '</strong>' : ''}`;
+                } else if (modifier && modifier.includes('left')) {
+                    icon = modifier.includes('slight') ? '↖️' : '⬅️';
+                    text = `${modifier.includes('slight') ? 'Slight left' : 'Turn left'}${name ? ' onto <strong>' + name + '</strong>' : ''}`;
+                } else if (modifier && modifier.includes('right')) {
+                    icon = modifier.includes('slight') ? '↗️' : '➡️';
+                    text = `${modifier.includes('slight') ? 'Slight right' : 'Turn right'}${name ? ' onto <strong>' + name + '</strong>' : ''}`;
+                } else if (modifier === 'uturn') {
+                    icon = '↩️';
+                    text = `Make a U-turn${name ? ' onto <strong>' + name + '</strong>' : ''}`;
+                } else {
+                    icon = '⬆️';
+                    text = `Continue straight${name ? ' on <strong>' + name + '</strong>' : ''}`;
+                }
+
+                html += `
+                    <div class="gmap-step-item">
+                        <div class="gmap-step-icon">${icon}</div>
+                        <div class="gmap-step-content">
+                            <div class="gmap-step-instruction">${text}</div>
+                            <div class="gmap-step-dist">${distStr}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            listEl.innerHTML = html;
+        }
+
+        function toggleDirectionsPanel() {
+            const panel = document.getElementById('gmap-directions-panel');
+            const arrow = document.getElementById('gmap-panel-toggle-arrow');
+            if (!panel) return;
+
+            if (panel.style.maxHeight === '45px') {
+                panel.style.maxHeight = '320px';
+                if (arrow) arrow.textContent = '▲ Collapse Steps';
+            } else {
+                panel.style.maxHeight = '45px';
+                if (arrow) arrow.textContent = '▼ Expand Steps';
+            }
+        }
+
+        function swapRouteLocations() {
+            const pickupInput = document.getElementById('pickup-location');
+            const destSelect = document.getElementById('booking-destination-select');
+            const customWrap = document.getElementById('custom-dest-input-wrap');
+            const customInput = document.getElementById('custom-destination-name');
+
+            // Swap coordinates
+            const tempCoords = [...originCoords];
+            originCoords = [...currentDestCoords];
+            currentDestCoords = [...tempCoords];
+
+            // Swap names
+            const oldPickup = pickupInput.value;
+            const oldDestName = currentDestinationName;
+
+            pickupInput.value = oldDestName;
+            destSelect.value = 'custom';
+            customWrap.style.display = 'block';
+            customInput.value = oldPickup;
+            currentDestinationName = oldPickup;
+
+            renderMapPins();
         }
 
         function renderMapPins() {
@@ -1118,4 +1328,3 @@
 </body>
 
 </html>
-

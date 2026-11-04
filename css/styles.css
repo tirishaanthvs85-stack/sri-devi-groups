@@ -2062,3 +2062,184 @@ img {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-5px); }
 }
+
+/* ===== GOOGLE MAPS NAVIGATION & ROUTING FORMAT STYLES ===== */
+.gmap-transit-modes {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 12px;
+}
+
+.gmap-mode-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    color: #4b5563;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.gmap-mode-tab:hover {
+    background: #e5e7eb;
+}
+
+.gmap-mode-tab.active {
+    background: #1a73e8;
+    color: #ffffff;
+    border-color: #1a73e8;
+    box-shadow: 0 2px 8px rgba(26, 115, 232, 0.35);
+}
+
+.route-swap-container {
+    display: flex;
+    justify-content: center;
+    margin: -8px 0 10px;
+}
+
+.btn-swap-locations {
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    color: #1a73e8;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.btn-swap-locations:hover {
+    background: #eff6ff;
+    transform: rotate(180deg);
+}
+
+/* Floating GPS button on Map */
+.gmap-locate-btn {
+    position: absolute;
+    bottom: 30px;
+    right: 20px;
+    z-index: 1000;
+    background: #ffffff;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: #1a73e8;
+    transition: all 0.2s ease;
+}
+
+.gmap-locate-btn:hover {
+    transform: scale(1.1);
+    background: #f8fafc;
+}
+
+/* Turn-by-Turn Directions Panel */
+.gmap-directions-panel {
+    background: #ffffff;
+    border-top: 1px solid #e5e7eb;
+    max-height: 280px;
+    overflow-y: auto;
+    transition: max-height 0.3s ease;
+}
+
+.gmap-directions-header {
+    padding: 12px 20px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #1e293b;
+    cursor: pointer;
+}
+
+.gmap-directions-header:hover {
+    background: #f1f5f9;
+}
+
+.gmap-step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.88rem;
+}
+
+.gmap-step-item:last-child {
+    border-bottom: none;
+}
+
+.gmap-step-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e8f0fe;
+    color: #1a73e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    font-weight: bold;
+}
+
+.gmap-step-icon.start {
+    background: #e6f4ea;
+    color: #137333;
+}
+
+.gmap-step-icon.finish {
+    background: #fce8e6;
+    color: #c5221f;
+}
+
+.gmap-step-content {
+    flex: 1;
+}
+
+.gmap-step-instruction {
+    color: #202124;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.gmap-step-dist {
+    color: #70757a;
+    font-size: 0.78rem;
+    margin-top: 2px;
+}
+
+/* Nav Auth User Badge */
+.user-auth-badge {
+    background: rgba(212, 168, 67, 0.15);
+    border: 1px solid rgba(212, 168, 67, 0.4);
+    color: #8b1a1a;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}

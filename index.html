@@ -3,17 +3,498 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sri Devi Groups - Tours, Travels & Catering Services</title>
+    <title>Login - Sri Devi Groups | Tours, Travels & Catering Services</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
-    <script>
-        // Redirect to dashboard immediately
-        window.location.href = 'dashboard.html';
-    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .love-login-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            background: radial-gradient(circle at 20% 20%, rgba(212, 168, 67, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 80%, rgba(139, 26, 26, 0.25) 0%, transparent 50%),
+                        linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Floating glowing orbs */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6;
+            animation: floatOrb 18s ease-in-out infinite alternate;
+        }
+        .glow-orb-1 {
+            width: 380px;
+            height: 380px;
+            background: #d4a843;
+            top: -100px;
+            left: -100px;
+        }
+        .glow-orb-2 {
+            width: 450px;
+            height: 450px;
+            background: #8b1a1a;
+            bottom: -120px;
+            right: -120px;
+            animation-delay: -7s;
+        }
+        .glow-orb-3 {
+            width: 250px;
+            height: 250px;
+            background: #e11d48;
+            top: 45%;
+            left: 65%;
+            animation-delay: -12s;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(40px, -30px) scale(1.1); }
+            100% { transform: translate(-30px, 30px) scale(0.95); }
+        }
+
+        .love-login-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 24px;
+            padding: 48px 42px;
+            width: 100%;
+            max-width: 460px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            transition: transform 0.3s ease;
+        }
+
+        .login-brand-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .brand-emblem {
+            width: 76px;
+            height: 76px;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, #d4a843, #8b1a1a);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            box-shadow: 0 12px 30px rgba(212, 168, 67, 0.35);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            animation: pulseEmblem 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseEmblem {
+            0% { box-shadow: 0 10px 25px rgba(212, 168, 67, 0.3); }
+            100% { box-shadow: 0 16px 35px rgba(212, 168, 67, 0.6); }
+        }
+
+        .login-brand-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0d98c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .login-brand-tagline {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.92rem;
+            font-weight: 400;
+        }
+
+        .love-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(225, 29, 72, 0.18);
+            border: 1px solid rgba(225, 29, 72, 0.4);
+            color: #fca5a5;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* Demo Pill Box */
+        .demo-credentials-banner {
+            background: rgba(212, 168, 67, 0.12);
+            border: 1px solid rgba(212, 168, 67, 0.3);
+            border-radius: 14px;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.82rem;
+        }
+
+        .demo-text {
+            color: #f0d98c;
+            line-height: 1.4;
+        }
+        .demo-text strong {
+            color: #ffffff;
+        }
+
+        .btn-quick-fill {
+            background: linear-gradient(135deg, #d4a843, #b8860b);
+            color: #1a1a2e;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .btn-quick-fill:hover {
+            transform: scale(1.04);
+            background: #f0d98c;
+        }
+
+        /* Form elements */
+        .form-floating-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-floating-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.86rem;
+            font-weight: 500;
+            margin-bottom: 7px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon input {
+            width: 100%;
+            padding: 14px 44px 14px 16px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .input-with-icon input::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .input-with-icon input:focus {
+            border-color: #d4a843;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 4px rgba(212, 168, 67, 0.2);
+        }
+
+        .field-icon {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.1rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .form-meta-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.84rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 24px;
+        }
+
+        .remember-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .remember-checkbox input[type="checkbox"] {
+            accent-color: #d4a843;
+            width: 16px;
+            height: 16px;
+        }
+
+        .forgot-link {
+            color: #f0d98c;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .forgot-link:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .btn-love-login {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #d4a843 0%, #8b1a1a 100%);
+            border: none;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(139, 26, 26, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-love-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(212, 168, 67, 0.45);
+        }
+
+        .btn-guest-entry {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.88rem;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px dashed rgba(255, 255, 255, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        .btn-guest-entry:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.45);
+        }
+
+        /* Error/Success Alert */
+        .login-alert {
+            display: none;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.86rem;
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .login-alert.error {
+            background: rgba(220, 53, 69, 0.2);
+            border: 1px solid rgba(220, 53, 69, 0.4);
+            color: #ff8b8b;
+        }
+
+        .login-alert.success {
+            background: rgba(40, 167, 69, 0.2);
+            border: 1px solid rgba(40, 167, 69, 0.4);
+            color: #75f190;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-footer-info {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.5;
+        }
+    </style>
 </head>
 <body>
-    <p style="text-align:center; padding:50px; font-family:sans-serif;">
-        Redirecting to <a href="dashboard.html">Sri Devi Groups Dashboard</a>...
-    </p>
+    <div class="love-login-wrapper">
+        <!-- Glowing background orbs -->
+        <div class="glow-orb glow-orb-1"></div>
+        <div class="glow-orb glow-orb-2"></div>
+        <div class="glow-orb glow-orb-3"></div>
+
+        <!-- Glassmorphism Login Card -->
+        <div class="love-login-card">
+            <!-- Brand Header -->
+            <div class="login-brand-header">
+                <div class="brand-emblem">SD</div>
+                <h1>Sri Devi Groups</h1>
+                <p class="login-brand-tagline">Tours, Travels & Grand Catering Services</p>
+                <div class="love-badge">
+                    ❤️ Welcome with Love & Hospitality
+                </div>
+            </div>
+
+            <!-- Demo Credentials Helper -->
+            <div class="demo-credentials-banner">
+                <div class="demo-text">
+                    <strong>Demo Access:</strong> admin / admin123
+                </div>
+                <button type="button" class="btn-quick-fill" onclick="autoFillDemo()">
+                    ⚡ 1-Click Auto Fill
+                </button>
+            </div>
+
+            <!-- Feedback Alert -->
+            <div id="login-alert-box" class="login-alert"></div>
+
+            <!-- Form -->
+            <form id="love-login-form" onsubmit="executeLogin(event)">
+                <div class="form-floating-group">
+                    <label for="login-username">👤 Username / Mobile Number</label>
+                    <div class="input-with-icon">
+                        <input type="text" id="login-username" placeholder="E.g. admin or 9876543210" required autocomplete="username">
+                        <span class="field-icon">✨</span>
+                    </div>
+                </div>
+
+                <div class="form-floating-group">
+                    <label for="login-password">🔒 Password</label>
+                    <div class="input-with-icon">
+                        <input type="password" id="login-password" placeholder="Enter password (e.g. admin123)" required autocomplete="current-password">
+                        <span class="field-icon" id="toggle-pwd-btn" onclick="togglePasswordVisibility()" title="Show/Hide Password">👁️</span>
+                    </div>
+                </div>
+
+                <div class="form-meta-row">
+                    <label class="remember-checkbox">
+                        <input type="checkbox" id="remember-me" checked>
+                        <span>Remember me</span>
+                    </label>
+                    <a href="javascript:void(0)" class="forgot-link" onclick="handleForgotPassword()">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-love-login" id="btn-submit-login">
+                    <span>Sign In to Sri Devi Groups</span> →
+                </button>
+
+                <a href="dashboard.html" class="btn-guest-entry">
+                    🚀 Continue as Guest Visitor →
+                </a>
+            </form>
+
+            <div class="login-footer-info">
+                Pollachi, Tamil Nadu • Pan-India Tours & Luxury Catering<br>
+                © 2026 Sri Devi Groups. All rights reserved.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if already logged in and restore session
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedUser = sessionStorage.getItem('sriDeviUser') || localStorage.getItem('sriDeviUser');
+            if (savedUser) {
+                // Pre-fill username if remembered
+                const userInput = document.getElementById('login-username');
+                if (userInput) userInput.value = savedUser;
+            }
+        });
+
+        function togglePasswordVisibility() {
+            const pwdInput = document.getElementById('login-password');
+            const toggleIcon = document.getElementById('toggle-pwd-btn');
+            if (pwdInput.type === 'password') {
+                pwdInput.type = 'text';
+                toggleIcon.textContent = '🙈';
+            } else {
+                pwdInput.type = 'password';
+                toggleIcon.textContent = '👁️';
+            }
+        }
+
+        function autoFillDemo() {
+            document.getElementById('login-username').value = 'admin';
+            document.getElementById('login-password').value = 'admin123';
+            showAlert('Demo credentials filled! Click "Sign In" or press Enter.', 'success');
+        }
+
+        function showAlert(message, type) {
+            const alertBox = document.getElementById('login-alert-box');
+            alertBox.className = `login-alert ${type}`;
+            alertBox.innerHTML = message;
+            alertBox.style.display = 'block';
+        }
+
+        function executeLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            const remember = document.getElementById('remember-me').checked;
+            const submitBtn = document.getElementById('btn-submit-login');
+
+            if (!username || !password) {
+                showAlert('⚠️ Please enter both username and password.', 'error');
+                return;
+            }
+
+            // Authentication verification (Demo admin / admin123, or user entrance)
+            submitBtn.innerHTML = '⏳ Verifying credentials...';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                if ((username.toLowerCase() === 'admin' && password === 'admin123') || (username.length >= 3 && password.length >= 4)) {
+                    showAlert('✅ Welcome back! Redirecting to Sri Devi Groups...', 'success');
+                    
+                    // Save authentication status
+                    sessionStorage.setItem('sriDeviLoggedIn', 'true');
+                    sessionStorage.setItem('sriDeviUser', username);
+                    if (remember) {
+                        localStorage.setItem('sriDeviUser', username);
+                    }
+
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 600);
+                } else {
+                    showAlert('❌ Invalid password. Use <strong>admin</strong> and <strong>admin123</strong> for demo access.', 'error');
+                    submitBtn.innerHTML = '<span>Sign In to Sri Devi Groups</span> →';
+                    submitBtn.disabled = false;
+                }
+            }, 500);
+        }
+
+        function handleForgotPassword() {
+            alert('🔐 Password Assistance:\n\nFor demo access, please use:\nUsername: admin\nPassword: admin123\n\nFor personal accounts, please contact Sri Devi Groups support at +91 98765 43210.');
+        }
+    </script>
 </body>
 </html>

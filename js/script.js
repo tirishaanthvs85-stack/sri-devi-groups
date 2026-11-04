@@ -284,7 +284,7 @@ async function updateMapRoute(destKey, roundTripKm) {
                 const roadLatLngs = r.geometry.coordinates.map(c => [c[1], c[0]]);
 
                 routeLineBorder = L.polyline(roadLatLngs, {
-                    color: '#450a0a',
+                    color: '#1557b0',
                     weight: 8,
                     opacity: 0.9,
                     lineCap: 'round',
@@ -292,9 +292,9 @@ async function updateMapRoute(destKey, roundTripKm) {
                 }).addTo(indiaMap);
 
                 routeLine = L.polyline(roadLatLngs, {
-                    color: '#dc2626',
+                    color: '#1a73e8',
                     weight: 5,
-                    opacity: 0.95,
+                    opacity: 1.0,
                     lineCap: 'round',
                     lineJoin: 'round'
                 }).addTo(indiaMap);
@@ -306,7 +306,7 @@ async function updateMapRoute(destKey, roundTripKm) {
                         <div class="map-status-pill">📍 From: <strong>Pollachi, TN</strong></div>
                         <div class="map-status-arrow">➔</div>
                         <div class="map-status-pill dest">🎯 To: <strong>${destData.name} (${destData.state})</strong></div>
-                        <div class="map-status-pill distance">🛣️ Exact Road: <strong>${realKm} km</strong> (Round trip: ${realKm * 2} km)</div>
+                        <div class="map-status-pill distance">🛣️ Google Highway Path: <strong>${realKm} km</strong> (Round trip: ${realKm * 2} km)</div>
                     `;
                 }
                 return;
@@ -318,7 +318,7 @@ async function updateMapRoute(destKey, roundTripKm) {
 
     // Fallback straight path
     routeLine = L.polyline([POLLACHI_COORDS, destCoords], {
-        color: '#dc2626',
+        color: '#1a73e8',
         weight: 5,
         opacity: 0.85,
         dashArray: '10, 10',
@@ -618,6 +618,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavbar();
     initBackToTop();
     initLoader();
+    initAuthNav();
     initIndiaMap();
 
     // Default route demo on map
@@ -670,4 +671,49 @@ function filterFleet(category, btn) {
             card.style.display = 'none';
         }
     });
+}
+
+// ===== AUTH NAVIGATION BADGE & LOGOUT =====
+function initAuthNav() {
+    const navLinks = document.querySelector('.nav-links');
+    if (!navLinks) return;
+
+    const loggedIn = sessionStorage.getItem('sriDeviLoggedIn') === 'true';
+    const user = sessionStorage.getItem('sriDeviUser') || 'admin';
+
+    // Remove any existing auth badge
+    const existing = document.getElementById('nav-user-auth-badge');
+    if (existing) existing.remove();
+
+    const authContainer = document.createElement('div');
+    authContainer.id = 'nav-user-auth-badge';
+    authContainer.style.display = 'inline-flex';
+    authContainer.style.alignItems = 'center';
+    authContainer.style.gap = '8px';
+    authContainer.style.marginLeft = '12px';
+
+    if (loggedIn) {
+        authContainer.innerHTML = `
+            <span style="background: rgba(212, 168, 67, 0.18); border: 1px solid rgba(212, 168, 67, 0.5); color: #8b1a1a; padding: 4px 12px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px;">
+                👤 <span>${user}</span>
+            </span>
+            <button onclick="handleLogout()" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #dc2626; padding: 4px 10px; border-radius: 6px; font-size: 0.76rem; cursor: pointer; font-weight: 600; transition: all 0.2s ease;" title="Sign Out">
+                Sign Out
+            </button>
+        `;
+    } else {
+        authContainer.innerHTML = `
+            <a href="index.html" style="background: rgba(139, 26, 26, 0.1); border: 1px solid rgba(139, 26, 26, 0.3); color: #8b1a1a; padding: 5px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s ease;">
+                🔐 <span>Sign In</span>
+            </a>
+        `;
+    }
+
+    navLinks.appendChild(authContainer);
+}
+
+function handleLogout() {
+    sessionStorage.removeItem('sriDeviLoggedIn');
+    sessionStorage.removeItem('sriDeviUser');
+    window.location.href = 'index.html';
 }
