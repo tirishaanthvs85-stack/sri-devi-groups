@@ -21,38 +21,102 @@
         <div class="loader"></div>
     </div>
 
-    <!-- Top Bar -->
+    <!-- Executive Top Announcement & Utility Bar -->
     <div class="top-announcement-bar">
         <div class="container">
-            <div style="display: flex; align-items: center; gap: 16px;">
-                <span>📍 Headquarters: Pollachi, Tamil Nadu</span>
-                <span>📞 24/7 Helpline: +91 98765 43210</span>
+            <div class="top-bar-left">
+                <span class="top-bar-item">
+                    <svg class="top-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                    Corporate HQ: <strong>Pollachi, Tamil Nadu</strong>
+                </span>
+                <span class="top-live-beacon">
+                    <span class="beacon-dot"></span> 24/7 Fleet Dispatch Live
+                </span>
             </div>
-            <div style="display: flex; align-items: center; gap: 14px;">
-                <span>🛡️ Sanitized Fleet & Professional Drivers</span>
-                <span>🚗 Sedans ₹18/km • SUVs ₹20/km • Traveller ₹22/km</span>
+            <div class="top-bar-center">
+                <span class="top-trust-badge">🚗 Sedans ₹18/km • SUVs ₹20/km • Traveller ₹22/km</span>
+                <span class="top-divider-dot">•</span>
+                <span class="top-bar-item">Verified Professional Drivers</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="tel:+919876543210" class="top-phone-link">
+                    <svg class="top-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <span>+91 98765 43210</span>
+                </a>
+                <a href="https://wa.me/919876543210?text=Hello%20Sri%20Devi%20Tours%2C%20I%20would%20like%20to%20book%20a%20vehicle." target="_blank" class="top-whatsapp-pill">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.288.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.353.101.173.45 1.444 1.341 2.238.571.509 1.053.667 1.203.742.15.075.239.064.327-.038.089-.102.378-.44.479-.591.101-.151.203-.127.34-.076.138.051.874.412 1.025.487.151.075.252.112.289.175.037.063.037.362-.107.767z"/></svg>
+                    WhatsApp
+                </a>
+                <span class="top-user-pill" id="topUserPill" style="display: none;">
+                    <span class="top-user-avatar">👤</span>
+                    <span id="topUserName">Verified Customer</span>
+                    <button class="top-logout-btn" onclick="handleLogout()" title="Sign Out">Logout</button>
+                </span>
             </div>
         </div>
     </div>
 
-    <!-- Navbar -->
-    <nav class="navbar">
+    <!-- Executive Main Navbar -->
+    <nav class="navbar" id="siteNavbar">
         <div class="container">
             <a href="dashboard.html" class="logo">
-                <div class="logo-icon">SD</div>
-                <span class="logo-text">Sri Devi Tours & Travels</span>
+                <div class="brand-crest-wrapper">
+                    <svg class="crest-svg-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="crestGoldGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#fceda2" />
+                                <stop offset="50%" stop-color="#d4a843" />
+                                <stop offset="100%" stop-color="#9a7114" />
+                            </linearGradient>
+                            <linearGradient id="crestMaroonGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#8b1a1a" />
+                                <stop offset="100%" stop-color="#4a0808" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M24 3 L41 9 C41 24 34 38 24 45 C14 38 7 24 7 9 Z" fill="url(#crestMaroonGrad2)" stroke="url(#crestGoldGrad2)" stroke-width="2.2" />
+                        <path d="M24 7 L37 12 C37 23 31.5 34 24 39.5 C16.5 34 11 23 11 12 Z" fill="none" stroke="url(#crestGoldGrad2)" stroke-width="1" stroke-opacity="0.6" />
+                        <path d="M19 16 L24 13 L29 16 L27 20 L21 20 Z" fill="url(#crestGoldGrad2)" />
+                        <text x="24" y="30.5" font-family="'Playfair Display', Georgia, serif" font-weight="800" font-size="10.5" fill="url(#crestGoldGrad2)" text-anchor="middle" letter-spacing="1">SDG</text>
+                    </svg>
+                </div>
+                <div class="brand-meta-group">
+                    <span class="brand-main-title">SRI DEVI <span class="gold-accent">TOURS</span></span>
+                    <span class="brand-sub-division">Travels & Fleet Logistics • Estd. 2010</span>
+                    <span class="brand-origin-tag">Pollachi HQ • All-India Permits</span>
+                </div>
             </a>
             <div class="nav-links">
-                <a href="dashboard.html">Home</a>
-                <a href="#fleet">Cars & Fleet</a>
-                <a href="#bikes">Bike Rentals</a>
-                <a href="#map-section">India Route Map</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#routes">Routes</a>
-                <a href="book.html" class="btn btn-gold nav-btn">🗺️ Book a Car & Pay</a>
-                <a href="catering.html" class="btn btn-outline nav-btn">Catering Services</a>
+                <a href="dashboard.html" class="nav-item">🏛️ Home</a>
+                <a href="#fleet" class="nav-item active">🚗 Fleet</a>
+                <a href="#bikes" class="nav-item">🏍️ Bikes</a>
+                <a href="#pricing" class="nav-item">🏷️ Pricing</a>
+                <a href="#routes" class="nav-item">📍 Routes</a>
+                <a href="catering.html" class="nav-item">🍽️ Catering</a>
+                
+                <div class="mobile-drawer-footer">
+                    <a href="book.html" class="nav-cta-btn">
+                        <span>⚡ Calculate Route & Fare</span>
+                    </a>
+                    <a href="tel:+919876543210" class="nav-phone-btn">
+                        <span class="nav-phone-pulse">📞</span>
+                        <span>Call Fleet Dispatch (+91 98765 43210)</span>
+                    </a>
+                </div>
             </div>
-            <button class="mobile-menu-btn">☰</button>
+            <div class="nav-actions-desktop">
+                <a href="tel:+919876543210" class="nav-phone-btn" title="24/7 Fleet Dispatch">
+                    <span class="nav-phone-pulse">📞</span>
+                    <span>24/7 Dispatch</span>
+                </a>
+                <a href="book.html" class="nav-cta-btn">
+                    <span>⚡ Book Ride & Pay →</span>
+                </a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
         </div>
     </nav>
 

@@ -6,26 +6,46 @@ const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';      // Get from: EmailJS Dashboar
 const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';      // Get from: EmailJS Dashboard > Email Services
 const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';    // Get from: EmailJS Dashboard > Email Templates
 
-// ===== NAVBAR SCROLL =====
+// ===== NAVBAR SCROLL & MOBILE INTERACTION =====
 function initNavbar() {
     const navbar = document.querySelector('.navbar');
     if (!navbar) return;
 
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
+    const onScroll = () => {
+        if (window.scrollY > 25) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
-    });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
-    // Mobile menu toggle
+    // Mobile menu toggle & drawer handling
     const menuBtn = document.querySelector('.mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');
 
     if (menuBtn && navLinks) {
-        menuBtn.addEventListener('click', () => {
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             navLinks.classList.toggle('active');
+            menuBtn.classList.toggle('open');
+        });
+
+        // Close drawer when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navbar.contains(e.target)) {
+                navLinks.classList.remove('active');
+                menuBtn.classList.remove('open');
+            }
+        });
+
+        // Close drawer when clicking any link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuBtn.classList.remove('open');
+            });
         });
     }
 }
@@ -703,8 +723,6 @@ function filterFleet(category, btn) {
 // ===== AUTH NAVIGATION BADGE & LOGOUT =====
 function initAuthNav() {
     const navLinks = document.querySelector('.nav-links');
-    if (!navLinks) return;
-
     const loggedIn = sessionStorage.getItem('sriDeviLoggedIn') === 'true' || localStorage.getItem('sriDeviLoggedIn') === 'true';
     let user = sessionStorage.getItem('sriDeviUser') || localStorage.getItem('sriDeviUser');
     const phone = sessionStorage.getItem('sriDeviPhone') || localStorage.getItem('sriDeviPhone');
@@ -714,7 +732,21 @@ function initAuthNav() {
     }
     if (!user) user = 'Guest User';
 
-    // Remove any existing auth badge
+    // Top Utility Bar User Pill
+    const topUserPill = document.getElementById('topUserPill');
+    const topUserName = document.getElementById('topUserName');
+    if (topUserPill && topUserName) {
+        if (loggedIn) {
+            topUserPill.style.display = 'inline-flex';
+            topUserName.textContent = user;
+        } else {
+            topUserPill.style.display = 'none';
+        }
+    }
+
+    if (!navLinks) return;
+
+    // Remove any existing auth badge in nav
     const existing = document.getElementById('nav-user-auth-badge');
     if (existing) existing.remove();
 
@@ -723,20 +755,20 @@ function initAuthNav() {
     authContainer.style.display = 'inline-flex';
     authContainer.style.alignItems = 'center';
     authContainer.style.gap = '8px';
-    authContainer.style.marginLeft = '12px';
+    authContainer.style.marginLeft = '8px';
 
     if (loggedIn) {
         authContainer.innerHTML = `
-            <span style="background: rgba(212, 168, 67, 0.18); border: 1px solid rgba(212, 168, 67, 0.5); color: #8b1a1a; padding: 5px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; display: inline-flex; align-items: center; gap: 5px;">
-                <span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:#10b981;"></span> <span>${user}</span>
+            <span style="background: rgba(212, 168, 67, 0.16); border: 1px solid rgba(212, 168, 67, 0.45); color: #8b1a1a; padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; display: inline-flex; align-items: center; gap: 5px;">
+                <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#10b981;"></span> <span>${user}</span>
             </span>
-            <button onclick="handleLogout()" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #dc2626; padding: 5px 12px; border-radius: 8px; font-size: 0.78rem; cursor: pointer; font-weight: 700; transition: all 0.2s ease;" title="Sign Out">
+            <button onclick="handleLogout()" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); color: #dc2626; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; font-weight: 700; transition: all 0.2s ease;" title="Sign Out">
                 Sign Out
             </button>
         `;
     } else {
         authContainer.innerHTML = `
-            <a href="index.html" style="background: rgba(139, 26, 26, 0.1); border: 1px solid rgba(139, 26, 26, 0.3); color: #8b1a1a; padding: 6px 16px; border-radius: 20px; font-size: 0.84rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: all 0.2s ease;">
+            <a href="index.html" style="background: rgba(139, 26, 26, 0.08); border: 1px solid rgba(139, 26, 26, 0.25); color: #8b1a1a; padding: 5px 14px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: all 0.2s ease;">
                 🔐 <span>Sign In</span>
             </a>
         `;
