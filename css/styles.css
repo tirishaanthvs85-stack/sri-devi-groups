@@ -2975,3 +2975,374 @@ img {
     background: #1ebe5d;
     transform: translateY(-1px);
 }
+
+
+/* ==========================================================
+   PRO GOOGLE MAPS ROUTE & FARE HEADER & NAVIGATION SECTION
+   ========================================================== */
+
+.booking-hero-pro {
+    background: radial-gradient(circle at 15% 20%, #4a0d0d 0%, #0f172a 60%, #030712 100%);
+    color: #ffffff;
+    padding: 110px 20px 75px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    border-bottom: 1px solid rgba(212, 168, 67, 0.25);
+}
+
+.booking-hero-pro::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.02' fill-rule='evenodd'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+.pro-breadcrumb-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    margin-bottom: 20px;
+    backdrop-filter: blur(12px);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.pro-breadcrumb-bar a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.pro-breadcrumb-bar a:hover {
+    color: #f5d061;
+}
+
+.pro-breadcrumb-bar .sep {
+    color: #64748b;
+    font-size: 0.75rem;
+}
+
+.pro-breadcrumb-bar .active-item {
+    color: #f5d061;
+    font-weight: 700;
+}
+
+.pro-api-live-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #34d399;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    margin-left: 6px;
+}
+
+.pro-api-live-tag .pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.35);
+    animation: proPulse 2s infinite;
+}
+
+@keyframes proPulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.pro-hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 14px;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+}
+
+.pro-hero-title span {
+    background: linear-gradient(135deg, #f5d061 0%, #d4a843 50%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.pro-hero-subtitle {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    max-width: 760px;
+    margin: 0 auto 30px;
+    line-height: 1.6;
+}
+
+/* 3-Step Interactive Booking Progress Bar */
+.pro-booking-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 700px;
+    margin: 0 auto 30px;
+    padding: 0 15px;
+}
+
+.pro-step-node {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 8px 18px;
+    border-radius: 40px;
+    transition: all 0.3s ease;
+}
+
+.pro-step-node.completed {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #34d399;
+}
+
+.pro-step-node.active {
+    background: rgba(212, 168, 67, 0.22);
+    border-color: rgba(212, 168, 67, 0.6);
+    color: #fef08a;
+    box-shadow: 0 0 20px rgba(212, 168, 67, 0.25);
+}
+
+.pro-step-circle {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.pro-step-node.completed .pro-step-circle {
+    background: #10b981;
+    color: #ffffff;
+}
+
+.pro-step-node.active .pro-step-circle {
+    background: #d4a843;
+    color: #111827;
+}
+
+.pro-step-text-title {
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.pro-step-connector {
+    flex: 1;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.15);
+    margin: 0 8px;
+    min-width: 25px;
+}
+
+.pro-step-connector.active {
+    background: linear-gradient(90deg, #10b981, #d4a843);
+}
+
+/* Live Tariff Ticker Strip */
+.pro-tariff-ticker-strip {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+.pro-ticker-item {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #e2e8f0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(8px);
+}
+
+.pro-ticker-item strong {
+    color: #f5d061;
+}
+
+/* Professional Card Header for "📍 Google Maps Route & Fare" */
+.panel-header-pro {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.panel-header-top-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.panel-engine-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+    padding: 3px 10px;
+    border-radius: 14px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.panel-coverage-pill {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e40af;
+    padding: 3px 10px;
+    border-radius: 14px;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+.panel-header-pro h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    color: #8b1a1a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+}
+
+.panel-header-pro .panel-desc {
+    font-size: 0.84rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Pro Transit Mode Cards Grid */
+.transit-cards-grid-pro {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.transit-card-pro {
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 10px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.transit-card-pro:hover {
+    border-color: #cbd5e1;
+    background: #f1f5f9;
+    transform: translateY(-2px);
+}
+
+.transit-card-pro.active {
+    background: #fffdf5;
+    border-color: #d4a843;
+    box-shadow: 0 4px 14px rgba(212, 168, 67, 0.22);
+}
+
+.transit-card-icon {
+    font-size: 1.4rem;
+    margin-bottom: 2px;
+    line-height: 1;
+}
+
+.transit-card-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.2;
+    margin-bottom: 2px;
+}
+
+.transit-card-rate {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #8b1a1a;
+}
+
+/* Trip Type Segmented Switch (One-Way vs Round Trip) */
+.trip-type-segmented-wrap {
+    display: flex;
+    background: #f1f5f9;
+    padding: 3px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #e2e8f0;
+}
+
+.trip-type-btn {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.trip-type-btn.active {
+    background: #ffffff;
+    color: #1e293b;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 900px) {
+    .pro-hero-title {
+        font-size: 2.2rem;
+    }
+    .transit-cards-grid-pro {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .pro-booking-stepper {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .pro-step-connector {
+        display: none;
+    }
+}

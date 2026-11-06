@@ -477,11 +477,49 @@
         </div>
     </nav>
 
-    <!-- Header -->
-    <header class="booking-page-header">
-        <div class="container">
-            <h1>Complete Your Ride Booking</h1>
-            <p>Google Maps style live routing from anywhere in India to your chosen destination. Calculate accurate road distance, view step-by-step turns, and confirm booking.</p>
+    <!-- Professional Header & Stepper -->
+    <header class="booking-hero-pro">
+        <div class="container" style="position: relative; z-index: 2;">
+            <div class="pro-breadcrumb-bar">
+                <a href="dashboard.html">🏢 Sri Devi Groups</a>
+                <span class="sep">›</span>
+                <a href="tours.html">🚗 Sri Devi Tours & Travels</a>
+                <span class="sep">›</span>
+                <span class="active-item">Google Maps Route & Fare</span>
+                <span class="pro-api-live-tag"><span class="pulse-dot"></span> LIVE HIGHWAY ROUTING</span>
+            </div>
+
+            <h1 class="pro-hero-title">Google Maps Route <span>& Real-Time Fare</span></h1>
+            <p class="pro-hero-subtitle">
+                Certified live road navigation across the Indian National Highway network. Accurate turn-by-turn routing, transparent government-approved tariffs, and verified driver dispatch from Pollachi or anywhere in India.
+            </p>
+
+            <!-- 3-Step Interactive Booking Progress Bar -->
+            <div class="pro-booking-stepper">
+                <div class="pro-step-node completed">
+                    <div class="pro-step-circle">✓</div>
+                    <div class="pro-step-text-title">1. Verified Contact</div>
+                </div>
+                <div class="pro-step-connector active"></div>
+                <div class="pro-step-node active">
+                    <div class="pro-step-circle">2</div>
+                    <div class="pro-step-text-title">2. Route & Vehicle Tariff</div>
+                </div>
+                <div class="pro-step-connector"></div>
+                <div class="pro-step-node">
+                    <div class="pro-step-circle">3</div>
+                    <div class="pro-step-text-title">3. Tax Invoice Slip</div>
+                </div>
+            </div>
+
+            <!-- Live Tariff Guarantee Strip -->
+            <div class="pro-tariff-ticker-strip">
+                <div class="pro-ticker-item">🚗 <strong>Sedan:</strong> ₹18/km • ₹2,000/day</div>
+                <div class="pro-ticker-item">🚙 <strong>SUV/XUV:</strong> ₹20/km • ₹2,000/day</div>
+                <div class="pro-ticker-item">🚐 <strong>Force Traveller:</strong> ₹22/km • ₹2,500/day</div>
+                <div class="pro-ticker-item">🏍️ <strong>Bikes:</strong> ₹1,200/day (Men) • ₹600/day (Women)</div>
+                <div class="pro-ticker-item">🛡️ <strong>Zero Hidden Charges</strong></div>
+            </div>
         </div>
     </header>
 
@@ -490,19 +528,49 @@
         <div class="booking-layout-grid">
             <!-- Left Form Panel -->
             <div class="booking-panel-card">
-                <h2>📍 Google Maps Route & Fare</h2>
+                <!-- Professional Panel Header -->
+                <div class="panel-header-pro">
+                    <div class="panel-header-top-meta">
+                        <div class="panel-engine-pill">
+                            <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#10b981;"></span>
+                            <span>Official Highway Dispatch</span>
+                        </div>
+                        <span class="panel-coverage-pill">🇮🇳 All-India Permit Active</span>
+                    </div>
+                    <h2>
+                        <span>📍</span> Google Maps Route & Fare
+                    </h2>
+                    <p class="panel-desc">
+                        Select transit category, pick starting point anywhere in India or use GPS, and choose destination to calculate exact mileage and tariff.
+                    </p>
+                </div>
 
-                <!-- Transit Mode Selector -->
-                <div class="gmap-transit-modes">
-                    <button type="button" class="gmap-mode-tab active" id="mode-tab-car" onclick="selectTransitMode('car')">
-                        🚗 Drive (Car)
-                    </button>
-                    <button type="button" class="gmap-mode-tab" id="mode-tab-traveller" onclick="selectTransitMode('traveller')">
-                        🚐 Force Traveller
-                    </button>
-                    <button type="button" class="gmap-mode-tab" id="mode-tab-bike" onclick="selectTransitMode('bike')">
-                        🏍️ Bike / Scooter
-                    </button>
+                <!-- Professional Transit Mode Selector Cards -->
+                <div class="transit-cards-grid-pro">
+                    <div class="transit-card-pro active" id="mode-tab-car" onclick="selectTransitMode('car')">
+                        <div class="transit-card-icon">🚗</div>
+                        <div class="transit-card-name">Sedan</div>
+                        <div class="transit-card-rate">₹18/km</div>
+                        <div style="font-size: 0.68rem; color: #64748b;">₹2,000/day</div>
+                    </div>
+                    <div class="transit-card-pro" id="mode-tab-suv" onclick="selectTransitMode('suv')">
+                        <div class="transit-card-icon">🚙</div>
+                        <div class="transit-card-name">SUV / XUV</div>
+                        <div class="transit-card-rate">₹20/km</div>
+                        <div style="font-size: 0.68rem; color: #64748b;">₹2,000/day</div>
+                    </div>
+                    <div class="transit-card-pro" id="mode-tab-traveller" onclick="selectTransitMode('traveller')">
+                        <div class="transit-card-icon">🚐</div>
+                        <div class="transit-card-name">Traveller</div>
+                        <div class="transit-card-rate">₹22/km</div>
+                        <div style="font-size: 0.68rem; color: #64748b;">₹2,500/day</div>
+                    </div>
+                    <div class="transit-card-pro" id="mode-tab-bike" onclick="selectTransitMode('bike')">
+                        <div class="transit-card-icon">🏍️</div>
+                        <div class="transit-card-name">Bike/Scooter</div>
+                        <div class="transit-card-rate">₹600 - 1.2k</div>
+                        <div style="font-size: 0.68rem; color: #64748b;">Per Day</div>
+                    </div>
                 </div>
 
                 <form id="car-booking-full-form" onsubmit="handleProceedToPay(event)">
@@ -1057,14 +1125,16 @@
         }
 
         function selectTransitMode(mode) {
-            document.querySelectorAll('.gmap-mode-tab').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.transit-card-pro, .gmap-mode-tab').forEach(b => b.classList.remove('active'));
             const tabBtn = document.getElementById('mode-tab-' + mode);
             if (tabBtn) tabBtn.classList.add('active');
 
             const vehSelect = document.getElementById('booking-vehicle-select');
             if (vehSelect) {
-                if (mode === 'car') {
+                if (mode === 'car' || mode === 'sedan') {
                     vehSelect.value = 'sedan';
+                } else if (mode === 'suv') {
+                    vehSelect.value = 'suv';
                 } else if (mode === 'traveller') {
                     vehSelect.value = 'traveller';
                 } else if (mode === 'bike') {
@@ -1072,6 +1142,17 @@
                 }
                 calculateBookingFare();
             }
+        }
+
+        function syncTransitTabWithVehicle(veh) {
+            document.querySelectorAll('.transit-card-pro, .gmap-mode-tab').forEach(b => b.classList.remove('active'));
+            let tabId = 'mode-tab-car';
+            if (veh === 'suv') tabId = 'mode-tab-suv';
+            else if (veh === 'traveller') tabId = 'mode-tab-traveller';
+            else if (veh && (veh.includes('bike') || veh.includes('jupiter'))) tabId = 'mode-tab-bike';
+
+            const tabBtn = document.getElementById(tabId);
+            if (tabBtn) tabBtn.classList.add('active');
         }
 
         // Fetch exact road route and Google Maps style live stats + Turn-by-Turn steps
@@ -1479,6 +1560,9 @@
             const vehKey = vehSelect.value;
             const days = parseInt(daysSelect?.value) || 1;
             const rate = pricing[vehKey] || pricing.sedan;
+
+            // Sync visual transit mode tab with chosen vehicle
+            syncTransitTabWithVehicle(vehKey);
 
             let oneWayKm = 0;
             if (computedKm) {
