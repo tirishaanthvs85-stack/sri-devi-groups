@@ -268,42 +268,21 @@
         <div class="loader"></div>
     </div>
 
-    <!-- Executive Top Announcement & Utility Bar -->
-    <div class="top-announcement-bar">
+    <!-- Header User Details Bar (Exclusively User Details) -->
+    <div class="top-user-bar">
         <div class="container">
-            <div class="top-bar-left">
-                <span class="top-bar-item">
-                    <svg class="top-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-                    Corporate HQ: <strong>Pollachi, Tamil Nadu</strong>
+            <div class="user-details-cluster" id="headerUserDetails">
+                <span class="user-badge-item">
+                    <span class="user-status-dot"></span>
+                    <span class="user-avatar-symbol">👤</span>
+                    <span class="user-info-text">Customer: <strong id="topUserName">Verified Customer</strong></span>
                 </span>
-                <span class="top-live-beacon">
-                    <span class="beacon-dot"></span> 24/7 Live Concierge
-                </span>
-            </div>
-            <div class="top-bar-center">
-                <span class="top-trust-badge">⭐ <strong>4.9/5</strong> Rating (1,500+ Trips & Banquets)</span>
-                <span class="top-divider-dot">•</span>
-                <span class="top-bar-item">Govt. Tariff Approved • FSSAI Certified</span>
-            </div>
-            <div class="top-bar-right">
-                <a href="tel:+919876543210" class="top-phone-link">
-                    <svg class="top-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    <span>+91 98765 43210</span>
-                </a>
-                <a href="https://wa.me/919876543210?text=Hello%20Sri%20Devi%20Groups%2C%20I%20would%20like%20to%20inquire%20about%20your%20services." target="_blank" class="top-whatsapp-pill">
-                    <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.288.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.353.101.173.45 1.444 1.341 2.238.571.509 1.053.667 1.203.742.15.075.239.064.327-.038.089-.102.378-.44.479-.591.101-.151.203-.127.34-.076.138.051.874.412 1.025.487.151.075.252.112.289.175.037.063.037.362-.107.767z"/></svg>
-                    WhatsApp
-                </a>
-                <span class="top-user-pill" id="topUserPill" style="display: none;">
-                    <span class="top-user-avatar">👤</span>
-                    <span id="topUserName">Verified Customer</span>
-                    <button class="top-logout-btn" onclick="handleLogout()" title="Sign Out">Logout</button>
-                </span>
+                <button class="user-signout-btn" onclick="handleLogout()" title="Sign Out">Sign Out</button>
             </div>
         </div>
     </div>
 
-    <!-- Left Slide-Out Navigation Drawer (Top-to-Down) -->
+    <!-- Left Slide-Out Navigation Drawer (Top-to-Down) with Real Photography -->
     <div class="drawer-backdrop" id="navDrawerBackdrop" onclick="closeNavDrawer()"></div>
     <aside class="left-slide-drawer" id="leftSlideDrawer" aria-label="Main Navigation Drawer">
         <!-- Drawer Header -->
@@ -336,55 +315,73 @@
             <button class="drawer-close-btn" onclick="closeNavDrawer()" aria-label="Close navigation drawer">✕</button>
         </div>
 
-        <!-- Quick Status Strip -->
-        <div class="drawer-info-strip">
-            <span class="drawer-hq-tag">📍 Pollachi HQ</span>
-            <span class="drawer-live-beacon"><span class="beacon-dot"></span> 24/7 Live Desk</span>
-        </div>
-
-        <!-- Vertical Navigation Links (Top to Bottom) -->
+        <!-- Vertical Navigation Links with Real Photography -->
         <nav class="drawer-nav-menu">
             <div class="drawer-nav-section-label">Main Portals</div>
             <a href="dashboard.html" class="drawer-nav-link active">
-                <span class="drawer-nav-icon">🏛️</span>
-                <span class="drawer-nav-text">Home Dashboard</span>
+                <img src="images/dashboard-tours.jpg" alt="Home Dashboard" class="drawer-nav-thumb" loading="lazy">
+                <div class="drawer-nav-info">
+                    <span class="drawer-nav-text">Home Dashboard</span>
+                    <span class="drawer-nav-desc">Sri Devi Groups Central Portal</span>
+                </div>
                 <span class="drawer-nav-arrow">→</span>
             </a>
             <a href="tours.html" class="drawer-nav-link">
-                <span class="drawer-nav-icon">🚗</span>
-                <span class="drawer-nav-text">Tours & Fleet Logistics</span>
+                <img src="images/innova.jpg" alt="Tours & Fleet Logistics" class="drawer-nav-thumb" loading="lazy">
+                <div class="drawer-nav-info">
+                    <span class="drawer-nav-text">Tours & Fleet Logistics</span>
+                    <span class="drawer-nav-desc">Sedans, Innova SUVs & Minibuses</span>
+                </div>
                 <span class="drawer-nav-arrow">→</span>
             </a>
             <a href="tours.html#bikes" class="drawer-nav-link">
-                <span class="drawer-nav-icon">🏍️</span>
-                <span class="drawer-nav-text">Self-Drive Bike Rentals</span>
+                <img src="images/classic350.jpg" alt="Self-Drive Bike Rentals" class="drawer-nav-thumb" loading="lazy">
+                <div class="drawer-nav-info">
+                    <span class="drawer-nav-text">Self-Drive Bike Rentals</span>
+                    <span class="drawer-nav-desc">Classic 350 & TVS Jupiter</span>
+                </div>
                 <span class="drawer-nav-arrow">→</span>
             </a>
             <a href="catering.html" class="drawer-nav-link">
-                <span class="drawer-nav-icon">🍽️</span>
-                <span class="drawer-nav-text">Royal Catering Services</span>
+                <img src="images/banana-leaf-feast.jpg" alt="Royal Catering Services" class="drawer-nav-thumb" loading="lazy">
+                <div class="drawer-nav-info">
+                    <span class="drawer-nav-text">Royal Catering Services</span>
+                    <span class="drawer-nav-desc">21-Item Feasts & Grand Banquets</span>
+                </div>
                 <span class="drawer-nav-arrow">→</span>
             </a>
             <a href="book.html" class="drawer-nav-link">
-                <span class="drawer-nav-icon">🗺️</span>
-                <span class="drawer-nav-text">Google Route & Fare Calculator</span>
+                <img src="images/promise-navigation.jpg" alt="Google Route & Live Fare" class="drawer-nav-thumb" loading="lazy">
+                <div class="drawer-nav-info">
+                    <span class="drawer-nav-text">Google Route & Live Fare</span>
+                    <span class="drawer-nav-desc">GPS Highway Routing & Tariffs</span>
+                </div>
                 <span class="drawer-nav-arrow">→</span>
             </a>
 
-            <div class="drawer-nav-section-label" style="margin-top: 10px;">Quick Discover</div>
+            <div class="drawer-nav-section-label" style="margin-top: 6px;">Services & Promises</div>
             <a href="tours.html#pricing" class="drawer-nav-link">
-                <span class="drawer-nav-icon">🏷️</span>
-                <span class="drawer-nav-text">Transparent Pricing Structure</span>
+                <img src="images/promise-pricing.jpg" alt="Transparent Pricing Structure" class="drawer-nav-thumb" loading="lazy">
+                <div class="drawer-nav-info">
+                    <span class="drawer-nav-text">Transparent Pricing</span>
+                    <span class="drawer-nav-desc">Fixed ₹18 - ₹22/km Tariffs</span>
+                </div>
                 <span class="drawer-nav-arrow">→</span>
             </a>
             <a href="catering.html#menu" class="drawer-nav-link">
-                <span class="drawer-nav-icon">🥗</span>
-                <span class="drawer-nav-text">All-India Culinary Repertoire</span>
+                <img src="images/biryani.jpg" alt="All-India Culinary Repertoire" class="drawer-nav-thumb" loading="lazy">
+                <div class="drawer-nav-info">
+                    <span class="drawer-nav-text">All-India Culinary Menu</span>
+                    <span class="drawer-nav-desc">50+ Authentic Regional Dishes</span>
+                </div>
                 <span class="drawer-nav-arrow">→</span>
             </a>
             <a href="dashboard.html#promise-section" class="drawer-nav-link">
-                <span class="drawer-nav-icon">⭐</span>
-                <span class="drawer-nav-text">Sri Devi Groups Promise</span>
+                <img src="images/promise-chauffeur.jpg" alt="Sri Devi Groups Promise" class="drawer-nav-thumb" loading="lazy">
+                <div class="drawer-nav-info">
+                    <span class="drawer-nav-text">Sri Devi Groups Promise</span>
+                    <span class="drawer-nav-desc">Verified Chauffeurs & 100% Hygiene</span>
+                </div>
                 <span class="drawer-nav-arrow">→</span>
             </a>
         </nav>
@@ -392,13 +389,7 @@
         <!-- Drawer Footer Touchpoints -->
         <div class="drawer-footer">
             <a href="book.html" class="drawer-cta-btn">
-                <span>⚡ Calculate Route & Fare</span>
-            </a>
-            <a href="tel:+919876543210" class="drawer-call-btn">
-                <span>📞 Call Concierge: +91 98765 43210</span>
-            </a>
-            <a href="https://wa.me/919876543210?text=Hello%20Sri%20Devi%20Groups%2C%20I%20would%20like%20to%20book%20a%20service." target="_blank" class="drawer-whatsapp-btn">
-                <span>💬 WhatsApp Quick Booking</span>
+                <span>Calculate Route & Fare →</span>
             </a>
         </div>
     </aside>
@@ -443,28 +434,14 @@
                 </a>
             </div>
             <div class="nav-links">
-                <a href="dashboard.html" class="nav-item active">🏛️ Home</a>
-                <a href="tours.html" class="nav-item">🚗 Tours & Fleet</a>
-                <a href="catering.html" class="nav-item">🍽️ Catering Services</a>
-                <a href="book.html" class="nav-item">🗺️ Route & Live Fare</a>
-                
-                <div class="mobile-drawer-footer">
-                    <a href="book.html" class="nav-cta-btn">
-                        <span>⚡ Calculate Route & Fare</span>
-                    </a>
-                    <a href="tel:+919876543210" class="nav-phone-btn">
-                        <span class="nav-phone-pulse">📞</span>
-                        <span>Call Concierge: +91 98765 43210</span>
-                    </a>
-                </div>
+                <a href="dashboard.html" class="nav-item active">Home</a>
+                <a href="tours.html" class="nav-item">Tours & Fleet</a>
+                <a href="catering.html" class="nav-item">Catering Services</a>
+                <a href="book.html" class="nav-item">Route & Live Fare</a>
             </div>
             <div class="nav-actions-desktop">
-                <a href="tel:+919876543210" class="nav-phone-btn" title="24/7 Priority Helpline">
-                    <span class="nav-phone-pulse">📞</span>
-                    <span>24/7 Help</span>
-                </a>
                 <a href="book.html" class="nav-cta-btn">
-                    <span>⚡ Route & Fare →</span>
+                    <span>Route & Fare →</span>
                 </a>
             </div>
             <button class="mobile-menu-btn" aria-label="Toggle navigation menu">

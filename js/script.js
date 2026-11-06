@@ -754,49 +754,29 @@ function initAuthNav() {
     }
     if (!user) user = 'Guest User';
 
-    // Top Utility Bar User Pill
-    const topUserPill = document.getElementById('topUserPill');
-    const topUserName = document.getElementById('topUserName');
-    if (topUserPill && topUserName) {
+    // Header User Details Bar (Exclusively User Details)
+    const headerUserDetails = document.getElementById('headerUserDetails');
+    if (headerUserDetails) {
         if (loggedIn) {
-            topUserPill.style.display = 'inline-flex';
-            topUserName.textContent = user;
+            headerUserDetails.innerHTML = `
+                <span class="user-badge-item">
+                    <span class="user-status-dot"></span>
+                    <span class="user-avatar-symbol">👤</span>
+                    <span class="user-info-text">Customer: <strong>${user}</strong></span>
+                </span>
+                <button class="user-signout-btn" onclick="handleLogout()" title="Sign Out">Sign Out</button>
+            `;
         } else {
-            topUserPill.style.display = 'none';
+            headerUserDetails.innerHTML = `
+                <span class="user-badge-item">
+                    <span class="user-status-dot" style="background:#94a3b8; box-shadow:none;"></span>
+                    <span class="user-avatar-symbol">👤</span>
+                    <span class="user-info-text">Guest Customer</span>
+                </span>
+                <a href="index.html" class="user-signin-link">🔐 Sign In</a>
+            `;
         }
     }
-
-    if (!navLinks) return;
-
-    // Remove any existing auth badge in nav
-    const existing = document.getElementById('nav-user-auth-badge');
-    if (existing) existing.remove();
-
-    const authContainer = document.createElement('div');
-    authContainer.id = 'nav-user-auth-badge';
-    authContainer.style.display = 'inline-flex';
-    authContainer.style.alignItems = 'center';
-    authContainer.style.gap = '8px';
-    authContainer.style.marginLeft = '8px';
-
-    if (loggedIn) {
-        authContainer.innerHTML = `
-            <span style="background: rgba(212, 168, 67, 0.16); border: 1px solid rgba(212, 168, 67, 0.45); color: #8b1a1a; padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; display: inline-flex; align-items: center; gap: 5px;">
-                <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#10b981;"></span> <span>${user}</span>
-            </span>
-            <button onclick="handleLogout()" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); color: #dc2626; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; font-weight: 700; transition: all 0.2s ease;" title="Sign Out">
-                Sign Out
-            </button>
-        `;
-    } else {
-        authContainer.innerHTML = `
-            <a href="index.html" style="background: rgba(139, 26, 26, 0.08); border: 1px solid rgba(139, 26, 26, 0.25); color: #8b1a1a; padding: 5px 14px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: all 0.2s ease;">
-                🔐 <span>Sign In</span>
-            </a>
-        `;
-    }
-
-    navLinks.appendChild(authContainer);
 }
 
 function handleLogout() {
