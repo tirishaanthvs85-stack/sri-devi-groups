@@ -1165,23 +1165,52 @@ img {
 
 .menu-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
 }
 
 .menu-item {
-    background: var(--white);
-    border-radius: var(--radius);
-    padding: 25px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 16px 18px;
     display: flex;
-    gap: 15px;
+    gap: 16px;
     align-items: center;
-    transition: var(--transition);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
 }
 
 .menu-item:hover {
-    box-shadow: var(--shadow-sm);
-    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+    border-color: rgba(212, 160, 23, 0.4);
+}
+
+.dish-photo-box {
+    width: 90px;
+    height: 90px;
+    min-width: 90px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    background: #f8fafc;
+}
+
+.dish-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.45s ease;
+}
+
+.menu-item:hover .dish-photo {
+    transform: scale(1.1);
 }
 
 .menu-item .emoji {
@@ -1189,22 +1218,30 @@ img {
     flex-shrink: 0;
 }
 
+.menu-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
 .menu-item-info h4 {
-    font-size: 1rem;
+    font-size: 1.02rem;
     margin-bottom: 4px;
     color: var(--dark);
+    font-weight: 700;
 }
 
 .menu-item-info p {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     color: var(--gray);
+    line-height: 1.4;
+    margin-bottom: 6px;
 }
 
 .menu-item-info .menu-price {
     color: var(--primary);
     font-weight: 700;
-    font-size: 0.95rem;
-    margin-top: 5px;
+    font-size: 0.92rem;
+    margin-top: 2px;
 }
 
 /* ===== CONTACT SECTION ===== */
