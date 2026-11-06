@@ -3346,3 +3346,349 @@ img {
         display: none;
     }
 }
+
+
+/* ==========================================================
+   EXECUTIVE PROFESSIONAL FORM INPUT BOXES (BOOKING ENGINE)
+   ========================================================== */
+
+.pro-form-card-group {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    position: relative;
+    transition: all 0.25s ease;
+}
+
+.pro-form-card-group:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.pro-form-card-group.route-group {
+    background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+    border-left: 4px solid #1a73e8;
+}
+
+.pro-form-card-group.passenger-group {
+    border-left: 4px solid #d4a843;
+}
+
+.pro-form-card-group.schedule-group {
+    border-left: 4px solid #8b1a1a;
+}
+
+.pro-group-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.pro-group-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pro-field-box {
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.pro-field-box:last-child {
+    margin-bottom: 0;
+}
+
+.pro-field-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #475569;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.pro-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 12px;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.pro-input-wrapper:focus-within {
+    background: #ffffff;
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.15), 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.pro-input-wrapper.gold-focus:focus-within {
+    border-color: #d4a843;
+    box-shadow: 0 0 0 4px rgba(212, 168, 67, 0.18);
+}
+
+.pro-input-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 14px;
+    padding-right: 6px;
+    font-size: 1.15rem;
+    color: #64748b;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.pro-text-input {
+    width: 100%;
+    padding: 13px 14px;
+    border: none;
+    background: transparent;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: #0f172a;
+    outline: none;
+}
+
+.pro-text-input::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+select.pro-text-input {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+    padding-right: 38px;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Modern GPS Locate Button inside Input Box */
+.btn-locate-in-box {
+    margin-right: 8px;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.btn-locate-in-box:hover {
+    background: #d1fae5;
+    transform: scale(1.02);
+}
+
+/* Vertical Google Maps Waypoint Connector */
+.google-route-timeline {
+    position: relative;
+    padding-left: 20px;
+}
+
+.google-route-timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 42px;
+    bottom: 42px;
+    width: 2px;
+    background: repeating-linear-gradient(to bottom, #1a73e8 0, #1a73e8 5px, transparent 5px, transparent 10px);
+}
+
+.route-waypoint-dot {
+    position: absolute;
+    left: -20px;
+    top: 40px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.route-waypoint-dot.start {
+    border: 3px solid #34a853;
+}
+
+.route-waypoint-dot.end {
+    border: 3px solid #ea4335;
+    top: auto;
+    bottom: 35px;
+}
+
+.route-swap-pro-wrap {
+    display: flex;
+    justify-content: center;
+    margin: -6px 0 10px;
+}
+
+.btn-swap-pro {
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    color: #1a73e8;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.btn-swap-pro:hover {
+    background: #eff6ff;
+    border-color: #1a73e8;
+    transform: rotate(180deg) scale(1.08);
+}
+
+/* ==========================================================
+   EXPANDED PAN-INDIAN CATERING MENUS & EVENT CUISINE STYLES
+   ========================================================== */
+
+.catering-event-types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin: 40px 0;
+}
+
+.event-type-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 26px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.event-type-card:hover {
+    transform: translateY(-4px);
+    border-color: #d4a843;
+    box-shadow: 0 15px 40px rgba(212, 168, 67, 0.15);
+}
+
+.event-type-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.event-type-icon {
+    font-size: 2.2rem;
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    background: #fdf6e2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.event-type-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: #111827;
+    margin: 0;
+}
+
+.event-dish-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 14px 0;
+}
+
+.dish-tag {
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+}
+
+.dish-tag.veg {
+    background: #ecfdf5;
+    color: #065f46;
+    border-color: #a7f3d0;
+}
+
+.dish-tag.non-veg {
+    background: #fef2f2;
+    color: #991b1b;
+    border-color: #fecaca;
+}
+
+.dish-tag.live {
+    background: #fffbeb;
+    color: #92400e;
+    border-color: #fde68a;
+}
+
+.dish-tag.royal {
+    background: #faf5ff;
+    color: #6b21a8;
+    border-color: #e9d5ff;
+}
+
+.dish-diet-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.dish-diet-pill.veg {
+    border: 1px solid #10b981;
+    color: #047857;
+}
+
+.dish-diet-pill.non-veg {
+    border: 1px solid #ef4444;
+    color: #b91c1c;
+}

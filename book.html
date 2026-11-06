@@ -574,153 +574,207 @@
                 </div>
 
                 <form id="car-booking-full-form" onsubmit="handleProceedToPay(event)">
-                    <!-- Passenger Info with Verified Badge -->
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <span style="font-weight: 600; color: #1e293b; font-size: 0.95rem;">👤 Passenger Details</span>
-                        <span id="passenger-verified-badge" class="badge-verified-user" style="display: none;">
-                            ✅ Verified via OTP
-                        </span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="book-user-name">Your Full Name *</label>
-                        <input type="text" id="book-user-name" placeholder="E.g. Ramesh Kumar" required>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="book-user-phone">Phone Number *</label>
-                            <input type="tel" id="book-user-phone" placeholder="+91 98765 XXXXX" required oninput="onPassengerContactChanged()">
+                    <!-- SECTION 1: Executive Passenger Profile Card -->
+                    <div class="pro-form-card-group passenger-group">
+                        <div class="pro-group-title-row">
+                            <span class="pro-group-title">
+                                <span>👤</span> Passenger Profile
+                            </span>
+                            <span id="passenger-verified-badge" class="badge-verified-user" style="display: none;">
+                                ✅ Verified via OTP
+                            </span>
                         </div>
-                        <div class="form-group">
-                            <label for="book-user-email">Email Address *</label>
-                            <input type="email" id="book-user-email" placeholder="ramesh@gmail.com" required oninput="onPassengerContactChanged()">
+
+                        <div class="pro-field-box">
+                            <label class="pro-field-label" for="book-user-name">Full Name *</label>
+                            <div class="pro-input-wrapper gold-focus">
+                                <span class="pro-input-icon">👤</span>
+                                <input type="text" id="book-user-name" class="pro-text-input" placeholder="Enter traveler's full name" required>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Pickup Location with Current Location Button -->
-                    <div class="form-group input-group-location">
-                        <label for="pickup-location">Starting / Pickup Location (Anywhere in India) *</label>
-                        <input type="text" id="pickup-location" value="Pollachi, Tamil Nadu" placeholder="Type city, airport, hotel, or street address in India" required oninput="triggerRouteUpdate()">
-                        <button type="button" class="loc-btn-current" onclick="fetchCurrentLocation()" title="Detect current GPS coordinates">
-                            🎯 <span>Use GPS Current Location</span>
-                        </button>
-                    </div>
-
-                    <!-- Pickup Location Quick-Pick Chips -->
-                    <div class="quick-chips-row">
-                        <span class="quick-dest-chip" onclick="setPickupLocation('Pollachi, Tamil Nadu')">📍 Pollachi HQ</span>
-                        <span class="quick-dest-chip" onclick="setPickupLocation('Coimbatore International Airport, Tamil Nadu')">✈️ Coimbatore Airport</span>
-                        <span class="quick-dest-chip" onclick="setPickupLocation('Coimbatore Junction Railway Station, Tamil Nadu')">🚆 Coimbatore Jn</span>
-                        <span class="quick-dest-chip" onclick="setPickupLocation('Tiruppur, Tamil Nadu')">📍 Tiruppur</span>
-                        <span class="quick-dest-chip" onclick="setPickupLocation('Palakkad, Kerala')">📍 Palakkad</span>
-                    </div>
-
-                    <!-- Swap Location Button -->
-                    <div class="route-swap-container">
-                        <button type="button" class="btn-swap-locations" onclick="swapRouteLocations()" title="Swap Pickup & Destination">
-                            ⇅
-                        </button>
-                    </div>
-
-                    <!-- Destination Selection with Free-form Input -->
-                    <div class="form-group">
-                        <label for="booking-destination-select">Destination (Any City / Town in India) *</label>
-                        <select id="booking-destination-select" onchange="onDestinationChanged()" required>
-                            <option value="">-- Select Destination --</option>
-                            <optgroup label="🔥 Nearby & Hill Stations">
-                                <option value="coimbatore">Coimbatore, Tamil Nadu (40 km)</option>
-                                <option value="palakkad">Palakkad, Kerala (50 km)</option>
-                                <option value="ooty" selected>Ooty (Udhagamandalam), Tamil Nadu (95 km)</option>
-                                <option value="kodaikanal">Kodaikanal, Tamil Nadu (150 km)</option>
-                                <option value="munnar">Munnar, Kerala (160 km)</option>
-                                <option value="valparai">Valparai, Tamil Nadu (65 km)</option>
-                                <option value="erode">Erode, Tamil Nadu (120 km)</option>
-                                <option value="thrissur">Thrissur, Kerala (120 km)</option>
-                            </optgroup>
-                            <optgroup label="🏙️ Major South Indian Cities">
-                                <option value="kochi">Kochi / Cochin, Kerala (190 km)</option>
-                                <option value="madurai">Madurai, Tamil Nadu (200 km)</option>
-                                <option value="salem">Salem, Tamil Nadu (210 km)</option>
-                                <option value="trichy">Tiruchirappalli, Tamil Nadu (260 km)</option>
-                                <option value="mysore">Mysore, Karnataka (280 km)</option>
-                                <option value="trivandrum">Thiruvananthapuram, Kerala (300 km)</option>
-                                <option value="thanjavur">Thanjavur, Tamil Nadu (300 km)</option>
-                                <option value="tirunelveli">Tirunelveli, Tamil Nadu (310 km)</option>
-                                <option value="bangalore">Bangalore / Bengaluru, Karnataka (370 km)</option>
-                                <option value="kanyakumari">Kanyakumari, Tamil Nadu (370 km)</option>
-                                <option value="rameshwaram">Rameshwaram, Tamil Nadu (380 km)</option>
-                                <option value="pondicherry">Puducherry / Pondicherry (400 km)</option>
-                                <option value="chennai">Chennai, Tamil Nadu (510 km)</option>
-                            </optgroup>
-                            <optgroup label="✈️ Pan-India Long Distance">
-                                <option value="tirupati">Tirupati, Andhra Pradesh (550 km)</option>
-                                <option value="hyderabad">Hyderabad, Telangana (750 km)</option>
-                                <option value="goa">Panaji / Goa (850 km)</option>
-                                <option value="vizag">Visakhapatnam, Andhra Pradesh (1100 km)</option>
-                                <option value="mumbai">Mumbai, Maharashtra (1100 km)</option>
-                                <option value="pune">Pune, Maharashtra (980 km)</option>
-                                <option value="kolkata">Kolkata, West Bengal (1950 km)</option>
-                                <option value="jaipur">Jaipur, Rajasthan (2000 km)</option>
-                                <option value="delhi">New Delhi / NCR (2200 km)</option>
-                            </optgroup>
-                            <optgroup label="✍️ Custom Destination Anywhere in India">
-                                <option value="custom">🔍 Search / Type Any Custom City in India...</option>
-                            </optgroup>
-                        </select>
-                    </div>
-
-                    <!-- Destination Quick-Pick Chips -->
-                    <div class="quick-chips-row">
-                        <span class="quick-dest-chip" onclick="setDestinationDirect('ooty')">⛰️ Ooty (95 km)</span>
-                        <span class="quick-dest-chip" onclick="setDestinationDirect('kodaikanal')">🌲 Kodaikanal (150 km)</span>
-                        <span class="quick-dest-chip" onclick="setDestinationDirect('munnar')">🍃 Munnar (160 km)</span>
-                        <span class="quick-dest-chip" onclick="setDestinationDirect('valparai')">🌿 Valparai (65 km)</span>
-                        <span class="quick-dest-chip" onclick="setDestinationDirect('bangalore')">🌆 Bangalore (370 km)</span>
-                        <span class="quick-dest-chip" onclick="setDestinationDirect('chennai')">🏙️ Chennai (510 km)</span>
-                        <span class="quick-dest-chip" onclick="setDestinationDirect('madurai')">🛕 Madurai (200 km)</span>
-                        <span class="quick-dest-chip" onclick="setDestinationDirect('tirupati')">🙏 Tirupati (550 km)</span>
-                    </div>
-
-                    <!-- Custom Address / City Search Input -->
-                    <div class="form-group" id="custom-dest-input-wrap" style="display: none;">
-                        <label for="custom-destination-name">Enter Destination City / Address in India</label>
-                        <div style="display: flex; gap: 8px;">
-                            <input type="text" id="custom-destination-name" placeholder="E.g. Wayanad, Kerala or Shimla, HP" onkeydown="if(event.key==='Enter'){event.preventDefault();searchCustomDestination();}">
-                            <button type="button" class="btn btn-primary" style="padding: 10px 18px; font-size: 0.85rem;" onclick="searchCustomDestination()">Find Route</button>
+                        <div class="form-row" style="gap: 12px; margin-top: 14px;">
+                            <div class="pro-field-box" style="flex: 1; margin-bottom: 0;">
+                                <label class="pro-field-label" for="book-user-phone">Mobile Number *</label>
+                                <div class="pro-input-wrapper gold-focus">
+                                    <span class="pro-input-icon">📞</span>
+                                    <input type="tel" id="book-user-phone" class="pro-text-input" placeholder="+91 98765 XXXXX" required oninput="onPassengerContactChanged()">
+                                </div>
+                            </div>
+                            <div class="pro-field-box" style="flex: 1; margin-bottom: 0;">
+                                <label class="pro-field-label" for="book-user-email">Email Address *</label>
+                                <div class="pro-input-wrapper gold-focus">
+                                    <span class="pro-input-icon">✉️</span>
+                                    <input type="email" id="book-user-email" class="pro-text-input" placeholder="name@example.com" required oninput="onPassengerContactChanged()">
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Vehicle Selection -->
-                    <div class="form-group">
-                        <label for="booking-vehicle-select">Select Vehicle Type *</label>
-                        <select id="booking-vehicle-select" onchange="calculateBookingFare()" required>
-                            <option value="sedan">🚗 Sedan (Dzire / Amaze / Etios) — ₹18/km | ₹2,000/day</option>
-                            <option value="suv">🚙 SUV / XUV (Innova Crysta / XUV700 / Scorpio) — ₹20/km | ₹2,000/day</option>
-                            <option value="traveller">🚐 Force Traveller (12-20 Seater) — ₹22/km | ₹2,500/day</option>
-                            <option value="bike-classic">🏍️ Royal Enfield Classic 350 (Men) — ₹1,200/day</option>
-                            <option value="scooter-jupiter">🛵 TVS Jupiter Scooter (Women) — ₹600/day</option>
-                        </select>
+                    <!-- SECTION 2: Google Maps Road Waypoints & GPS Card -->
+                    <div class="pro-form-card-group route-group">
+                        <div class="pro-group-title-row">
+                            <span class="pro-group-title">
+                                <span>🗺️</span> Route Waypoints & GPS Navigation
+                            </span>
+                            <span style="font-size: 0.72rem; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 10px; font-weight: 700;">
+                                NH / SH Connected
+                            </span>
+                        </div>
+
+                        <!-- Pickup Waypoint -->
+                        <div class="pro-field-box">
+                            <div class="pro-field-label">
+                                <span>🟢 Starting / Pickup Point (Anywhere in India) *</span>
+                            </div>
+                            <div class="pro-input-wrapper">
+                                <span class="pro-input-icon">📍</span>
+                                <input type="text" id="pickup-location" class="pro-text-input" value="Pollachi, Tamil Nadu" placeholder="Type city, airport, hotel, or address in India" required oninput="triggerRouteUpdate()">
+                                <button type="button" class="btn-locate-in-box" onclick="fetchCurrentLocation()" title="Detect current GPS coordinates">
+                                    🎯 <span>Detect GPS</span>
+                                </button>
+                            </div>
+                            <!-- Pickup Location Quick-Pick Chips -->
+                            <div class="quick-chips-row" style="margin-top: 8px;">
+                                <span class="quick-dest-chip" onclick="setPickupLocation('Pollachi, Tamil Nadu')">📍 Pollachi HQ</span>
+                                <span class="quick-dest-chip" onclick="setPickupLocation('Coimbatore International Airport, Tamil Nadu')">✈️ CBE Airport</span>
+                                <span class="quick-dest-chip" onclick="setPickupLocation('Coimbatore Junction Railway Station, Tamil Nadu')">🚆 CBE Jn</span>
+                                <span class="quick-dest-chip" onclick="setPickupLocation('Tiruppur, Tamil Nadu')">📍 Tiruppur</span>
+                                <span class="quick-dest-chip" onclick="setPickupLocation('Palakkad, Kerala')">📍 Palakkad</span>
+                            </div>
+                        </div>
+
+                        <!-- Route Swap Button -->
+                        <div class="route-swap-pro-wrap">
+                            <button type="button" class="btn-swap-pro" onclick="swapRouteLocations()" title="Swap Pickup & Destination">
+                                ⇅
+                            </button>
+                        </div>
+
+                        <!-- Destination Waypoint -->
+                        <div class="pro-field-box">
+                            <div class="pro-field-label">
+                                <span>🔴 Drop Destination (Pan-India) *</span>
+                            </div>
+                            <div class="pro-input-wrapper">
+                                <span class="pro-input-icon">🎯</span>
+                                <select id="booking-destination-select" class="pro-text-input" onchange="onDestinationChanged()" required>
+                                    <option value="">-- Select Destination --</option>
+                                    <optgroup label="🔥 Nearby & Hill Stations">
+                                        <option value="coimbatore">Coimbatore, Tamil Nadu (40 km)</option>
+                                        <option value="palakkad">Palakkad, Kerala (50 km)</option>
+                                        <option value="ooty" selected>Ooty (Udhagamandalam), Tamil Nadu (95 km)</option>
+                                        <option value="kodaikanal">Kodaikanal, Tamil Nadu (150 km)</option>
+                                        <option value="munnar">Munnar, Kerala (160 km)</option>
+                                        <option value="valparai">Valparai, Tamil Nadu (65 km)</option>
+                                        <option value="erode">Erode, Tamil Nadu (120 km)</option>
+                                        <option value="thrissur">Thrissur, Kerala (120 km)</option>
+                                    </optgroup>
+                                    <optgroup label="🏙️ Major South Indian Cities">
+                                        <option value="kochi">Kochi / Cochin, Kerala (190 km)</option>
+                                        <option value="madurai">Madurai, Tamil Nadu (200 km)</option>
+                                        <option value="salem">Salem, Tamil Nadu (210 km)</option>
+                                        <option value="trichy">Tiruchirappalli, Tamil Nadu (260 km)</option>
+                                        <option value="mysore">Mysore, Karnataka (280 km)</option>
+                                        <option value="trivandrum">Thiruvananthapuram, Kerala (300 km)</option>
+                                        <option value="thanjavur">Thanjavur, Tamil Nadu (300 km)</option>
+                                        <option value="tirunelveli">Tirunelveli, Tamil Nadu (310 km)</option>
+                                        <option value="bangalore">Bangalore / Bengaluru, Karnataka (370 km)</option>
+                                        <option value="kanyakumari">Kanyakumari, Tamil Nadu (370 km)</option>
+                                        <option value="rameshwaram">Rameshwaram, Tamil Nadu (380 km)</option>
+                                        <option value="pondicherry">Puducherry / Pondicherry (400 km)</option>
+                                        <option value="chennai">Chennai, Tamil Nadu (510 km)</option>
+                                    </optgroup>
+                                    <optgroup label="✈️ Pan-India Long Distance">
+                                        <option value="tirupati">Tirupati, Andhra Pradesh (550 km)</option>
+                                        <option value="hyderabad">Hyderabad, Telangana (750 km)</option>
+                                        <option value="goa">Panaji / Goa (850 km)</option>
+                                        <option value="vizag">Visakhapatnam, Andhra Pradesh (1100 km)</option>
+                                        <option value="mumbai">Mumbai, Maharashtra (1100 km)</option>
+                                        <option value="pune">Pune, Maharashtra (980 km)</option>
+                                        <option value="kolkata">Kolkata, West Bengal (1950 km)</option>
+                                        <option value="jaipur">Jaipur, Rajasthan (2000 km)</option>
+                                        <option value="delhi">New Delhi / NCR (2200 km)</option>
+                                    </optgroup>
+                                    <optgroup label="✍️ Custom Destination Anywhere in India">
+                                        <option value="custom">🔍 Search / Type Any Custom City in India...</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <!-- Destination Quick-Pick Chips -->
+                            <div class="quick-chips-row" style="margin-top: 8px;">
+                                <span class="quick-dest-chip" onclick="setDestinationDirect('ooty')">⛰️ Ooty (95 km)</span>
+                                <span class="quick-dest-chip" onclick="setDestinationDirect('kodaikanal')">🌲 Kodaikanal (150 km)</span>
+                                <span class="quick-dest-chip" onclick="setDestinationDirect('munnar')">🍃 Munnar (160 km)</span>
+                                <span class="quick-dest-chip" onclick="setDestinationDirect('valparai')">🌿 Valparai (65 km)</span>
+                                <span class="quick-dest-chip" onclick="setDestinationDirect('bangalore')">🌆 Bangalore (370 km)</span>
+                                <span class="quick-dest-chip" onclick="setDestinationDirect('chennai')">🏙️ Chennai (510 km)</span>
+                                <span class="quick-dest-chip" onclick="setDestinationDirect('madurai')">🛕 Madurai (200 km)</span>
+                                <span class="quick-dest-chip" onclick="setDestinationDirect('tirupati')">🙏 Tirupati (550 km)</span>
+                            </div>
+
+                            <!-- Custom Address / City Search Input -->
+                            <div class="form-group" id="custom-dest-input-wrap" style="display: none; margin-top: 10px;">
+                                <label for="custom-destination-name" style="font-size: 0.8rem; font-weight: 600;">Enter Custom City / Address in India</label>
+                                <div style="display: flex; gap: 8px;">
+                                    <input type="text" id="custom-destination-name" class="pro-text-input" style="border: 1.5px solid #cbd5e1; border-radius: 10px; background: #fff;" placeholder="E.g. Wayanad, Kerala or Shimla, HP" onkeydown="if(event.key==='Enter'){event.preventDefault();searchCustomDestination();}">
+                                    <button type="button" class="btn btn-primary" style="padding: 10px 18px; font-size: 0.85rem;" onclick="searchCustomDestination()">Find Route</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Dates & Days -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="booking-start-date">Travel Date *</label>
-                            <input type="date" id="booking-start-date" required>
+                    <!-- SECTION 3: Vehicle Allocation & Schedule Card -->
+                    <div class="pro-form-card-group schedule-group">
+                        <div class="pro-group-title-row">
+                            <span class="pro-group-title">
+                                <span>🚘</span> Vehicle Allocation & Trip Dates
+                            </span>
+                            <span style="font-size: 0.72rem; background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 10px; font-weight: 700;">
+                                AC & Sanitized
+                            </span>
                         </div>
-                        <div class="form-group">
-                            <label for="booking-duration-days">Duration (Days) *</label>
-                            <select id="booking-duration-days" onchange="calculateBookingFare()">
-                                <option value="1">1 Day</option>
-                                <option value="2">2 Days</option>
-                                <option value="3">3 Days</option>
-                                <option value="4">4 Days</option>
-                                <option value="5">5 Days</option>
-                                <option value="7">7 Days (Week)</option>
-                                <option value="10">10 Days</option>
-                                <option value="15">15 Days</option>
-                            </select>
+
+                        <!-- Vehicle Selection -->
+                        <div class="pro-field-box">
+                            <label class="pro-field-label" for="booking-vehicle-select">Selected Vehicle / Bike *</label>
+                            <div class="pro-input-wrapper gold-focus">
+                                <span class="pro-input-icon">🚘</span>
+                                <select id="booking-vehicle-select" class="pro-text-input" onchange="calculateBookingFare()" required>
+                                    <option value="sedan">🚗 Sedan (Dzire / Amaze / Etios) — ₹18/km | ₹2,000/day</option>
+                                    <option value="suv">🚙 SUV / XUV (Innova Crysta / XUV700 / Scorpio) — ₹20/km | ₹2,000/day</option>
+                                    <option value="traveller">🚐 Force Traveller (12-20 Seater) — ₹22/km | ₹2,500/day</option>
+                                    <option value="bike-classic">🏍️ Royal Enfield Classic 350 (Men) — ₹1,200/day</option>
+                                    <option value="scooter-jupiter">🛵 TVS Jupiter Scooter (Women) — ₹600/day</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Dates & Days -->
+                        <div class="form-row" style="gap: 12px; margin-top: 14px;">
+                            <div class="pro-field-box" style="flex: 1; margin-bottom: 0;">
+                                <label class="pro-field-label" for="booking-start-date">Departure Date *</label>
+                                <div class="pro-input-wrapper gold-focus">
+                                    <span class="pro-input-icon">📅</span>
+                                    <input type="date" id="booking-start-date" class="pro-text-input" required>
+                                </div>
+                            </div>
+                            <div class="pro-field-box" style="flex: 1; margin-bottom: 0;">
+                                <label class="pro-field-label" for="booking-duration-days">Duration *</label>
+                                <div class="pro-input-wrapper gold-focus">
+                                    <span class="pro-input-icon">⏳</span>
+                                    <select id="booking-duration-days" class="pro-text-input" onchange="calculateBookingFare()">
+                                        <option value="1">1 Day</option>
+                                        <option value="2">2 Days</option>
+                                        <option value="3">3 Days</option>
+                                        <option value="4">4 Days</option>
+                                        <option value="5">5 Days</option>
+                                        <option value="7">7 Days (Week)</option>
+                                        <option value="10">10 Days</option>
+                                        <option value="15">15 Days</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
