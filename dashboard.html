@@ -303,35 +303,145 @@
         </div>
     </div>
 
-    <!-- Executive Main Navbar -->
-    <nav class="navbar" id="siteNavbar">
-        <div class="container">
-            <a href="dashboard.html" class="logo">
-                <div class="brand-crest-wrapper">
-                    <svg class="crest-svg-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Left Slide-Out Navigation Drawer (Top-to-Down) -->
+    <div class="drawer-backdrop" id="navDrawerBackdrop" onclick="closeNavDrawer()"></div>
+    <aside class="left-slide-drawer" id="leftSlideDrawer" aria-label="Main Navigation Drawer">
+        <!-- Drawer Header -->
+        <div class="drawer-header">
+            <a href="dashboard.html" class="drawer-brand">
+                <div class="drawer-crest">
+                    <svg viewBox="0 0 48 48" width="42" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <defs>
-                            <linearGradient id="crestGoldGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <linearGradient id="drawerGold" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" stop-color="#fceda2" />
                                 <stop offset="50%" stop-color="#d4a843" />
                                 <stop offset="100%" stop-color="#9a7114" />
                             </linearGradient>
-                            <linearGradient id="crestMaroonGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <linearGradient id="drawerMaroon" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" stop-color="#8b1a1a" />
                                 <stop offset="100%" stop-color="#4a0808" />
                             </linearGradient>
                         </defs>
-                        <path d="M24 3 L41 9 C41 24 34 38 24 45 C14 38 7 24 7 9 Z" fill="url(#crestMaroonGrad1)" stroke="url(#crestGoldGrad1)" stroke-width="2.2" />
-                        <path d="M24 7 L37 12 C37 23 31.5 34 24 39.5 C16.5 34 11 23 11 12 Z" fill="none" stroke="url(#crestGoldGrad1)" stroke-width="1" stroke-opacity="0.6" />
-                        <path d="M19 16 L24 13 L29 16 L27 20 L21 20 Z" fill="url(#crestGoldGrad1)" />
-                        <text x="24" y="30.5" font-family="'Playfair Display', Georgia, serif" font-weight="800" font-size="10.5" fill="url(#crestGoldGrad1)" text-anchor="middle" letter-spacing="1">SDG</text>
+                        <path d="M24 3 L41 9 C41 24 34 38 24 45 C14 38 7 24 7 9 Z" fill="url(#drawerMaroon)" stroke="url(#drawerGold)" stroke-width="2.2" />
+                        <path d="M24 7 L37 12 C37 23 31.5 34 24 39.5 C16.5 34 11 23 11 12 Z" fill="none" stroke="url(#drawerGold)" stroke-width="1" stroke-opacity="0.6" />
+                        <path d="M19 16 L24 13 L29 16 L27 20 L21 20 Z" fill="url(#drawerGold)" />
+                        <text x="24" y="30.5" font-family="'Playfair Display', Georgia, serif" font-weight="800" font-size="10.5" fill="url(#drawerGold)" text-anchor="middle" letter-spacing="1">SDG</text>
                     </svg>
                 </div>
-                <div class="brand-meta-group">
-                    <span class="brand-main-title">SRI DEVI <span class="gold-accent">GROUPS</span></span>
-                    <span class="brand-sub-division">Tours & Travels • Royal Catering</span>
-                    <span class="brand-origin-tag">Pollachi • Estd. 2010</span>
+                <div class="drawer-titles">
+                    <span class="drawer-title-main">SRI DEVI GROUPS</span>
+                    <span class="drawer-title-sub">Tours & Royal Catering</span>
                 </div>
             </a>
+            <button class="drawer-close-btn" onclick="closeNavDrawer()" aria-label="Close navigation drawer">✕</button>
+        </div>
+
+        <!-- Quick Status Strip -->
+        <div class="drawer-info-strip">
+            <span class="drawer-hq-tag">📍 Pollachi HQ</span>
+            <span class="drawer-live-beacon"><span class="beacon-dot"></span> 24/7 Live Desk</span>
+        </div>
+
+        <!-- Vertical Navigation Links (Top to Bottom) -->
+        <nav class="drawer-nav-menu">
+            <div class="drawer-nav-section-label">Main Portals</div>
+            <a href="dashboard.html" class="drawer-nav-link active">
+                <span class="drawer-nav-icon">🏛️</span>
+                <span class="drawer-nav-text">Home Dashboard</span>
+                <span class="drawer-nav-arrow">→</span>
+            </a>
+            <a href="tours.html" class="drawer-nav-link">
+                <span class="drawer-nav-icon">🚗</span>
+                <span class="drawer-nav-text">Tours & Fleet Logistics</span>
+                <span class="drawer-nav-arrow">→</span>
+            </a>
+            <a href="tours.html#bikes" class="drawer-nav-link">
+                <span class="drawer-nav-icon">🏍️</span>
+                <span class="drawer-nav-text">Self-Drive Bike Rentals</span>
+                <span class="drawer-nav-arrow">→</span>
+            </a>
+            <a href="catering.html" class="drawer-nav-link">
+                <span class="drawer-nav-icon">🍽️</span>
+                <span class="drawer-nav-text">Royal Catering Services</span>
+                <span class="drawer-nav-arrow">→</span>
+            </a>
+            <a href="book.html" class="drawer-nav-link">
+                <span class="drawer-nav-icon">🗺️</span>
+                <span class="drawer-nav-text">Google Route & Fare Calculator</span>
+                <span class="drawer-nav-arrow">→</span>
+            </a>
+
+            <div class="drawer-nav-section-label" style="margin-top: 10px;">Quick Discover</div>
+            <a href="tours.html#pricing" class="drawer-nav-link">
+                <span class="drawer-nav-icon">🏷️</span>
+                <span class="drawer-nav-text">Transparent Pricing Structure</span>
+                <span class="drawer-nav-arrow">→</span>
+            </a>
+            <a href="catering.html#menu" class="drawer-nav-link">
+                <span class="drawer-nav-icon">🥗</span>
+                <span class="drawer-nav-text">All-India Culinary Repertoire</span>
+                <span class="drawer-nav-arrow">→</span>
+            </a>
+            <a href="dashboard.html#promise-section" class="drawer-nav-link">
+                <span class="drawer-nav-icon">⭐</span>
+                <span class="drawer-nav-text">Sri Devi Groups Promise</span>
+                <span class="drawer-nav-arrow">→</span>
+            </a>
+        </nav>
+
+        <!-- Drawer Footer Touchpoints -->
+        <div class="drawer-footer">
+            <a href="book.html" class="drawer-cta-btn">
+                <span>⚡ Calculate Route & Fare</span>
+            </a>
+            <a href="tel:+919876543210" class="drawer-call-btn">
+                <span>📞 Call Concierge: +91 98765 43210</span>
+            </a>
+            <a href="https://wa.me/919876543210?text=Hello%20Sri%20Devi%20Groups%2C%20I%20would%20like%20to%20book%20a%20service." target="_blank" class="drawer-whatsapp-btn">
+                <span>💬 WhatsApp Quick Booking</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Executive Main Navbar -->
+    <nav class="navbar" id="siteNavbar">
+        <div class="container">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button class="drawer-trigger-btn" onclick="toggleNavDrawer()" aria-label="Open Left Navigation Drawer" title="Open Main Menu">
+                    <span class="drawer-trigger-icon">
+                        <span class="trigger-bar"></span>
+                        <span class="trigger-bar"></span>
+                        <span class="trigger-bar"></span>
+                    </span>
+                    <span class="drawer-trigger-text">Menu</span>
+                </button>
+                <a href="dashboard.html" class="logo">
+                    <div class="brand-crest-wrapper">
+                        <svg class="crest-svg-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="crestGoldGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#fceda2" />
+                                    <stop offset="50%" stop-color="#d4a843" />
+                                    <stop offset="100%" stop-color="#9a7114" />
+                                </linearGradient>
+                                <linearGradient id="crestMaroonGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#8b1a1a" />
+                                    <stop offset="100%" stop-color="#4a0808" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M24 3 L41 9 C41 24 34 38 24 45 C14 38 7 24 7 9 Z" fill="url(#crestMaroonGrad1)" stroke="url(#crestGoldGrad1)" stroke-width="2.2" />
+                            <path d="M24 7 L37 12 C37 23 31.5 34 24 39.5 C16.5 34 11 23 11 12 Z" fill="none" stroke="url(#crestGoldGrad1)" stroke-width="1" stroke-opacity="0.6" />
+                            <path d="M19 16 L24 13 L29 16 L27 20 L21 20 Z" fill="url(#crestGoldGrad1)" />
+                            <text x="24" y="30.5" font-family="'Playfair Display', Georgia, serif" font-weight="800" font-size="10.5" fill="url(#crestGoldGrad1)" text-anchor="middle" letter-spacing="1">SDG</text>
+                        </svg>
+                    </div>
+                    <div class="brand-meta-group">
+                        <span class="brand-main-title">SRI DEVI <span class="gold-accent">GROUPS</span></span>
+                        <span class="brand-sub-division">Tours & Travels • Royal Catering</span>
+                        <span class="brand-origin-tag">Pollachi • Estd. 2010</span>
+                    </div>
+                </a>
+            </div>
             <div class="nav-links">
                 <a href="dashboard.html" class="nav-item active">🏛️ Home</a>
                 <a href="tours.html" class="nav-item">🚗 Tours & Fleet</a>

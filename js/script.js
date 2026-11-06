@@ -6,6 +6,39 @@ const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';      // Get from: EmailJS Dashboar
 const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';      // Get from: EmailJS Dashboard > Email Services
 const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';    // Get from: EmailJS Dashboard > Email Templates
 
+// ===== LEFT SLIDE-OUT DRAWER CONTROLS =====
+function openNavDrawer() {
+    const drawer = document.getElementById('leftSlideDrawer');
+    const backdrop = document.getElementById('navDrawerBackdrop');
+    if (drawer) drawer.classList.add('open');
+    if (backdrop) backdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeNavDrawer() {
+    const drawer = document.getElementById('leftSlideDrawer');
+    const backdrop = document.getElementById('navDrawerBackdrop');
+    if (drawer) drawer.classList.remove('open');
+    if (backdrop) backdrop.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function toggleNavDrawer() {
+    const drawer = document.getElementById('leftSlideDrawer');
+    if (drawer && drawer.classList.contains('open')) {
+        closeNavDrawer();
+    } else {
+        openNavDrawer();
+    }
+}
+
+// Global escape key listener
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeNavDrawer();
+    }
+});
+
 // ===== NAVBAR SCROLL & MOBILE INTERACTION =====
 function initNavbar() {
     const navbar = document.querySelector('.navbar');
@@ -21,33 +54,22 @@ function initNavbar() {
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    // Mobile menu toggle & drawer handling
+    // Wire Mobile Menu button to Left Slide-out Drawer
     const menuBtn = document.querySelector('.mobile-menu-btn');
-    const navLinks = document.querySelector('.nav-links');
-
-    if (menuBtn && navLinks) {
+    if (menuBtn) {
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            navLinks.classList.toggle('active');
-            menuBtn.classList.toggle('open');
-        });
-
-        // Close drawer when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!navbar.contains(e.target)) {
-                navLinks.classList.remove('active');
-                menuBtn.classList.remove('open');
-            }
-        });
-
-        // Close drawer when clicking any link
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                menuBtn.classList.remove('open');
-            });
+            toggleNavDrawer();
         });
     }
+
+    // Auto-close drawer on link clicks inside drawer
+    const drawerLinks = document.querySelectorAll('.drawer-nav-link, .drawer-footer a');
+    drawerLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            closeNavDrawer();
+        });
+    });
 }
 
 // ===== DISTANCE & COORDINATES DATA (from Pollachi) =====
