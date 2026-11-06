@@ -4274,3 +4274,112 @@ select.pro-text-input {
     border: 1px solid #ef4444;
     color: #b91c1c;
 }
+
+/* ===== THE SRI DEVI GROUPS PROMISE ===== */
+.promise-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 28px;
+}
+
+.promise-card {
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.promise-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(139, 26, 26, 0.12), 0 0 0 1px rgba(212, 168, 67, 0.4);
+}
+
+.promise-card-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 190px;
+    overflow: hidden;
+    background: #0f172a;
+}
+
+.promise-card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.promise-card:hover .promise-card-img-wrap img {
+    transform: scale(1.07);
+}
+
+.promise-badge-pill {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: rgba(15, 23, 42, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fceda2;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.promise-card-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.promise-num-tag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #8b1a1a;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.promise-card-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: #1e293b;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.promise-card-body p {
+    font-size: 0.88rem;
+    color: #64748b;
+    line-height: 1.55;
+    margin-bottom: 18px;
+    flex-grow: 1;
+}
+
+.promise-card-footer {
+    padding-top: 14px;
+    border-top: 1px dashed #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.promise-tick-item {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #059669;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
