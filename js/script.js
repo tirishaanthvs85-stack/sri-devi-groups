@@ -142,8 +142,8 @@ const pricing = {
     'bike-classic': {
         perKm: 6,
         perDay: 1200,
-        name: 'Royal Enfield Classic 350 (With Driver • Local Only)',
-        brandExample: 'Royal Enfield Classic 350cc with Driver for Local Ride (No Self-Drive)',
+        name: 'Royal Enfield Classic 350 Gunmetal Grey (With Driver • Local Only)',
+        brandExample: 'Royal Enfield Classic 350 Gunmetal Grey with Driver for Local Ride (No Self-Drive)',
         isBike: true
     },
     'scooter-jupiter': {
