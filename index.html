@@ -13,7 +13,7 @@
     </script>
 
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
+    <link rel="icon" type="image/png" href="images/favicon.png">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,27 +97,24 @@
             margin-bottom: 24px;
         }
 
-        .brand-emblem {
-            width: 76px;
-            height: 76px;
+        .brand-emblem-img {
+            width: 86px;
+            height: 86px;
             margin: 0 auto 14px;
-            background: linear-gradient(135deg, #d4a843, #8b1a1a);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #ffffff;
-            box-shadow: 0 12px 30px rgba(212, 168, 67, 0.35);
-            border: 2px solid rgba(255, 255, 255, 0.25);
+            display: block;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 25px rgba(212, 168, 67, 0.45));
             animation: pulseEmblem 3s ease-in-out infinite alternate;
+            transition: transform 0.3s ease;
+        }
+
+        .brand-emblem-img:hover {
+            transform: scale(1.08) rotate(-3deg);
         }
 
         @keyframes pulseEmblem {
-            0% { box-shadow: 0 10px 25px rgba(212, 168, 67, 0.3); }
-            100% { box-shadow: 0 16px 35px rgba(212, 168, 67, 0.6); }
+            0% { filter: drop-shadow(0 8px 20px rgba(212, 168, 67, 0.35)); }
+            100% { filter: drop-shadow(0 14px 32px rgba(212, 168, 67, 0.7)); }
         }
 
         .login-brand-header h1 {
@@ -331,7 +328,7 @@
         <div class="love-login-card">
             <!-- Brand Header -->
             <div class="login-brand-header">
-                <div class="brand-emblem">SD</div>
+                <img src="images/logo-groups-badge.png" alt="Sri Devi Groups Official Logo" class="brand-emblem-img">
                 <h1>Sri Devi Groups</h1>
                 <p class="login-brand-tagline">Tours, Travels & Grand Catering Services</p>
                 <div class="security-badge">

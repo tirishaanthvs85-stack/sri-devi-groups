@@ -263,11 +263,24 @@ img {
     width: 48px;
     height: 48px;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.brand-crest-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logo:hover .brand-crest-img,
 .logo:hover .brand-crest-wrapper {
-    transform: scale(1.06) rotate(-2deg);
+    transform: scale(1.08) rotate(-2deg);
 }
 
 .crest-svg-icon {
@@ -4254,9 +4267,20 @@ select.pro-text-input {
 }
 
 .drawer-crest {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drawer-crest-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.4));
 }
 
 .drawer-titles {
