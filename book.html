@@ -503,10 +503,10 @@
                 <span class="drawer-nav-arrow">→</span>
             </a>
             <a href="tours.html#bikes" class="drawer-nav-link">
-                <img src="images/classic350.jpg" alt="Self-Drive Bike Rentals" class="drawer-nav-thumb" loading="lazy">
+                <img src="images/classic350.jpg" alt="Local Bike Rides with Driver" class="drawer-nav-thumb" loading="lazy">
                 <div class="drawer-nav-info">
-                    <span class="drawer-nav-text">Self-Drive Bike Rentals</span>
-                    <span class="drawer-nav-desc">Classic 350 & TVS Jupiter</span>
+                    <span class="drawer-nav-text">Local Bike Rides (With Driver)</span>
+                    <span class="drawer-nav-desc">Classic 350 & TVS Jupiter • Local Only</span>
                 </div>
                 <span class="drawer-nav-arrow">→</span>
             </a>
@@ -580,7 +580,7 @@
             <div class="nav-links">
                 <a href="dashboard.html" class="nav-item">Home</a>
                 <a href="tours.html" class="nav-item">Fleet & Pricing</a>
-                <a href="tours.html#bikes" class="nav-item">Bike Rentals</a>
+                <a href="tours.html#bikes" class="nav-item">Local Bike Rides</a>
                 <a href="catering.html" class="nav-item">Catering</a>
                 <a href="book.html" class="nav-item active">Route & Fare</a>
                 
@@ -643,7 +643,7 @@
                 <div class="pro-ticker-item">🚗 <strong>Sedan:</strong> ₹18/km • ₹2,000/day</div>
                 <div class="pro-ticker-item">🚙 <strong>SUV/XUV:</strong> ₹20/km • ₹2,000/day</div>
                 <div class="pro-ticker-item">🚐 <strong>Force Traveller:</strong> ₹22/km • ₹2,500/day</div>
-                <div class="pro-ticker-item">🏍️ <strong>Bikes:</strong> ₹1,200/day (Men) • ₹600/day (Women)</div>
+                <div class="pro-ticker-item">🏍️ <strong>Bikes (With Driver • Local Only):</strong> ₹1,200/day (Men) • ₹600/day (Women)</div>
                 <div class="pro-ticker-item">🛡️ <strong>Zero Hidden Charges</strong></div>
             </div>
         </div>
@@ -693,9 +693,9 @@
                     </div>
                     <div class="transit-card-pro" id="mode-tab-bike" onclick="selectTransitMode('bike')">
                         <div class="transit-card-icon">🏍️</div>
-                        <div class="transit-card-name">Bike/Scooter</div>
-                        <div class="transit-card-rate">₹600 - 1.2k</div>
-                        <div style="font-size: 0.68rem; color: #64748b;">Per Day</div>
+                        <div class="transit-card-name">Bike (With Driver)</div>
+                        <div class="transit-card-rate">Local Ride</div>
+                        <div style="font-size: 0.68rem; color: #64748b;">₹600 - 1.2k/day</div>
                     </div>
                 </div>
 
@@ -870,9 +870,12 @@
                                     <option value="sedan">🚗 Sedan (Dzire / Amaze / Etios) — ₹18/km | ₹2,000/day</option>
                                     <option value="suv">🚙 SUV / XUV (Innova Crysta / XUV700 / Scorpio) — ₹20/km | ₹2,000/day</option>
                                     <option value="traveller">🚐 Force Traveller (12-20 Seater) — ₹22/km | ₹2,500/day</option>
-                                    <option value="bike-classic">🏍️ Royal Enfield Classic 350 (Men) — ₹1,200/day</option>
-                                    <option value="scooter-jupiter">🛵 TVS Jupiter Scooter (Women) — ₹600/day</option>
+                                    <option value="bike-classic">🏍️ Royal Enfield Classic 350 (With Driver • Local Only) — ₹1,200/day</option>
+                                    <option value="scooter-jupiter">🛵 TVS Jupiter Scooter (With Driver • Local Only) — ₹600/day</option>
                                 </select>
+                            </div>
+                            <div id="bike-driver-notice" style="display: none; margin-top: 8px; padding: 10px 14px; background: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; font-size: 0.82rem; color: #92400e; line-height: 1.4;">
+                                ⚠️ <strong>Important:</strong> Two-wheelers are <strong>not offered for self-driving</strong>. A professional driver/rider is provided for local Pollachi rides only.
                             </div>
                         </div>
 
@@ -1758,10 +1761,15 @@
             let dayCharge = 0;
             let total = 0;
 
+            const noticeBox = document.getElementById('bike-driver-notice');
+            if (noticeBox) {
+                noticeBox.style.display = rate.isBike ? 'block' : 'none';
+            }
+
             if (rate.isBike) {
                 dayCharge = days * rate.perDay;
                 total = dayCharge;
-                document.getElementById('summary-km-charge').textContent = 'Included standard';
+                document.getElementById('summary-km-charge').textContent = 'Included (Local with Driver)';
                 document.getElementById('summary-day-charge').textContent = `₹${dayCharge.toLocaleString('en-IN')} (₹${rate.perDay}/day x ${days} days)`;
             } else {
                 kmCharge = roundTripKm * rate.perKm;

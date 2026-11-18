@@ -114,9 +114,9 @@ const POLLACHI_COORDS = [10.6609, 77.0048];
 // Sedan: ₹18/km, ₹2000/day
 // SUV / XUV: ₹20/km, ₹2000/day
 // Traveller: ₹22/km, ₹2500/day
-// Bikes (Self Drive / Rentals):
-// Classic 350 (Men): ₹1,200/day (Unlimited km / ₹6/km fuel standard)
-// TVS Jupiter (Women): ₹600/day
+// Bikes (With Driver / Local Ride Only - No Self-Drive):
+// Classic 350 (Men): ₹1,200/day with Driver (Pollachi Local Only)
+// TVS Jupiter (Women): ₹600/day with Driver (Pollachi Local Only)
 const pricing = {
     sedan: {
         perKm: 18,
@@ -142,15 +142,15 @@ const pricing = {
     'bike-classic': {
         perKm: 6,
         perDay: 1200,
-        name: 'Royal Enfield Classic 350 (For Men)',
-        brandExample: 'Royal Enfield Classic 350cc - Stealth / Chrome with Helmet',
+        name: 'Royal Enfield Classic 350 (With Driver • Local Only)',
+        brandExample: 'Royal Enfield Classic 350cc with Driver for Local Ride (No Self-Drive)',
         isBike: true
     },
     'scooter-jupiter': {
         perKm: 4,
         perDay: 600,
-        name: 'TVS Jupiter 110/125 (For Women & Easy Commute)',
-        brandExample: 'TVS Jupiter with Easy Electric Start & Helmet',
+        name: 'TVS Jupiter (With Driver • Local Only)',
+        brandExample: 'TVS Jupiter Scooter with Driver for Local Ride (No Self-Drive)',
         isBike: true
     },
     // Backwards compatibility
